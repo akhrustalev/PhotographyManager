@@ -1,0 +1,14 @@
+c:\users\akhrustalev\documents\visual studio 2013\Projects\PhotographyManager\PhotographyManager.DataAccess\obj\Debug\PhotographyManager.DataAccess.csprojResolveAssemblyReference.cache
+C:\Users\akhrustalev\documents\visual studio 2013\Projects\PhotographyManager\PhotographyManager.DataAccess\bin\Debug\PhotographyManager.DataAccess.dll.config
+C:\Users\akhrustalev\documents\visual studio 2013\Projects\PhotographyManager\PhotographyManager.DataAccess\bin\Debug\PhotographyManager.DataAccess.dll
+C:\Users\akhrustalev\documents\visual studio 2013\Projects\PhotographyManager\PhotographyManager.DataAccess\bin\Debug\PhotographyManager.DataAccess.pdb
+C:\Users\akhrustalev\documents\visual studio 2013\Projects\PhotographyManager\PhotographyManager.DataAccess\bin\Debug\EntityFramework.dll
+C:\Users\akhrustalev\documents\visual studio 2013\Projects\PhotographyManager\PhotographyManager.DataAccess\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\akhrustalev\documents\visual studio 2013\Projects\PhotographyManager\PhotographyManager.DataAccess\bin\Debug\Ninject.dll
+C:\Users\akhrustalev\documents\visual studio 2013\Projects\PhotographyManager\PhotographyManager.DataAccess\bin\Debug\PhotographyManager.Model.dll
+C:\Users\akhrustalev\documents\visual studio 2013\Projects\PhotographyManager\PhotographyManager.DataAccess\bin\Debug\PhotographyManager.Model.pdb
+C:\Users\akhrustalev\documents\visual studio 2013\Projects\PhotographyManager\PhotographyManager.DataAccess\bin\Debug\EntityFramework.xml
+C:\Users\akhrustalev\documents\visual studio 2013\Projects\PhotographyManager\PhotographyManager.DataAccess\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\akhrustalev\documents\visual studio 2013\Projects\PhotographyManager\PhotographyManager.DataAccess\bin\Debug\Ninject.xml
+C:\Users\akhrustalev\documents\visual studio 2013\Projects\PhotographyManager\PhotographyManager.DataAccess\obj\Debug\PhotographyManager.DataAccess.dll
+C:\Users\akhrustalev\documents\visual studio 2013\Projects\PhotographyManager\PhotographyManager.DataAccess\obj\Debug\PhotographyManager.DataAccess.pdb

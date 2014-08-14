@@ -1,0 +1,9 @@
+C:\Users\akhrustalev\documents\visual studio 2013\Projects\PhotographyManager\PhotographyManager.Model\bin\Debug\PhotographyManager.Model.dll.config
+C:\Users\akhrustalev\documents\visual studio 2013\Projects\PhotographyManager\PhotographyManager.Model\bin\Debug\PhotographyManager.Model.dll
+C:\Users\akhrustalev\documents\visual studio 2013\Projects\PhotographyManager\PhotographyManager.Model\bin\Debug\PhotographyManager.Model.pdb
+C:\Users\akhrustalev\documents\visual studio 2013\Projects\PhotographyManager\PhotographyManager.Model\bin\Debug\EntityFramework.dll
+C:\Users\akhrustalev\documents\visual studio 2013\Projects\PhotographyManager\PhotographyManager.Model\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\akhrustalev\documents\visual studio 2013\Projects\PhotographyManager\PhotographyManager.Model\bin\Debug\EntityFramework.xml
+C:\Users\akhrustalev\documents\visual studio 2013\Projects\PhotographyManager\PhotographyManager.Model\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\akhrustalev\documents\visual studio 2013\Projects\PhotographyManager\PhotographyManager.Model\obj\Debug\PhotographyManager.Model.dll
+C:\Users\akhrustalev\documents\visual studio 2013\Projects\PhotographyManager\PhotographyManager.Model\obj\Debug\PhotographyManager.Model.pdb
