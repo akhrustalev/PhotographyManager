@@ -56,7 +56,8 @@ namespace PhotographyManager.Controllers
         {
             if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
             {
-                return RedirectToLocal(returnUrl);
+                //return RedirectToLocal(returnUrl);
+                return RedirectToAction("MyHomePage", "Home", new { Id = _userRepository.FindByUserName(model.UserName).ID });
             }
 
             // If we got this far, something failed, redisplay form
@@ -101,12 +102,12 @@ namespace PhotographyManager.Controllers
                     var user = _userRepository.FindByUserName(model.UserName);
                     if (user != null)
                         throw new MembershipCreateUserException(MembershipCreateStatus.DuplicateUserName);
-                    //user = new User { Name = model.UserName };
+                    user = new FreeUser { Name = model.UserName };
                     _userRepository.AddUser(user);
                     _unitOfWork.Commit();
                     WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
                     WebSecurity.Login(model.UserName, model.Password);
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("MyHomePage", "Home", new { Id = user.ID });
                 }
                 catch (MembershipCreateUserException e)
                 {

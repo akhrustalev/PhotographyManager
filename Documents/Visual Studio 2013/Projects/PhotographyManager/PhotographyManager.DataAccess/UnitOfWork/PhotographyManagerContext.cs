@@ -27,7 +27,18 @@ namespace PhotographyManager.DataAccess.UnitOfWork
 
         public void Commit()
         {
-            SaveChanges();
+
+            try
+            {
+                SaveChanges();
+            }
+            catch (DbUpdateException ex)
+            {
+                string exmes = ex.InnerException.InnerException.Message;
+            }
+
+
+
         }
 
         public void DiscardChanges()

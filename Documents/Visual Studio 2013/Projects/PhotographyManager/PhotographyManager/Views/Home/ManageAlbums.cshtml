@@ -1,0 +1,21 @@
+﻿@model PhotographyManager.Model.User
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ManageAlbums</title>
+</head>
+<body>
+    <div>
+        <form method="post" enctype="multipart/form-data" action="/Home/AddAlbum/@Model.ID.ToString()">
+          <INPUT type="submit" value="Add Album" runat="server" id="Button1">
+         </form>
+</div>
+</body>
+</html>

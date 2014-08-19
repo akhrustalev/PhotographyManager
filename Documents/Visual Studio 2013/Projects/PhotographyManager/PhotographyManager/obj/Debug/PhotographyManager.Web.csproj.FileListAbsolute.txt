@@ -92,3 +92,5 @@ C:\Users\akhrustalev\documents\visual studio 2013\Projects\PhotographyManager\Ph
 C:\Users\akhrustalev\documents\visual studio 2013\Projects\PhotographyManager\PhotographyManager\bin\PhotographyManager.Model.dll
 C:\Users\akhrustalev\documents\visual studio 2013\Projects\PhotographyManager\PhotographyManager\bin\PhotographyManager.DataAccess.pdb
 C:\Users\akhrustalev\documents\visual studio 2013\Projects\PhotographyManager\PhotographyManager\bin\PhotographyManager.Model.pdb
+C:\Users\akhrustalev\documents\visual studio 2013\Projects\PhotographyManager\PhotographyManager\obj\Debug\PhotographyManager.Migrations.Inheritance.resources
+C:\Users\akhrustalev\documents\visual studio 2013\Projects\PhotographyManager\PhotographyManager\obj\Debug\PhotographyManager.Web.csproj.GenerateResource.Cache

@@ -7,6 +7,9 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using PhotographyManager.DataAccess.Infrastructure;
+using System.Data.Entity;
+using PhotographyManager.DataAccess.UnitOfWork;
+using PhotographyManager.Model;
 
 namespace PhotographyManager
 {
@@ -25,6 +28,10 @@ namespace PhotographyManager
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AuthConfig.RegisterAuth();
+            //Database.SetInitializer<PhotographyManagerContext>(null);
+            Database.SetInitializer<PhotographyManagerContext>(
+ new DropCreateDatabaseIfModelChanges<PhotographyManagerContext>()); 
+            
         }
     }
 }

@@ -4,6 +4,7 @@ namespace PhotographyManager.Model
     using System.Data.Entity;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
+    using System.Data.Entity.Infrastructure;
 
     public partial class PhotographyManagerModel : DbContext
     {
@@ -16,6 +17,9 @@ namespace PhotographyManager.Model
         public virtual DbSet<Photo> Photo { get; set; }
         public virtual DbSet<User> User { get; set; }
 
+        public virtual DbSet<FreeUser> FreeUser { get; set; }
+
+        public virtual DbSet<PaidUser> PaidUser { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Album>()
@@ -25,14 +29,10 @@ namespace PhotographyManager.Model
             modelBuilder.Entity<Album>()
                 .HasMany(e => e.Photo)
                 .WithMany(e => e.Album)
-                .Map(m => m.ToTable("Album2Photo").MapLeftKey("AlbumId").MapRightKey("PhotoId"));
+                .Map(m => m.ToTable("Album2Photo").MapLeftKey("AlbumID").MapRightKey("PhotoID"));
 
             modelBuilder.Entity<Photo>()
                 .Property(e => e.Name)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Photo>()
-                .Property(e => e.Description)
                 .IsUnicode(false);
 
             modelBuilder.Entity<Photo>()
@@ -40,15 +40,11 @@ namespace PhotographyManager.Model
                 .IsUnicode(false);
 
             modelBuilder.Entity<Photo>()
-                .Property(e => e.CameraModel)
+                .Property(e => e.ISO)
                 .IsUnicode(false);
 
             modelBuilder.Entity<Photo>()
                 .Property(e => e.Diaphragm)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Photo>()
-                .Property(e => e.ISO)
                 .IsUnicode(false);
 
             modelBuilder.Entity<User>()
@@ -59,6 +55,7 @@ namespace PhotographyManager.Model
                 .HasMany(e => e.Album)
                 .WithRequired(e => e.User)
                 .WillCascadeOnDelete(false);
+            modelBuilder.Conventions.Remove<IncludeMetadataConvention>();
         }
     }
 }

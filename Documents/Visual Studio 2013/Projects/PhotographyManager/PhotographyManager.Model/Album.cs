@@ -14,13 +14,14 @@ namespace PhotographyManager.Model
             Photo = new HashSet<Photo>();
         }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int Id { get; set; }
+        public int ID { get; set; }
 
         [StringLength(50)]
         public string Name { get; set; }
 
-        public int UserId { get; set; }
+        public string Discription { get; set; }
+
+        public int UserID { get; set; }
 
         public virtual User User { get; set; }
 
