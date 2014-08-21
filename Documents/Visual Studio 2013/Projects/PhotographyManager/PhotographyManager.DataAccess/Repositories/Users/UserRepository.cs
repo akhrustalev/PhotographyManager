@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using PhotographyManager.Model;
 using System.Data.Entity;
 using PhotographyManager.DataAccess.UnitOfWork;
-using PhotographyManager.DataAccess.Repositories.Specification;
+
 
 namespace PhotographyManager.DataAccess.Repositories.Users
 {

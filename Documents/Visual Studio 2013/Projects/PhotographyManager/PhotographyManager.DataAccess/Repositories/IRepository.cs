@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using PhotographyManager.DataAccess.Repositories.Specification;
+
 
 namespace PhotographyManager.DataAccess.Repositories
 {
@@ -14,7 +14,7 @@ namespace PhotographyManager.DataAccess.Repositories
         void Remove(TEntity item);
         TEntity Get(params object[] keyValues);
 
-        List<TEntity> GetAllMatching(ISpecification<TEntity> specification, List<string> includes = null);
+
 
         List<TEntity> GetAll();
 

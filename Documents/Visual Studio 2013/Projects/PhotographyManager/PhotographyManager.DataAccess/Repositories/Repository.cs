@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
 using PhotographyManager.DataAccess.UnitOfWork;
-using PhotographyManager.DataAccess.Repositories.Specification;
+
 
 namespace PhotographyManager.DataAccess.Repositories
 {
@@ -53,10 +53,7 @@ namespace PhotographyManager.DataAccess.Repositories
             return _unitOfWork.GetDbSet<TEntity>().Find(keyValues);
         }
 
-        public List<TEntity> GetAllMatching(ISpecification<TEntity> specification, List<string> includes = null)
-        {
-            return GetQueryable(includes, specification).ToList();
-        }
+
 
         public List<TEntity> GetAll()
         {
@@ -81,17 +78,7 @@ namespace PhotographyManager.DataAccess.Repositories
 
         #region "Private methods"
 
-        public IQueryable<TEntity> GetQueryable(List<string> includes = null,
-            ISpecification<TEntity> specification = null)
-        {
-            IQueryable<TEntity> items = _unitOfWork.GetDbSet<TEntity>();
-            if (includes != null && includes.Any())
-                includes.Where(i => i != null).ToList().ForEach(i => { items = items.Include(i); });
-            if (specification != null)
-                items = items.Where(specification.SatisfiedBy());
 
-            return items;
-        }
 
         #endregion
     }

@@ -135,6 +135,29 @@ namespace PhotographyManager.Controllers
             return View("ManageAlbums", _userRepository.GetById(id));
         }
 
+        public ActionResult ManagePhotosInAlbum(int id, string albumName)
+        {
+            ViewBag.AlbumName = albumName;
+            return View("ManagePhotosInAlbum",_userRepository.GetById(id));
+        }
+
+        public ActionResult DeletePhotoFromAlbum(int id, string albumName, int photoId)
+        {
+            ViewBag.AlbumName = albumName;
+            _userRepository.GetById(id).Album.Where(album =>album.Name.Equals(albumName)).First().Photo.Remove(_userRepository.GetById(id).Photo.Where(photo =>photo.ID==photoId).First());
+            _unitOfWork.Commit();
+            return View("ManagePhotosInAlbum",_userRepository.GetById(id));
+
+        }
+
+        public ActionResult AddPhotoToAlbum(int id, string albumName, int photoId)
+        {
+            ViewBag.AlbumName = albumName;
+            _userRepository.GetById(id).Album.Where(album => album.Name.Equals(albumName)).First().Photo.Add(_userRepository.GetById(id).Photo.Where(photo => photo.ID == photoId).First());
+            _unitOfWork.Commit();
+            return View("ManagePhotosInAlbum", _userRepository.GetById(id));
+
+        }
 
 
 

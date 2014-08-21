@@ -55,17 +55,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\IRepository.cs" />
     <Compile Include="Repositories\Repository.cs" />
-    <Compile Include="Repositories\Specification\AndSpecification.cs" />
-    <Compile Include="Repositories\Specification\CompositeSpecification.cs" />
-    <Compile Include="Repositories\Specification\DirectSpecification.cs" />
-    <Compile Include="Repositories\Specification\ExpressionTreeSerialization\ExpressionBuilder.cs" />
-    <Compile Include="Repositories\Specification\ExpressionTreeSerialization\ExpressionSerializationTypeResolver.cs" />
-    <Compile Include="Repositories\Specification\ExpressionTreeSerialization\ExpressionSerializer.cs" />
-    <Compile Include="Repositories\Specification\ISpecification.cs" />
-    <Compile Include="Repositories\Specification\NotSpecification.cs" />
-    <Compile Include="Repositories\Specification\OrSpecification.cs" />
-    <Compile Include="Repositories\Specification\Specification.cs" />
-    <Compile Include="Repositories\Specification\TrueSpecification.cs" />
     <Compile Include="Repositories\Users\IUserRepository.cs" />
     <Compile Include="Repositories\Users\UserRepository.cs" />
     <Compile Include="UnitOfWork\IQueryableUnitOfWork.cs" />
@@ -82,9 +71,7 @@
     <None Include="packages.config" />
     <None Include="Scripts\jquery-1.9.1.min.map" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\PhotographyManager.Model\PhotographyManager.Model.csproj">
       <Project>{986f0d80-6823-4a5c-b049-a971b276e8e8}</Project>
