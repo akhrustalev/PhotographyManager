@@ -15,7 +15,7 @@ using PhotographyManager.Services;
 using System.Data.SqlClient;
 using System.Globalization;
 
-
+//asdasd
 namespace PhotographyManager.Controllers
 {
     public class HomeController : Controller
