@@ -26,13 +26,11 @@ namespace PhotographyManager.Filters
         {
             public SimpleMembershipInitializer()
             {
-                //Database.SetInitializer<UsersContext>(null);
-                Database.SetInitializer<PhotographyManagerContext>(null);
+                Database.SetInitializer<UsersContext>(null);
 
                 try
                 {
-                    //using (var context = new UsersContext())
-                    using (var context = new PhotographyManagerContext())
+                    using (var context = new UsersContext())
                     {
                         if (!context.Database.Exists())
                         {
@@ -41,8 +39,7 @@ namespace PhotographyManager.Filters
                         }
                     }
 
-                    //WebSecurity.InitializeDatabaseConnection("PhotographyManagerContext", "UserProfile", "UserId", "UserName", autoCreateTables: true);
-                    WebSecurity.InitializeDatabaseConnection("PhotographyManagerContext", "User", "ID", "Name", autoCreateTables: true);
+                    WebSecurity.InitializeDatabaseConnection("PhotographyManagerContext", "UserProfile", "UserId", "UserName", autoCreateTables: true);
                 }
                 catch (Exception ex)
                 {

@@ -14,10 +14,11 @@ using System.Web.Security;
 using PhotographyManager.Services;
 using System.Data.SqlClient;
 using System.Globalization;
-
+using PhotographyManager.Filters;
 
 namespace PhotographyManager.Controllers
 {
+    [Logging]
     public class HomeController : Controller
     {
         private IUnitOfWork _unitOfWork;
@@ -58,8 +59,6 @@ namespace PhotographyManager.Controllers
             HttpPostedFileBase file = Request.Files["OriginalLocation"];
             Int32 length = file.ContentLength;
             User currentUser = _unitOfWork.GetUsers().GetById((int)Membership.GetUser().ProviderUserKey);
-
-            
             if (currentUser.GetType().BaseType.Equals(typeof(FreeUser)))
             {
                 if (currentUser.Photo.Count==30)
@@ -209,16 +208,21 @@ namespace PhotographyManager.Controllers
             return View("SearchResult",searchResult);
         }
 
-        public ActionResult EditPhotosProperties(int id)
+        public ActionResult AdvancedSearch()
         {
-            return View(_unitOfWork.GetPhotos().GetById(id));
+            return View("AdvancedSearch", _unitOfWork.GetUsers().GetById((int)Membership.GetUser().ProviderUserKey));
         }
 
-        public ActionResult AddEditedProperties(int id)
+        public ActionResult AdvancedSearchResult()
         {
             string name = String.Format(Request.Form["Name"]);
             string shootingPlace = String.Format(Request.Form["ShootingPlace"]);
-            DateTime shootingTime = DateTime.Parse(String.Format(Request.Form["ShootingTime"]));
+            DateTime shootingTime=DateTime.Now;
+            if (String.Format(Request.Form["ShootingTime"]) != "")
+            {
+                shootingTime = DateTime.Parse(String.Format(Request.Form["ShootingTime"]));
+            }
+
             string cameraModel = String.Format(Request.Form["CameraModel"]);
             string diaphragm = String.Format(Request.Form["Diaphragm"]);
             string ISO = String.Format(Request.Form["ISO"]);
@@ -239,11 +243,53 @@ namespace PhotographyManager.Controllers
             }
             else
             {
+                flash = false;
+            }
+
+            List<Photo> searchResult = _unitOfWork.GetPhotos().AdvancedSearch(name,shootingPlace,shootingTime,cameraModel,diaphragm,ISO,shutterSpeed,focalDistance,flash);
+            return View("SearchResult",searchResult);
+        }
+
+        public ActionResult EditPhotosProperties(int id)
+        {
+            return View(_unitOfWork.GetPhotos().GetById(id));
+        }
+
+        public ActionResult AddEditedProperties(int id)
+        {
+            string name = String.Format(Request.Form["Name"]);
+            string shootingPlace = String.Format(Request.Form["ShootingPlace"]);
+            DateTime shootingTime = new DateTime();
+            if (String.Format(Request.Form["ShootingTime"]) != "")
+            {
+                shootingTime = DateTime.Parse(String.Format(Request.Form["ShootingTime"]));
+                _unitOfWork.GetPhotos().GetById(id).ShootingTime = shootingTime;
+            }
+            string cameraModel = String.Format(Request.Form["CameraModel"]);
+            string diaphragm = String.Format(Request.Form["Diaphragm"]);
+            string ISO = String.Format(Request.Form["ISO"]);
+            double focalDistance ;
+            if (!double.TryParse(Request.Form["FocalDistance"], NumberStyles.Float, CultureInfo.InvariantCulture, out focalDistance))
+            {
+                //focalDistance = 0;
+            }
+            double shutterSpeed = 0;
+            if (!double.TryParse(Request.Form["ShutterSpeed"], NumberStyles.Float, CultureInfo.InvariantCulture, out shutterSpeed))
+            {
+               // shutterSpeed = 0;
+            }
+            bool flash;
+            if (Request.Form["Flash"] != null && Request.Form["Flash"] == "on")
+            {
+                flash = true;
+            }
+            else
+            {
                 flash=false;
             }
             _unitOfWork.GetPhotos().GetById(id).Name = name;
             _unitOfWork.GetPhotos().GetById(id).ShootingPlace = shootingPlace;
-            _unitOfWork.GetPhotos().GetById(id).ShootingTime = shootingTime;
+            
             _unitOfWork.GetPhotos().GetById(id).CameraModel = cameraModel;
             _unitOfWork.GetPhotos().GetById(id).FocalDistance = focalDistance;
             _unitOfWork.GetPhotos().GetById(id).Diaphragm = diaphragm;

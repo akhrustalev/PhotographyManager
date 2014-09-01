@@ -69,6 +69,12 @@ namespace PhotographyManager.DataAccess.Repositories
             
             return context.Database.SqlQuery<TEntity>("SearchPhotos @KeyWord", new SqlParameter("KeyWord",keyword)).ToList();
         }
+
+        public List<TEntity> AdvancedSearch(string name, string shootingPlace, DateTime shootingTime, string cameraModel, string diaphragm, string ISO, double shutterSpeed, double focalDistance, bool flash)
+        {
+            return context.Database.SqlQuery<TEntity>("AdvancedSearchPhoto @name, @shootingPlace, @shootingTime, @cameraModel, @diaphragm, @ISO, @shutterSpeed,@focalDistance,@flash", new SqlParameter("name", name), new SqlParameter("shootingPlace", shootingPlace), new SqlParameter("shootingTime", shootingTime), new SqlParameter("cameraModel", cameraModel), new SqlParameter("diaphragm", diaphragm), new SqlParameter("ISO", ISO), new SqlParameter("shutterSpeed", shutterSpeed), new SqlParameter("focalDistance", focalDistance), new SqlParameter("flash", flash)).ToList();
+
+        }
         
     }
 

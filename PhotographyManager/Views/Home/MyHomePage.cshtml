@@ -21,8 +21,13 @@
     <div class="well">
         <form method ="post" id="searchForm" enctype="multipart/form-data" action=@Url.Action("Search","Home")>
             <input type="text" id="SearchText" name="SearchText" />
+            <br />
             <input type="submit" class="btn btn-primary" id="SearchButton" value="Search"/> 
             </form>
+        <form method="post" id="advancedSearchForm" enctype="multipart/form-data" action=@Url.Action("AdvancedSearch","Home")>
+            <input type="submit" class="btn btn-primary" id="SearchButton" value="Advanced Search" />
+        </form>
+
 </div>
     <br/>
     <h1 class="text-success">My Albums</h1>

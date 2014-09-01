@@ -1,0 +1,80 @@
+﻿@model PhotographyManager.Model.User
+
+@{
+    ViewBag.Title = "AdvancedSearch";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>AdvancedSearch</h2>
+
+<div class="well-lg">
+    <form method="post" enctype="multipart/form-data" action=@Url.Action("AdvancedSearchResult", "Home", new {id = Model.ID })>
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+        <fieldset>
+            <ul>
+                <li>
+                    @Html.Label("Name")
+                    <input type="text" name="Name" id="Name" />
+                    @Html.ValidationMessageFor(m => m.Photo.FirstOrDefault().Name)
+                </li>
+                <li>
+                    @Html.Label("ShootingPlace")
+                    <input type="text" name="ShootingPlace" id="ShootingPlace" />
+                    @Html.ValidationMessageFor(m => m.Photo.FirstOrDefault().ShootingPlace)
+                </li>
+                <li>
+                    @Html.Label("ShootingTime")
+                    <div id="datetimepicker" class="input-append date" data-date="29-08-2014 21:05" data-date-format="dd-mm-yyyy hh:ii">
+                        <input type="text" id="ShootingTime" value="@DateTime.Now" name="ShootingTime">
+                        <span class="add-on"><i class="icon-th"></i></span>
+                    </div>
+
+                    @Html.ValidationMessageFor(m => m.Photo.FirstOrDefault().ShootingTime)
+                </li>
+                <li>
+                    @Html.Label("CameraModel")
+                    <input type="text" name="CameraModel" id="CameraModel" />
+                    @Html.ValidationMessageFor(m => m.Photo.FirstOrDefault().CameraModel)
+                </li>
+                <li>
+                    @Html.Label("FocalDistance")
+                    <input type="number" name="FocalDistance" value="0" id="FocalDistance"/>
+                    @Html.ValidationMessageFor(m => m.Photo.FirstOrDefault().FocalDistance)
+                </li>
+                <li>
+                    @Html.Label("ShutterSpeed")
+                    <input type="number" name="ShutterSpeed" value="0" id="ShutterSpeed" />
+                    @Html.ValidationMessageFor(m => m.Photo.FirstOrDefault().ShutterSpeed)
+                </li>
+                <li>
+                    @Html.Label("ISO")
+                    <input type="text" name="ISO" id="ISO" />
+                    @Html.ValidationMessageFor(m => m.Photo.FirstOrDefault().ISO)
+                </li>
+                <li>
+                    @Html.Label("Diaphragm")
+                    <input type="text" name="Diaphragm" id="Diaphragm" />
+                    @Html.ValidationMessageFor(m => m.Photo.FirstOrDefault().Diaphragm)
+                </li>
+                <li>
+                    @Html.Label("Flash")
+                    <input type="checkbox" name="Flash" id="Flash"/>
+                    @Html.ValidationMessageFor(m => m.Photo.FirstOrDefault().Flash)
+                </li>
+
+            </ul>
+            <input type="submit" value="Search" class="btn btn-primary btn-lg" />
+        </fieldset>
+    </form>
+
+</div>
+
+
+
+<script type="text/javascript">
+
+    $('#datetimepicker').datetimepicker({
+        language: 'en'
+    });
+</script>

@@ -220,6 +220,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201409011523146_AdvancedSearchPost.cs" />
+    <Compile Include="Migrations\201409011523146_AdvancedSearchPost.Designer.cs">
+      <DependentUpon>201409011523146_AdvancedSearchPost.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -350,6 +355,7 @@
     <Content Include="Views\Home\ManagePhotosInAlbum.cshtml" />
     <Content Include="Views\Home\EditPhotosProperties.cshtml" />
     <Content Include="Views\Home\SearchResult.cshtml" />
+    <Content Include="Views\Home\AdvancedSearch.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -370,6 +376,11 @@
       <Project>{0812f72c-9088-4c03-abe5-dc7e0039512b}</Project>
       <Name>PhotographyManager.Services</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201409011523146_AdvancedSearchPost.resx">
+      <DependentUpon>201409011523146_AdvancedSearchPost.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

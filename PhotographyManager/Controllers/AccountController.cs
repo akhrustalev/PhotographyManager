@@ -16,6 +16,7 @@ namespace PhotographyManager.Controllers
 {
     [Authorize]
     [InitializeSimpleMembership]
+    [Logging]
     public class AccountController : Controller
     {
 
