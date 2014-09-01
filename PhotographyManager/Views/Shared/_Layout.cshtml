@@ -1,0 +1,82 @@
+﻿
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8" />
+    
+    <title>@ViewBag.Title - Photography Manager</title>
+    
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    
+    <meta name="viewport" content="width=device-width" />
+    
+    <style type="text/css">
+ body  {
+ padding-top: 60px;
+ padding-bottom: 40px;
+
+        }
+
+.sidebar-nav {
+ padding: 9px 0;
+        }
+
+
+    </style>
+
+    @Styles.Render("~/Content/bootstrapcss")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jqueryval")
+</head>
+
+<body>
+     <div class="navbar navbar-fixed-top">
+         <div class="navbar navbar-default">
+             <div class="container-fluid">
+                 <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+
+                </a>
+
+                 @Html.Partial("_LoginPartial")
+                 @if (Request.IsAuthenticated)
+                 {
+                    <nav class="navbar-default">
+                      
+                     <ul class="nav navbar-default">
+                         <li>@Html.ActionLink("Manage Photos", "ManagePhotos")</li>
+                         <li>   @Html.ActionLink("Manage Albums", "ManageAlbums")</li>
+                         <li>    @Html.ActionLink("My Home Page", "MyHomePage")</li>
+                         <li>    @Html.ActionLink("All Users' Albums", "Index")</li>
+                     </ul>
+                        </nav>
+                 }
+            </div>
+        </div>
+
+    </div>
+     <div class="container-fluid">
+         <div class="row-fluid">
+             @RenderBody()
+
+        </div>
+         <hr>
+         <footer>
+             <div class="content-wrapper">
+                <div class="float-left">
+                     <p>
+                        &copy; @DateTime.Now.Year - Photography Manager
+                    </p>
+
+                </div>
+            </div>
+        </footer>
+    </div>
+
+      @RenderSection("scripts", required: false)
+</body>
+</html>

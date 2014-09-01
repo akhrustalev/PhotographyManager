@@ -1,0 +1,50 @@
+﻿@model PhotographyManager.Model.User
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+@*Домашняя страница пользователя с его фотоальбомами*@
+
+
+
+<html>
+<head>
+
+
+    <meta name="viewport" content="width=device-width" />
+    <title>MyHomePage</title>
+</head>
+<body>
+    <h3 style="color:white">@Model.Name </h3>
+    <div class="well">
+        <form method ="post" id="searchForm" enctype="multipart/form-data" action=@Url.Action("Search","Home")>
+            <input type="text" id="SearchText" name="SearchText" />
+            <input type="submit" class="btn btn-primary" id="SearchButton" value="Search"/> 
+            </form>
+</div>
+    <br/>
+    <h1 class="text-success">My Albums</h1>
+    <br />
+    <div>
+        @using (Html.BeginForm())
+        {
+            for (int i = 0; i < Model.Album.Count; i++)
+            {
+                <figure style="display:inline-block; border:none">
+                @if (Model.Album.ElementAt(i).Photo.Count != 0)
+                {
+                    <img src=@Url.Action("ShowMiniPhoto", "Home", new { id = Model.Album.ElementAt(i).Photo.ElementAt(0).ID }) alt=""/>
+                }
+                else {<img src="~/Content/themes/base/images/ui-bg_flat_0_aaaaaa_40x100.png" alt="" style="height:200px; width:200px"/> }
+                    <figcaption style="border:none">@Html.ActionLink(Model.Album.ElementAt(i).Name + "      ", "ObservePhotos", new { albumName = Model.Album.ElementAt(i).Name }, null)</figcaption>
+                </figure>
+            }
+        }
+        <br/>        
+    </div>
+</body>
+</html>
+
+

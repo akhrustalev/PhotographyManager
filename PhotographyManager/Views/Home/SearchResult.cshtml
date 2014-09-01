@@ -1,0 +1,16 @@
+﻿@model List<PhotographyManager.Model.Photo>
+@{
+    ViewBag.Title = "SearchResult";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>The result of Search:</h2>
+@for (int i = 0; i < Model.Count; i++)
+{
+    <figure style="display:inline-block; border:none; vertical-align:top">
+        <img src=@Url.Action("ShowMiniPhoto", "Home", new { id = Model.ElementAt(i).ID }) alt="" />
+        <figcaption style="border:none">
+            @Model.ElementAt(i).Name
+        </figcaption>
+    </figure>
+}
