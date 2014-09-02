@@ -48,14 +48,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Album.cs" />
-    <Compile Include="FreeUser.cs" />
-    <Compile Include="Log.cs" />
-    <Compile Include="PaidUser.cs" />
-    <Compile Include="Photo.cs" />
-    <Compile Include="PhotographyManagerContext.cs" />
+    <Compile Include="Entities\Album.cs" />
+    <Compile Include="Entities\FreeUser.cs" />
+    <Compile Include="Entities\Log.cs" />
+    <Compile Include="AccountModels\LoginModel.cs" />
+    <Compile Include="Entities\PaidUser.cs" />
+    <Compile Include="Entities\Photo.cs" />
+    <Compile Include="Entities\PhotographyManagerContext.cs" />
+    <Compile Include="Entities\UsersContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="User.cs" />
+    <Compile Include="AccountModels\RegisterModel.cs" />
+    <Compile Include="Entities\User.cs" />
+    <Compile Include="Entities\UserProfile.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

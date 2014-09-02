@@ -12,7 +12,7 @@ using System.IO;
 
 namespace PhotographyManager.Controllers
 {
-    public class AjaxController : ApiController
+    public class LoadingPhotosController : ApiController
     {
         private IUnitOfWork _unitOfWork;
         
@@ -29,7 +29,7 @@ namespace PhotographyManager.Controllers
         }
 
 
-        public AjaxController(IUnitOfWork uoW)
+        public LoadingPhotosController(IUnitOfWork uoW)
         {
            _unitOfWork = uoW;
         }
@@ -38,7 +38,7 @@ namespace PhotographyManager.Controllers
         public string Get(parameters id)
         {
             int BlockSize = 12;
-            List<Photo> photos = MyServices.GetBlockOfPhotos(_unitOfWork.GetAlbums().GetByName(album => album.Name.Equals(id.AlbumName)).Photo.ToList(), id.BlockNumber, BlockSize);
+            List<Photo> photos = MyServices.GetBlockOfPhotos(_unitOfWork.Albums.GetByName(album => album.Name.Equals(id.AlbumName)).Photo.ToList(), id.BlockNumber, BlockSize);
             List<temp> temps = new List<temp>();
             foreach(Photo item in photos)
             {

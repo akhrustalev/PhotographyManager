@@ -10,26 +10,43 @@ namespace PhotographyManager.DataAccess.UnitOfWork
 {
     public class MyUnitOfWork : PhotographyManagerContext, IUnitOfWork
     {
-        private readonly PhotographyManagerContext context = new PhotographyManagerContext();
+        private  readonly PhotographyManagerContext context = new PhotographyManagerContext();
 
         public void Commit()
         {
             context.SaveChanges();
         }
 
-        public Repository<User> GetUsers()
+        public IRepository<User> Users
         {
-            return new Repository<User>(context);
+            get
+            {
+                return new Repository<User>(context);
+            }
         }
-        public Repository<Album> GetAlbums()
+        public IRepository<Album> Albums
         {
-            return new Repository<Album>(context);
+            get
+            {
+               return new Repository<Album>(context);
+            }
+ 
         }
 
-        public Repository<Photo> GetPhotos()
+        public IRepository<Photo> Photos
         {
-            return new Repository<Photo>(context);
+            get
+            {
+                return new Repository<Photo>(context);
+            }
         }
+
+        public void Dispose()
+        {
+            if (context != null) context.Dispose();
+        }
+
+
 
     }
 }

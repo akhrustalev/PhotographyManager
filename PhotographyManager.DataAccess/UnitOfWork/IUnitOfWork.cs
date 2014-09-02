@@ -10,15 +10,15 @@ using PhotographyManager.Model;
 
 namespace PhotographyManager.DataAccess.UnitOfWork
 {
-    public interface IUnitOfWork
+    public interface IUnitOfWork:IDisposable
     {
         void Commit();
 
-        Repository<User> GetUsers();
+        IRepository<User> Users{get; }
 
-        Repository<Album> GetAlbums();
+        IRepository<Album> Albums { get; }
 
-        Repository<Photo> GetPhotos();
+        IRepository<Photo> Photos{get; }
         
     }
 }

@@ -27,30 +27,31 @@ namespace PhotographyManager.Controllers
         {
            _unitOfWork = uoW;
         }
-        
         public ActionResult Index()
         {
-            return View("Index",_unitOfWork);
+           //throw new Exception("!!!!");
+           return View("Index", _unitOfWork);
+
         }
 
         public ActionResult ObservePhotos(string albumName)
         {
-            return View(_unitOfWork.GetAlbums().GetByName(album=>album.Name.Equals(albumName)));
+            return View(_unitOfWork.Albums.GetByName(album=>album.Name.Equals(albumName)));
         }
 
         public ActionResult MyHomePage()
         {
-            return View(_unitOfWork.GetUsers().GetById((int)Membership.GetUser().ProviderUserKey));
+            return View(_unitOfWork.Users.GetById((int)Membership.GetUser().ProviderUserKey));
         }
 
         public ActionResult ManagePhotos()
         {
-            return View(_unitOfWork.GetUsers().GetById((int)Membership.GetUser().ProviderUserKey));
+            return View(_unitOfWork.Users.GetById((int)Membership.GetUser().ProviderUserKey));
         }
 
         public ActionResult ManageAlbums()
         {
-            return View("ManageAlbums",_unitOfWork.GetUsers().GetById((int)Membership.GetUser().ProviderUserKey));
+            return View("ManageAlbums",_unitOfWork.Users.GetById((int)Membership.GetUser().ProviderUserKey));
         }
 
         [HttpPost]
@@ -58,7 +59,7 @@ namespace PhotographyManager.Controllers
         { 
             HttpPostedFileBase file = Request.Files["OriginalLocation"];
             Int32 length = file.ContentLength;
-            User currentUser = _unitOfWork.GetUsers().GetById((int)Membership.GetUser().ProviderUserKey);
+            User currentUser = _unitOfWork.Users.GetById((int)Membership.GetUser().ProviderUserKey);
             if (currentUser.GetType().BaseType.Equals(typeof(FreeUser)))
             {
                 if (currentUser.Photo.Count==30)
@@ -70,23 +71,18 @@ namespace PhotographyManager.Controllers
             }
 
 
-
-
-            //Проверка, был ли выбран файл
             if (length == 0)
             {
                 ModelState.AddModelError("", "No image was chosen");
 
                 return View("ManagePhotos", currentUser);
             }
-            //Проверка, не превышает ли объем файла 500 килобайт
             if (length > 500*1024)
             {
                 ModelState.AddModelError("", "The image size is more than 500K. Please choose smaller image");
 
                 return View("ManagePhotos", currentUser);
             }
-            //Проверка,является ли файл JPEG
             if (System.IO.Path.GetExtension(file.FileName).ToLower() != ".jpg")
             {
                 ModelState.AddModelError("", "Image must be JPEG");
@@ -94,27 +90,27 @@ namespace PhotographyManager.Controllers
                 return View("ManagePhotos", currentUser);
             }
 
-            //Сохранение в полном размере
+            //saving in big size
             byte[] image = new byte[length];
             file.InputStream.Read(image, 0, length);
             Photo photo = new Photo();
             photo.Image = image;
 
             Bitmap originalImage = new Bitmap(Image.FromStream(file.InputStream));
-            //Сохранение в среднем размере
+            //saving in middle size
             Bitmap middleImage = new Bitmap(400,400);
             using (Graphics g = Graphics.FromImage((Image)middleImage))
                 g.DrawImage(originalImage, 0, 0, 400, 400);
             ImageConverter converter = new ImageConverter();
+            //saving in small size
             photo.MiddleImage =  (byte[])converter.ConvertTo(middleImage, typeof(byte[]));
-            //Сохранение в миниатюре
             Bitmap miniImage = new Bitmap(200,200);
             using (Graphics g = Graphics.FromImage((Image)miniImage))
                 g.DrawImage(originalImage, 0, 0, 200, 200);
             photo.MiniImage = (byte[])converter.ConvertTo(miniImage, typeof(byte[]));
 
 
-            _unitOfWork.GetUsers().GetById((int)Membership.GetUser().ProviderUserKey).Photo.Add(photo);
+            _unitOfWork.Users.GetById((int)Membership.GetUser().ProviderUserKey).Photo.Add(photo);
             _unitOfWork.Commit();
             return View("ManagePhotos", currentUser);
         }
@@ -122,31 +118,31 @@ namespace PhotographyManager.Controllers
         [HttpGet]
         public ActionResult ShowPhoto(int id)
         {
-            FileContentResult result = new FileContentResult(_unitOfWork.GetPhotos().GetById(id).Image, "jpeg");
+            FileContentResult result = new FileContentResult(_unitOfWork.Photos.GetById(id).Image, "jpeg");
             return result;
         }
         [HttpGet]
         public ActionResult ShowMiddlePhoto(int id)
         {
-            FileContentResult result = new FileContentResult(_unitOfWork.GetPhotos().GetById(id).MiddleImage, "jpeg");
+            FileContentResult result = new FileContentResult(_unitOfWork.Photos.GetById(id).MiddleImage, "jpeg");
             return result;
         }
         [HttpGet]
         public ActionResult ShowMiniPhoto(int id)
         {
-            FileContentResult result = new FileContentResult(_unitOfWork.GetPhotos().GetById(id).MiniImage, "jpeg");
+            FileContentResult result = new FileContentResult(_unitOfWork.Photos.GetById(id).MiniImage, "jpeg");
             return result;
         }
 
         public ActionResult AddAlbum()
         {
-            if (_unitOfWork.GetUsers().GetById((int)Membership.GetUser().ProviderUserKey).GetType().BaseType.Equals(typeof(FreeUser)))
+            if (_unitOfWork.Users.GetById((int)Membership.GetUser().ProviderUserKey).GetType().BaseType.Equals(typeof(FreeUser)))
             {
-                if (_unitOfWork.GetUsers().GetById((int)Membership.GetUser().ProviderUserKey).Album.Count == 5)
+                if (_unitOfWork.Users.GetById((int)Membership.GetUser().ProviderUserKey).Album.Count == 5)
                 {
                     ModelState.AddModelError("", "You can't create more than 5  albums because you are a free user");
 
-                    return View("ManageAlbums", _unitOfWork.GetUsers().GetById((int)Membership.GetUser().ProviderUserKey));
+                    return View("ManageAlbums", _unitOfWork.Users.GetById((int)Membership.GetUser().ProviderUserKey));
                 }
             }
             return View("AddAlbum");            
@@ -161,12 +157,12 @@ namespace PhotographyManager.Controllers
                 album.Name = String.Format(Request.Form["Name"]);
                 album.Discription = String.Format(Request.Form["Discription"]);
 
-                if (_unitOfWork.GetAlbums().GetByName(a => a.Name.Equals(album.Name)) != null) throw new DuplicateNameException();
+                if (_unitOfWork.Albums.GetByName(a => a.Name.Equals(album.Name)) != null) throw new DuplicateNameException();
 
-                _unitOfWork.GetUsers().GetById((int)Membership.GetUser().ProviderUserKey).Album.Add(album);
+                _unitOfWork.Users.GetById((int)Membership.GetUser().ProviderUserKey).Album.Add(album);
                 _unitOfWork.Commit();
 
-                return View("ManageAlbums", _unitOfWork.GetUsers().GetById((int)Membership.GetUser().ProviderUserKey));
+                return View("ManageAlbums", _unitOfWork.Users.GetById((int)Membership.GetUser().ProviderUserKey));
             }
             catch (DuplicateNameException e)
             {
@@ -178,31 +174,31 @@ namespace PhotographyManager.Controllers
         public ActionResult ManagePhotosInAlbum(string albumName)
         {
             ViewBag.AlbumName = albumName;
-            return View("ManagePhotosInAlbum", _unitOfWork.GetUsers().GetById((int)Membership.GetUser().ProviderUserKey));
+            return View("ManagePhotosInAlbum", _unitOfWork.Users.GetById((int)Membership.GetUser().ProviderUserKey));
         }
 
         public ActionResult DeletePhotoFromAlbum(string albumName, int photoId)
         {
             ViewBag.AlbumName = albumName;
-            _unitOfWork.GetUsers().GetById((int)Membership.GetUser().ProviderUserKey).Album.Where(album => album.Name.Equals(albumName)).First().Photo.Remove(_unitOfWork.GetUsers().GetById((int)Membership.GetUser().ProviderUserKey).Photo.Where(photo => photo.ID == photoId).First());
+            _unitOfWork.Users.GetById((int)Membership.GetUser().ProviderUserKey).Album.Where(album => album.Name.Equals(albumName)).First().Photo.Remove(_unitOfWork.Users.GetById((int)Membership.GetUser().ProviderUserKey).Photo.Where(photo => photo.ID == photoId).First());
             _unitOfWork.Commit();
-            return View("ManagePhotosInAlbum", _unitOfWork.GetUsers().GetById((int)Membership.GetUser().ProviderUserKey));
+            return View("ManagePhotosInAlbum", _unitOfWork.Users.GetById((int)Membership.GetUser().ProviderUserKey));
 
         }
 
         public ActionResult AddPhotoToAlbum(string albumName, int photoId)
         {
             ViewBag.AlbumName = albumName;
-            _unitOfWork.GetUsers().GetById((int)Membership.GetUser().ProviderUserKey).Album.Where(album => album.Name.Equals(albumName)).First().Photo.Add(_unitOfWork.GetUsers().GetById((int)Membership.GetUser().ProviderUserKey).Photo.Where(photo => photo.ID == photoId).First());
+            _unitOfWork.Users.GetById((int)Membership.GetUser().ProviderUserKey).Album.Where(album => album.Name.Equals(albumName)).First().Photo.Add(_unitOfWork.Users.GetById((int)Membership.GetUser().ProviderUserKey).Photo.Where(photo => photo.ID == photoId).First());
             _unitOfWork.Commit();
-            return View("ManagePhotosInAlbum", _unitOfWork.GetUsers().GetById((int)Membership.GetUser().ProviderUserKey));
+            return View("ManagePhotosInAlbum", _unitOfWork.Users.GetById((int)Membership.GetUser().ProviderUserKey));
         }
 
         public ActionResult Search()
         {
             string keyword = String.Format(Request.Form["SearchText"]);
-
-            List<Photo> searchResult = _unitOfWork.GetPhotos().Search(keyword);
+            List<Photo> searchResult = new List<Photo>();
+            //List<Photo> searchResult = _unitOfWork.Photos.Search(keyword);
 
            
             return View("SearchResult",searchResult);
@@ -210,7 +206,7 @@ namespace PhotographyManager.Controllers
 
         public ActionResult AdvancedSearch()
         {
-            return View("AdvancedSearch", _unitOfWork.GetUsers().GetById((int)Membership.GetUser().ProviderUserKey));
+            return View("AdvancedSearch", _unitOfWork.Users.GetById((int)Membership.GetUser().ProviderUserKey));
         }
 
         public ActionResult AdvancedSearchResult()
@@ -226,7 +222,7 @@ namespace PhotographyManager.Controllers
             string cameraModel = String.Format(Request.Form["CameraModel"]);
             string diaphragm = String.Format(Request.Form["Diaphragm"]);
             string ISO = String.Format(Request.Form["ISO"]);
-            double focalDistance = 0;
+            double focalDistance=0;
             if (!double.TryParse(Request.Form["FocalDistance"], NumberStyles.Float, CultureInfo.InvariantCulture, out focalDistance))
             {
                 focalDistance = 0;
@@ -245,14 +241,14 @@ namespace PhotographyManager.Controllers
             {
                 flash = false;
             }
-
-            List<Photo> searchResult = _unitOfWork.GetPhotos().AdvancedSearch(name,shootingPlace,shootingTime,cameraModel,diaphragm,ISO,shutterSpeed,focalDistance,flash);
+            List<Photo> searchResult = new List<Photo>();
+            //List<Photo> searchResult = _unitOfWork.Photos.AdvancedSearch(name,shootingPlace,shootingTime,cameraModel,diaphragm,ISO,shutterSpeed,focalDistance,flash);
             return View("SearchResult",searchResult);
         }
 
         public ActionResult EditPhotosProperties(int id)
         {
-            return View(_unitOfWork.GetPhotos().GetById(id));
+            return View(_unitOfWork.Photos.GetById(id));
         }
 
         public ActionResult AddEditedProperties(int id)
@@ -263,7 +259,7 @@ namespace PhotographyManager.Controllers
             if (String.Format(Request.Form["ShootingTime"]) != "")
             {
                 shootingTime = DateTime.Parse(String.Format(Request.Form["ShootingTime"]));
-                _unitOfWork.GetPhotos().GetById(id).ShootingTime = shootingTime;
+                _unitOfWork.Photos.GetById(id).ShootingTime = shootingTime;
             }
             string cameraModel = String.Format(Request.Form["CameraModel"]);
             string diaphragm = String.Format(Request.Form["Diaphragm"]);
@@ -287,17 +283,17 @@ namespace PhotographyManager.Controllers
             {
                 flash=false;
             }
-            _unitOfWork.GetPhotos().GetById(id).Name = name;
-            _unitOfWork.GetPhotos().GetById(id).ShootingPlace = shootingPlace;
+            _unitOfWork.Photos.GetById(id).Name = name;
+            _unitOfWork.Photos.GetById(id).ShootingPlace = shootingPlace;
             
-            _unitOfWork.GetPhotos().GetById(id).CameraModel = cameraModel;
-            _unitOfWork.GetPhotos().GetById(id).FocalDistance = focalDistance;
-            _unitOfWork.GetPhotos().GetById(id).Diaphragm = diaphragm;
-            _unitOfWork.GetPhotos().GetById(id).ISO = ISO;
-            _unitOfWork.GetPhotos().GetById(id).ShutterSpeed = shutterSpeed;
-            _unitOfWork.GetPhotos().GetById(id).Flash = flash;
+            _unitOfWork.Photos.GetById(id).CameraModel = cameraModel;
+            _unitOfWork.Photos.GetById(id).FocalDistance = focalDistance;
+            _unitOfWork.Photos.GetById(id).Diaphragm = diaphragm;
+            _unitOfWork.Photos.GetById(id).ISO = ISO;
+            _unitOfWork.Photos.GetById(id).ShutterSpeed = shutterSpeed;
+            _unitOfWork.Photos.GetById(id).Flash = flash;
             _unitOfWork.Commit();
-            return View("ManagePhotos", _unitOfWork.GetUsers().GetById((int)Membership.GetUser().ProviderUserKey));
+            return View("ManagePhotos", _unitOfWork.Users.GetById((int)Membership.GetUser().ProviderUserKey));
         }
     }
 }

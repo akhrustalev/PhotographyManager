@@ -8,21 +8,21 @@
 <div class="row">
 @using (Html.BeginForm())
 {
-    for (int i = 0; i < Model.GetUsers().GetAll().Count; i++) 
+    for (int i = 0; i < Model.Users.GetAll().Count; i++) 
     {
-        if (Model.GetUsers().GetAll().ElementAt(i).Album.Count != 0) 
+        if (Model.Users.GetAll().ElementAt(i).Album.Count != 0) 
         { 
-        <p>@Html.Label(Model.GetUsers().GetAll()[i].Name, new {@class="label label-success"})</p>
-        for (int j = 0; j < Model.GetUsers().GetAll()[i].Album.Count; j++) 
+        <p>@Html.Label(Model.Users.GetAll()[i].Name, new {@class="label label-success"})</p>
+        for (int j = 0; j < Model.Users.GetAll()[i].Album.Count; j++) 
            { 
                 <figure style="display:inline-block; border:none">
-                @if (Model.GetUsers().GetAll()[i].Album.ElementAt(j).Photo.Count != 0)
+                @if (Model.Users.GetAll()[i].Album.ElementAt(j).Photo.Count != 0)
                 {
-                    <img src=@Url.Action("ShowMiniPhoto", "Home", new { id = Model.GetUsers().GetAll()[i].Album.ElementAt(j).Photo.ElementAt(0).ID }) alt=""/>
+                    <img src=@Url.Action("ShowMiniPhoto", "Home", new { id = Model.Users.GetAll()[i].Album.ElementAt(j).Photo.ElementAt(0).ID }) alt=""/>
                 }
                 else
                 {<img src="~/Content/themes/base/images/ui-bg_flat_0_aaaaaa_40x100.png" alt="" style="height:200px; width:200px" /> }
-                    <figcaption style="border:none">@Html.ActionLink(Model.GetUsers().GetAll()[i].Album.ElementAt(j).Name + "      ", "ObservePhotos", new { albumName = Model.GetUsers().GetAll()[i].Album.ElementAt(j).Name }, null)</figcaption>
+                    <figcaption style="border:none">@Html.ActionLink(Model.Users.GetAll()[i].Album.ElementAt(j).Name + "      ", "ObservePhotos", new { albumName = Model.Users.GetAll()[i].Album.ElementAt(j).Name }, null)</figcaption>
                 </figure>
            }
        }

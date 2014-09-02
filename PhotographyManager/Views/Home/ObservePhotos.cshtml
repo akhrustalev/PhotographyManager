@@ -22,8 +22,9 @@
             inProgress = true;
             
             $.ajax({
-                url: "api/Ajax/"+param.toString(),
+                //url: "api/Ajax/"+param.toString(),
                 @*data: JSON.stringify({BlockNumber: BlockNumber, AlbumName: "@Model.Name" }),*@
+                url: "@@Url.RouteUrl('api/LoadingPhotos', new {id = "+param+"})",
                 type: 'GET',           
                 dataType: 'json',
                 success: function (result) {
@@ -56,7 +57,7 @@
 </head>
 <body>
     <div id="photosDiv">
-        @for (int i = 0; i < Model.Photo.Count&&i<12; i++)
+        @for (int i = 0; i < Model.Photo.Count&&i<4; i++)
         {
             <figure style="display:inline-block; border:none; vertical-align:top">
                 <img src=@Url.Action("ShowMiniPhoto", "Home", new { id = Model.Photo.ElementAt(i).ID }) alt="" />
@@ -64,9 +65,7 @@
                     @Model.Photo.ElementAt(i).Name
                 </figcaption>
             </figure>
-
-            if ((i + 1) % 3 == 0)
-            { <br /><br />}
+            <br />
         }
     </div>
 </body>

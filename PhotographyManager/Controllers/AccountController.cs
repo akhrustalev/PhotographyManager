@@ -8,7 +8,6 @@ using System.Web.Security;
 using DotNetOpenAuth.AspNet;
 using WebMatrix.WebData;
 using PhotographyManager.Filters;
-using PhotographyManager.Models;
 using PhotographyManager.DataAccess.UnitOfWork;
 using PhotographyManager.Model;
 
@@ -46,7 +45,7 @@ namespace PhotographyManager.Controllers
         {
             if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
             {
-                return RedirectToAction("MyHomePage", "Home", new { Id = _unitOfWork.GetUsers().GetByName(user =>user.Name.Equals(model.UserName)).ID });
+                return RedirectToAction("MyHomePage", "Home", new { Id = _unitOfWork.Users.GetByName(user =>user.Name.Equals(model.UserName)).ID });
             }
 
             ModelState.AddModelError("", "The user name or password provided is incorrect.");
@@ -76,24 +75,20 @@ namespace PhotographyManager.Controllers
         {
             if (ModelState.IsValid)
             {
-                try
-                {
-                    var user = _unitOfWork.GetUsers().GetByName(us=>us.Name.Equals(model.UserName));
-                    if (user != null)
-                        throw new MembershipCreateUserException("User name already exists. Please enter a different user name.");
-                    if (Request.Form["submitBtn"] == "Register As Free User")
-                        user = new FreeUser { Name = model.UserName };
-                    else user = new PaidUser { Name=model.UserName};
-                    _unitOfWork.GetUsers().Add(user);
-                    _unitOfWork.Commit();
-                    WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
-                    WebSecurity.Login(model.UserName, model.Password);
-                    return RedirectToAction("MyHomePage", "Home", new { Id = user.ID });
-                }
-                catch (MembershipCreateUserException e)
-                {
-                    ModelState.AddModelError("", "User name already exists. Please enter a different user name.");
-                }
+               var user = _unitOfWork.Users.GetByName(us=>us.Name.Equals(model.UserName));
+               if (user != null)
+                  {
+                      ModelState.AddModelError("", "User name already exists. Please enter a different user name.");
+                      return View(model);
+                  }
+                  if (Request.Form["submitBtn"] == "Register As Free User")
+                     user = new FreeUser { Name = model.UserName };
+                  else user = new PaidUser { Name=model.UserName};
+                  _unitOfWork.Users.Add(user);
+                  _unitOfWork.Commit();
+                  WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
+                  WebSecurity.Login(model.UserName, model.Password);
+                  return RedirectToAction("MyHomePage", "Home", new { Id = user.ID });
             }
             return View(model);
         }

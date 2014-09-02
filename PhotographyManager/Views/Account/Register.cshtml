@@ -1,4 +1,4 @@
-﻿@model PhotographyManager.Models.RegisterModel
+﻿@model PhotographyManager.Model.RegisterModel
 @{
     ViewBag.Title = "Register";
 }
@@ -16,7 +16,7 @@
         <legend>Registration Form</legend>
         <ul>
             <li>
-                @Html.LabelFor(m => m.UserName)
+                @Html.LabelFor(m=>m.UserName)
                 @Html.TextBoxFor(m => m.UserName)
             </li>
             <li>
