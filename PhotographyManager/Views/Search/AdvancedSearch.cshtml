@@ -8,7 +8,7 @@
 <h2>AdvancedSearch</h2>
 
 <div class="well-lg">
-    <form method="post" enctype="multipart/form-data" action=@Url.Action("AdvancedSearchResult", "Home", new {id = Model.ID })>
+    <form method="post" enctype="multipart/form-data" action=@Url.Action("AdvancedSearchResult", "Search")>
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true)
         <fieldset>

@@ -23,7 +23,7 @@
         if (Model.Photo.ElementAt(i).Album.Where(album => album.Name == ViewBag.AlbumName).Count() != 0)
         {
             <figure style="display:inline-block">
-                <img src=@Url.Action("ShowMiniPhoto", "Home", new { id = Model.Photo.ElementAt(i).ID }) alt=""/>
+                <img src=@Url.Action("ShowMiniPhoto", "Photo", new { id = Model.Photo.ElementAt(i).ID }) alt=""/>
                 <figcaption style="border:none">
                     @Html.ActionLink("Delete Photo", "DeletePhotoFromAlbum", new { albumName = ViewBag.AlbumName, photoId = Model.Photo.ElementAt(i).ID }, null)
                 </figcaption>
@@ -38,7 +38,7 @@
         if (Model.Photo.ElementAt(i).Album.Where(album => album.Name == ViewBag.AlbumName).Count() == 0)
         {
             <figure style="display:inline-block; border:none">
-                <img src=@Url.Action("ShowMiniPhoto","Home", new {id=Model.Photo.ElementAt(i).ID}) alt=""/>
+                <img src=@Url.Action("ShowMiniPhoto","Photo", new {id=Model.Photo.ElementAt(i).ID}) alt=""/>
                 <figcaption style="border:none">
                 @Html.ActionLink("Add Photo", "AddPhotoToAlbum", new { albumName = ViewBag.AlbumName, photoId = Model.Photo.ElementAt(i).ID }, null)
                 </figcaption>

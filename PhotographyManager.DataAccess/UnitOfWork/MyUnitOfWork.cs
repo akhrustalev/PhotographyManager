@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using PhotographyManager.DataAccess.Repositories;
 using PhotographyManager.Model;
+using System.Data.SqlClient;
+
 
 namespace PhotographyManager.DataAccess.UnitOfWork
 {
@@ -44,6 +46,18 @@ namespace PhotographyManager.DataAccess.UnitOfWork
         public void Dispose()
         {
             if (context != null) context.Dispose();
+        }
+
+        public IEnumerable<Photo> SearchPhotos(string keyword)
+        {
+
+            return context.Database.SqlQuery<Photo>("SearchPhotos @KeyWord", new SqlParameter("KeyWord", keyword)).ToList();
+        }
+
+        public IEnumerable<Photo> AdvancedSearchPhotos(string name, string shootingPlace, DateTime shootingTime, string cameraModel, string diaphragm, string ISO, double shutterSpeed, double focalDistance, bool flash)
+        {
+            return context.Database.SqlQuery<Photo>("AdvancedSearchPhoto @name, @shootingPlace, @shootingTime, @cameraModel, @diaphragm, @ISO, @shutterSpeed,@focalDistance,@flash", new SqlParameter("name", name), new SqlParameter("shootingPlace", shootingPlace), new SqlParameter("shootingTime", shootingTime), new SqlParameter("cameraModel", cameraModel), new SqlParameter("diaphragm", diaphragm), new SqlParameter("ISO", ISO), new SqlParameter("shutterSpeed", shutterSpeed), new SqlParameter("focalDistance", focalDistance), new SqlParameter("flash", flash)).ToList();
+
         }
 
 

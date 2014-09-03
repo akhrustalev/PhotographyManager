@@ -18,11 +18,11 @@
                 <figure style="display:inline-block; border:none">
                 @if (Model.Users.GetAll()[i].Album.ElementAt(j).Photo.Count != 0)
                 {
-                    <img src=@Url.Action("ShowMiniPhoto", "Home", new { id = Model.Users.GetAll()[i].Album.ElementAt(j).Photo.ElementAt(0).ID }) alt=""/>
+                    <img src=@Url.Action("ShowMiniPhoto", "Photo", new { id = Model.Users.GetAll()[i].Album.ElementAt(j).Photo.ElementAt(0).ID }) alt=""/>
                 }
                 else
                 {<img src="~/Content/themes/base/images/ui-bg_flat_0_aaaaaa_40x100.png" alt="" style="height:200px; width:200px" /> }
-                    <figcaption style="border:none">@Html.ActionLink(Model.Users.GetAll()[i].Album.ElementAt(j).Name + "      ", "ObservePhotos", new { albumName = Model.Users.GetAll()[i].Album.ElementAt(j).Name }, null)</figcaption>
+                    <figcaption style="border:none">@Html.ActionLink(Model.Users.GetAll()[i].Album.ElementAt(j).Name + "      ", "ObservePhotos","Album", new { albumName = Model.Users.GetAll()[i].Album.ElementAt(j).Name }, null)</figcaption>
                 </figure>
            }
        }

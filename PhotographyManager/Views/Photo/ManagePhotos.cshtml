@@ -3,7 +3,7 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@*Управление фотографиями*@
+
 
 
 <!DOCTYPE html>
@@ -27,7 +27,7 @@
 <body>
     <div>
         <div class="well">
-            <form method="post" enctype="multipart/form-data" action=@Url.Action("Upload","Home")>
+            <form method="post" enctype="multipart/form-data" action=@Url.Action("Upload","Photo")>
                 <input id="OriginalLocation" type="file"
                        size="28" name="OriginalLocation" runat="server" class="btn btn-primary">
                 <INPUT type="submit" value="Upload" runat="server" id="Button1" class="btn btn-primary">
@@ -41,9 +41,9 @@
             for (int i = 0; i < count1; i++)
             {
                 <figure style="display:inline-block; border:none">
-                    <img src=@Url.Action("ShowMiniPhoto","Home", new {id=Model.Photo.ElementAt(i).ID}) alt=""/>
+                    <img src=@Url.Action("ShowMiniPhoto","Photo", new {id=Model.Photo.ElementAt(i).ID}) alt=""/>
                     <figcaption style="border:none">
-                        @Html.ActionLink("Edit Properties", "EditPhotosProperties", new { id = Model.Photo.ElementAt(i).ID })
+                        @Html.ActionLink("Edit Properties", "EditPhotosProperties","Photo", new { id = Model.Photo.ElementAt(i).ID },null)
                     </figcaption>
                 </figure>
 

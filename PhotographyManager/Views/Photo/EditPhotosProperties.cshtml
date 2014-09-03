@@ -10,7 +10,7 @@
 
 
 <div class="well-lg">
-    <form method ="post" enctype="multipart/form-data" action=@Url.Action("AddEditedProperties", "Home", new {id = Model.ID })>
+    <form method ="post" enctype="multipart/form-data" action=@Url.Action("AddEditedProperties", "Photo", new {id = Model.ID })>
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true)
         <fieldset>

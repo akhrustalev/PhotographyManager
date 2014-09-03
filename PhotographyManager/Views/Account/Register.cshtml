@@ -8,29 +8,33 @@
     <h2>Create a new account.</h2>
 </hgroup>
 
-@using (Html.BeginForm()) {
+<form action=@Url.Action("RegisterFreeUser","Account") method="post" novalidate="novalidate">
     @Html.AntiForgeryToken()
     @Html.ValidationSummary()
     <div class="well">
-    <fieldset>
-        <legend>Registration Form</legend>
-        <ul>
-            <li>
-                @Html.LabelFor(m=>m.UserName)
-                @Html.TextBoxFor(m => m.UserName)
-            </li>
-            <li>
-                @Html.LabelFor(m => m.Password)
-                @Html.PasswordFor(m => m.Password)
-            </li>
-            <li>
-                @Html.LabelFor(m => m.ConfirmPassword)
-                @Html.PasswordFor(m => m.ConfirmPassword)
-            </li>
-        </ul>
-        <input type="submit" value="Register As Free User" name="submitBtn" class="btn btn-primary btn-lg"/>
-        <input type="submit" value="Register As Paid User" name="submitBtn" class="btn btn-primary btn-lg">
-    </fieldset>
-        </div>
-}
+        <fieldset>
+            <legend>Registration Form</legend>
+            <ul>
+                <li>
+                    @Html.LabelFor(m => m.UserName)
+                    @Html.TextBoxFor(m => m.UserName)
+                </li>
+                <li>
+                    @Html.LabelFor(m => m.Password)
+                    @Html.PasswordFor(m => m.Password)
+                </li>
+                <li>
+                    @Html.LabelFor(m => m.ConfirmPassword)
+                    @Html.PasswordFor(m => m.ConfirmPassword)
+                </li>
+            </ul>
 
+
+            <input type="submit" value="Register As Free User" name="submitBtn" class="btn btn-primary btn-lg" onclick="location.href='@Url.Action("RegisterFreeUser","Account")'" />
+
+            <input type="submit" value="Register As Paid User" name="submitBtn" class="btn btn-primary btn-lg" onclick="location.href='@Url.Action("RegisterPaidUser","Account")'" />
+
+        </fieldset>
+    </div>
+
+</form>

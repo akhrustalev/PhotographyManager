@@ -16,11 +16,6 @@ namespace PhotographyManager.Controllers
     {
         private IUnitOfWork _unitOfWork;
         
-        public class temp
-        {
-            public int ID;
-            public string Name;
-        }
         
         public class parameters
         {
@@ -34,17 +29,15 @@ namespace PhotographyManager.Controllers
            _unitOfWork = uoW;
         }
 
-        [HttpGet]
-        public string Get(parameters id)
+        [HttpPost]
+        public string Get(int blockNumber, string albumName)
         {
             int BlockSize = 12;
-            List<Photo> photos = MyServices.GetBlockOfPhotos(_unitOfWork.Albums.GetByName(album => album.Name.Equals(id.AlbumName)).Photo.ToList(), id.BlockNumber, BlockSize);
-            List<temp> temps = new List<temp>();
+            List<Photo> photos = MyServices.GetBlockOfPhotos(_unitOfWork.Albums.GetByName(album => album.Name.Equals(albumName)).Photo.ToList(), blockNumber, BlockSize);
+            List<int> temps = new List<int>();
             foreach(Photo item in photos)
             {
-                temp t = new temp();
-                t.Name = item.Name;
-                t.ID = item.ID;
+                temps.Add(item.ID);
             }
             
             string result = System.Web.Helpers.Json.Encode(temps);

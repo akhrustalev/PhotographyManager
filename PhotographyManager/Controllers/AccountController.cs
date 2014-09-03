@@ -15,13 +15,10 @@ namespace PhotographyManager.Controllers
 {
     [Authorize]
     [InitializeSimpleMembership]
-    [Logging]
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
 
         #region Constructor
-
-        private IUnitOfWork _unitOfWork;
 
         public AccountController(IUnitOfWork uoW)
         {
@@ -71,7 +68,7 @@ namespace PhotographyManager.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(RegisterModel model)
+        public ActionResult RegisterFreeUser(RegisterModel model)
         {
             if (ModelState.IsValid)
             {
@@ -81,16 +78,39 @@ namespace PhotographyManager.Controllers
                       ModelState.AddModelError("", "User name already exists. Please enter a different user name.");
                       return View(model);
                   }
-                  if (Request.Form["submitBtn"] == "Register As Free User")
-                     user = new FreeUser { Name = model.UserName };
-                  else user = new PaidUser { Name=model.UserName};
+                   user = new FreeUser { Name = model.UserName };
                   _unitOfWork.Users.Add(user);
                   _unitOfWork.Commit();
                   WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
                   WebSecurity.Login(model.UserName, model.Password);
                   return RedirectToAction("MyHomePage", "Home", new { Id = user.ID });
             }
-            return View(model);
+            return View("Register",model);
         }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult RegisterPaidUser(RegisterModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = _unitOfWork.Users.GetByName(us => us.Name.Equals(model.UserName));
+                if (user != null)
+                {
+                    ModelState.AddModelError("", "User name already exists. Please enter a different user name.");
+                    return View(model);
+                }
+                user = new PaidUser { Name = model.UserName };
+                _unitOfWork.Users.Add(user);
+                _unitOfWork.Commit();
+                WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
+                WebSecurity.Login(model.UserName, model.Password);
+                return RedirectToAction("MyHomePage", "Home", new { Id = user.ID });
+            }
+            return View("Register",model);
+        }
+
+
     }
 }

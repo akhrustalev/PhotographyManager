@@ -1,0 +1,86 @@
+﻿@model  PhotographyManager.Model.Album
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ObservePhotos</title>
+    
+
+
+
+
+    
+
+
+</head>
+<body>
+    <div id="photosDiv">
+        @for (int i = 0; i < Model.Photo.Count&&i<4; i++)
+        {
+            <figure style="display:inline-block; border:none; vertical-align:top">
+                <img src=@Url.Action("ShowMiniPhoto", "Photo", new { id = Model.Photo.ElementAt(i).ID }) alt="" />
+                <figcaption style="border:none">
+                    @Model.Photo.ElementAt(i).Name
+                </figcaption>
+            </figure>
+            <br />
+        }
+    </div>
+
+
+</body>
+</html>
+
+@*<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>*@
+@*<script type="text/javascript">
+    var BlockNumber = 2;  //Infinate Scroll starts from second block
+    var inProgress = false;
+
+    $(window).scroll(function () {
+        if ($(window).scrollTop() == $(document).height() -
+        $(window).height() && !inProgress) {
+
+            inProgress = true;
+
+            $.post("@Url.RouteUrl("DefaultApi", new {controller="LoadingPhotos" })", {"blockNumber": BlockNumber,"albumName": "@Model.Name" },
+                    function (data) {
+
+                        BlockNumber = BlockNumber + 1;
+                        $("#photosDiv").append("<p>success</p>");
+                        inProgress = false;
+                    });
+        }
+    });
+</script>*@
+<script type="text/javascript">
+    $(document).ready(function () {
+        var BlockNumber = 2;  //Infinate Scroll starts from second block
+        var inProgress = false;
+        $(window).scroll(function () {
+            if ($(window).scrollTop() == $(document).height() -
+            $(window).height() && !inProgress) {
+
+                inProgress = true;
+
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.RouteUrl("DefaultApi", new { controller = "LoadingPhotos"})",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    data: { BlockNumber: BlockNumber, AlbumName: "@Model.Name" },
+                    success: function (res) {
+                        $("#photosDiv").append("<div>rakkkkkkkkkkkkk</div>")
+                    }
+                    
+
+                });
+            }
+        });
+    })
+</script>  
+

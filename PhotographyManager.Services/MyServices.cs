@@ -22,5 +22,6 @@ namespace PhotographyManager.Services
             return photos;
         }
 
+
     }
 }

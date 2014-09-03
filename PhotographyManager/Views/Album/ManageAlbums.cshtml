@@ -14,7 +14,7 @@
 <body>
     <div>
         <div class="well">
-            <form method="post" enctype="multipart/form-data" action=@Url.Action("AddAlbum","Home")>
+            <form method="post" enctype="multipart/form-data" action=@Url.Action("AddAlbum","Album")>
                 <INPUT type="submit" value="Add Album" runat="server" id="Button1" class="btn btn-primary">
             </form>
         </div>
@@ -29,7 +29,7 @@
                 <figure style="display:inline-block; border:none">
                 @if (Model.Album.ElementAt(i).Photo.Count != 0)
                 {
-                    <img src=@Url.Action("ShowMiniPhoto", "Home", new { id = Model.Album.ElementAt(i).Photo.ElementAt(0).ID }) alt=""/>
+                    <img src=@Url.Action("ShowMiniPhoto", "Photo", new { id = Model.Album.ElementAt(i).Photo.ElementAt(0).ID }) alt=""/>
                 }
                 else
                 {<img src="~/Content/themes/base/images/ui-bg_flat_0_aaaaaa_40x100.png" alt="" style="height:200px; width:200px" /> }

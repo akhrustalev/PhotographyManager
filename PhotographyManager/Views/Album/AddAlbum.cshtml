@@ -14,7 +14,7 @@
 </head>
 <body>
     <div>
-        <form method="post" enctype="multipart/form-data" action=@Url.Action("AddAlbumToUser","Home")>
+        <form method="post" enctype="multipart/form-data" action=@Url.Action("AddAlbumToUser","Album")>
             @Html.AntiForgeryToken()
             @Html.ValidationSummary(true)
             <ul>

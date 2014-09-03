@@ -213,8 +213,12 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AlbumController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\LoadingPhotosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PhotoController.cs" />
+    <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Filters\LoggingAttribute.cs" />
     <Compile Include="Global.asax.cs">
@@ -341,21 +345,20 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Home\ObservePhotos.cshtml" />
+    <Content Include="Views\Album\ObservePhotos.cshtml" />
     <Content Include="Views\Home\MyHomePage.cshtml" />
-    <Content Include="Views\Home\ManagePhotos.cshtml" />
-    <Content Include="Views\Home\ManageAlbums.cshtml" />
-    <Content Include="Views\Home\AddAlbum.cshtml" />
-    <Content Include="Views\Home\ManagePhotosInAlbum.cshtml" />
-    <Content Include="Views\Home\EditPhotosProperties.cshtml" />
-    <Content Include="Views\Home\SearchResult.cshtml" />
-    <Content Include="Views\Home\AdvancedSearch.cshtml" />
-    <Content Include="Views\Home\ErrorView.cshtml" />
+    <Content Include="Views\Photo\ManagePhotos.cshtml" />
+    <Content Include="Views\Album\ManageAlbums.cshtml" />
+    <Content Include="Views\Album\AddAlbum.cshtml" />
+    <Content Include="Views\Album\ManagePhotosInAlbum.cshtml" />
+    <Content Include="Views\Photo\EditPhotosProperties.cshtml" />
+    <Content Include="Views\Search\SearchResult.cshtml" />
+    <Content Include="Views\Search\AdvancedSearch.cshtml" />
+    <Content Include="Views\Shared\ErrorView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

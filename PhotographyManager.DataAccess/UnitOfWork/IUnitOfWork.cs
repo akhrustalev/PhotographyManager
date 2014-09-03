@@ -19,6 +19,10 @@ namespace PhotographyManager.DataAccess.UnitOfWork
         IRepository<Album> Albums { get; }
 
         IRepository<Photo> Photos{get; }
+
+        IEnumerable<Photo> SearchPhotos(string keyword);
+
+        IEnumerable<Photo> AdvancedSearchPhotos(string name, string shootingPlace, DateTime shootingTime, string cameraModel, string diaphragm, string ISO, double shutterSpeed, double focalDistance, bool flash);
         
     }
 }
