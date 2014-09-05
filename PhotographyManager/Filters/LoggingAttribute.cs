@@ -9,12 +9,11 @@ namespace PhotographyManager.Filters
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
     public class LoggingAttribute :FilterAttribute, IExceptionFilter
     {
-        //private log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-        private log4net.ILog log = log4net.LogManager.GetLogger("MyLogger");
+        private log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         public void OnException(ExceptionContext filterContext)
         {
             filterContext.ExceptionHandled = true;
-            log.Error(filterContext.Exception.Message);
+            log.Error(filterContext.Exception.Message,filterContext.Exception);
             filterContext.Result = new ViewResult { ViewName = "ErrorView" };  
         }
 

@@ -1,0 +1,1 @@
+2014-09-04 19:00:50,203 [9] ERROR PhotographyManager.Filters.LoggingAttribute [(null)] - Object reference not set to an instance of an object.

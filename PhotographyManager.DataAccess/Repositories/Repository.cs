@@ -59,7 +59,7 @@ namespace PhotographyManager.DataAccess.Repositories
         }
 
 
-        public List<TEntity> GetAll()
+        public List<TEntity> GetAll()///ienum
         {
             return dbSet.ToList();
         }

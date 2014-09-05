@@ -1,0 +1,7 @@
+log4net: log4net assembly [log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a]. Loaded from [C:\Users\akhrustalev\AppData\Local\Temp\Temporary ASP.NET Files\root\41ce5aeb\fbf0f7e6\assembly\dl3\e5cf375b\6646f4c0_22c1cf01\log4net.dll]. (.NET Runtime [4.0.30319.34014] on Microsoft Windows NT 6.2.9200.0)
+log4net: defaultRepositoryType [log4net.Repository.Hierarchy.Hierarchy]
+log4net: Creating repository for assembly [DotNetOpenAuth.Core, Version=4.1.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246]
+log4net: Assembly [DotNetOpenAuth.Core, Version=4.1.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246] Loaded From [C:\Users\akhrustalev\AppData\Local\Temp\Temporary ASP.NET Files\root\41ce5aeb\fbf0f7e6\assembly\dl3\bccee94b\c593274f_debdcf01\DotNetOpenAuth.Core.dll]
+log4net: Assembly [DotNetOpenAuth.Core, Version=4.1.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246] does not have a RepositoryAttribute specified.
+log4net: Assembly [DotNetOpenAuth.Core, Version=4.1.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246] using repository [log4net-default-repository] and repository type [log4net.Repository.Hierarchy.Hierarchy]
+log4net: Creating repository [log4net-default-repository] using type [log4net.Repository.Hierarchy.Hierarchy]

@@ -9,12 +9,14 @@ using PhotographyManager.DataAccess.Repositories;
 
 namespace PhotographyManager.Services
 {
-    public class MyServices
+    public class LoadingPhotosService
     {
         public static List<Photo> GetBlockOfPhotos(List<Photo> list, int blockNumber, int blockSize)
         {
             int startIndex = (blockNumber - 1) * blockSize;
-            List<Photo> photos;
+            List<Photo> photos=new List<Photo>();
+
+            if (startIndex > list.Count) return photos;
 
             if (list.Count - startIndex < blockSize) photos = list.GetRange(startIndex, list.Count - startIndex);
             else photos = list.GetRange(startIndex, blockSize);

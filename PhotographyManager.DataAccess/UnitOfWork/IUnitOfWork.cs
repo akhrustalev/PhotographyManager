@@ -22,7 +22,7 @@ namespace PhotographyManager.DataAccess.UnitOfWork
 
         IEnumerable<Photo> SearchPhotos(string keyword);
 
-        IEnumerable<Photo> AdvancedSearchPhotos(string name, string shootingPlace, DateTime shootingTime, string cameraModel, string diaphragm, string ISO, double shutterSpeed, double focalDistance, bool flash);
+        IEnumerable<Photo> AdvancedSearchPhotos(string name, string shootingPlace, DateTime? shotAfter, DateTime? shotBefore, string cameraModel, string diaphragm, string ISO, double? shutterSpeed, double? focalDistance, bool? flash);
         
     }
 }

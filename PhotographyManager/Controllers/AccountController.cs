@@ -5,7 +5,6 @@ using System.Transactions;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
-using DotNetOpenAuth.AspNet;
 using WebMatrix.WebData;
 using PhotographyManager.Filters;
 using PhotographyManager.DataAccess.UnitOfWork;
@@ -76,7 +75,7 @@ namespace PhotographyManager.Controllers
                if (user != null)
                   {
                       ModelState.AddModelError("", "User name already exists. Please enter a different user name.");
-                      return View(model);
+                      return View("Register");
                   }
                    user = new FreeUser { Name = model.UserName };
                   _unitOfWork.Users.Add(user);
@@ -114,3 +113,4 @@ namespace PhotographyManager.Controllers
 
     }
 }
+

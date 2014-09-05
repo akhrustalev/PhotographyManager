@@ -9,6 +9,7 @@ using System.Web.Routing;
 using System.Data.Entity;
 using PhotographyManager.DataAccess.UnitOfWork;
 using PhotographyManager.Model;
+[assembly: log4net.Config.XmlConfigurator(Watch = true)]
 
 namespace PhotographyManager
 {

@@ -28,7 +28,6 @@ namespace PhotographyManager.Controllers
         }
         public ActionResult Index()
         {
-            throw new Exception("da exception");
             return View("Index", _unitOfWork);
 
         }

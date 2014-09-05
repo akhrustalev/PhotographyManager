@@ -29,11 +29,11 @@ namespace PhotographyManager.Controllers
            _unitOfWork = uoW;
         }
 
-        [HttpPost]
-        public string Get(int blockNumber, string albumName)
+        [HttpGet]
+        public string GetLoadingPhotos(int blockNumber, string albumName)
         {
-            int BlockSize = 12;
-            List<Photo> photos = MyServices.GetBlockOfPhotos(_unitOfWork.Albums.GetByName(album => album.Name.Equals(albumName)).Photo.ToList(), blockNumber, BlockSize);
+            int BlockSize = 4;
+            List<Photo> photos = LoadingPhotosService.GetBlockOfPhotos(_unitOfWork.Albums.GetByName(album => album.Name.Equals(albumName)).Photo.ToList(), blockNumber, BlockSize);
             List<int> temps = new List<int>();
             foreach(Photo item in photos)
             {
@@ -42,8 +42,10 @@ namespace PhotographyManager.Controllers
             
             string result = System.Web.Helpers.Json.Encode(temps);
 
+
             return result;
         }
+
 
     }
 }

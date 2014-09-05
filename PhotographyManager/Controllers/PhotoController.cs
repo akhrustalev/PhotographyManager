@@ -104,6 +104,11 @@ namespace PhotographyManager.Controllers
             return result;
         }
 
+        public ActionResult ShowCurrentPhoto(int id)
+        {
+            return PartialView("CurrentPhoto",_unitOfWork.Photos.GetById(id));
+        }
+
         public ActionResult EditPhotosProperties(int id)
         {
             return View(_unitOfWork.Photos.GetById(id));

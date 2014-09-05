@@ -1,0 +1,23 @@
+﻿@model PhotographyManager.Model.Photo
+<a href="#@Model.ID.ToString()" data-toggle="modal">Show</a>
+<div id="@Model.ID.ToString()" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    </div>
+    <div class="modal-body" id="currentPhoto" style="height:1000px">
+        <img src=@Url.Action("ShowMiddlePhoto", "Photo", new { id = Model.ID }) alt="" style="vertical-align:middle" id="Image" />
+        <p class="text-center" style="font-family:'Times New Roman'; font-size:large">Name: @Model.Name</p>
+        <p class="text-center" style="font-family:'Times New Roman'; font-size:large">Shooting Place: @Model.ShootingPlace</p>
+        <p class="text-center" style="font-family:'Times New Roman'; font-size:large">Shooting Time: @Model.ShootingTime</p>
+        <p class="text-center" style="font-family:'Times New Roman'; font-size:large">Camera Model: @Model.CameraModel</p>
+        <p class="text-center" style="font-family:'Times New Roman'; font-size:large">Diaphragm: @Model.Diaphragm</p>
+        <p class="text-center" style="font-family:'Times New Roman'; font-size:large">ISO: @Model.ISO</p>
+        <p class="text-center" style="font-family:'Times New Roman'; font-size:large">Shutter Speed: @Model.ShutterSpeed</p>
+        <p class="text-center" style="font-family:'Times New Roman'; font-size:large">Focal Distance: @Model.FocalDistance</p>
+        <p class="text-center" style="font-family:'Times New Roman'; font-size:large">Flash: @Model.Flash</p>
+    </div>
+    <div class="modal-footer">
+        <a href="#@((Model.ID - 1).ToString())" class="btn btn-primary" style="float:left" data-dismiss="modal" data-toggle="modal">Previous</a>
+        <a href="#@((Model.ID + 1).ToString())" class="btn btn-primary" data-dismiss="modal" data-toggle="modal">Next</a>
+    </div>
+</div>

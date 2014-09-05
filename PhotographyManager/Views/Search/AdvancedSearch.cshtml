@@ -1,4 +1,4 @@
-﻿@model PhotographyManager.Model.User
+﻿@model PhotographyManager.Model.AdvancedSearchModel
 
 @{
     ViewBag.Title = "AdvancedSearch";
@@ -16,51 +16,60 @@
                 <li>
                     @Html.Label("Name")
                     <input type="text" name="Name" id="Name" />
-                    @Html.ValidationMessageFor(m => m.Photo.FirstOrDefault().Name)
+                    @Html.ValidationMessageFor(m => m.Name)
                 </li>
                 <li>
                     @Html.Label("ShootingPlace")
                     <input type="text" name="ShootingPlace" id="ShootingPlace" />
-                    @Html.ValidationMessageFor(m => m.Photo.FirstOrDefault().ShootingPlace)
+                    @Html.ValidationMessageFor(m => m.ShootingPlace)
                 </li>
                 <li>
-                    @Html.Label("ShootingTime")
-                    <div id="datetimepicker" class="input-append date" data-date="29-08-2014 21:05" data-date-format="dd-mm-yyyy hh:ii">
-                        <input type="text" id="ShootingTime" value="@DateTime.Now" name="ShootingTime">
+                    @Html.Label("ShotAfter")
+                    <div id="datetimepicker1" class="input-append date" data-date="29-08-2014 21:05" data-date-format="dd-mm-yyyy hh:ii">
+                        <input type="text" id="ShotAfter"  name="ShotAfter">
                         <span class="add-on"><i class="icon-th"></i></span>
                     </div>
 
-                    @Html.ValidationMessageFor(m => m.Photo.FirstOrDefault().ShootingTime)
+                    @Html.ValidationMessageFor(m => m.ShotAfter)
+                </li>
+                <li>
+                    @Html.Label("ShotBefore")
+                    <div id="datetimepicker2" class="input-append date" data-date="29-08-2014 21:05" data-date-format="dd-mm-yyyy hh:ii">
+                        <input type="text" id="ShotBefore"  name="ShotBefore">
+                        <span class="add-on"><i class="icon-th"></i></span>
+                    </div>
+
+                    @Html.ValidationMessageFor(m => m.ShotBefore)
                 </li>
                 <li>
                     @Html.Label("CameraModel")
                     <input type="text" name="CameraModel" id="CameraModel" />
-                    @Html.ValidationMessageFor(m => m.Photo.FirstOrDefault().CameraModel)
+                    @Html.ValidationMessageFor(m => m.CameraModel)
                 </li>
                 <li>
                     @Html.Label("FocalDistance")
-                    <input type="number" name="FocalDistance" value="0" id="FocalDistance"/>
-                    @Html.ValidationMessageFor(m => m.Photo.FirstOrDefault().FocalDistance)
+                    <input type="number" name="FocalDistance" id="FocalDistance"/>
+                    @Html.ValidationMessageFor(m => m.FocalDistance)
                 </li>
                 <li>
                     @Html.Label("ShutterSpeed")
-                    <input type="number" name="ShutterSpeed" value="0" id="ShutterSpeed" />
-                    @Html.ValidationMessageFor(m => m.Photo.FirstOrDefault().ShutterSpeed)
+                    <input type="number" name="ShutterSpeed" id="ShutterSpeed" />
+                    @Html.ValidationMessageFor(m => m.ShutterSpeed)
                 </li>
                 <li>
                     @Html.Label("ISO")
                     <input type="text" name="ISO" id="ISO" />
-                    @Html.ValidationMessageFor(m => m.Photo.FirstOrDefault().ISO)
+                    @Html.ValidationMessageFor(m => m.ISO)
                 </li>
                 <li>
                     @Html.Label("Diaphragm")
                     <input type="text" name="Diaphragm" id="Diaphragm" />
-                    @Html.ValidationMessageFor(m => m.Photo.FirstOrDefault().Diaphragm)
+                    @Html.ValidationMessageFor(m => m.Diaphragm)
                 </li>
                 <li>
                     @Html.Label("Flash")
                     <input type="checkbox" name="Flash" id="Flash"/>
-                    @Html.ValidationMessageFor(m => m.Photo.FirstOrDefault().Flash)
+                    @Html.ValidationMessageFor(m => m.Flash)
                 </li>
 
             </ul>
@@ -74,7 +83,13 @@
 
 <script type="text/javascript">
 
-    $('#datetimepicker').datetimepicker({
+    $('#datetimepicker1').datetimepicker({
+        language: 'en'
+    });
+</script>
+<script type="text/javascript">
+
+    $('#datetimepicker2').datetimepicker({
         language: 'en'
     });
 </script>

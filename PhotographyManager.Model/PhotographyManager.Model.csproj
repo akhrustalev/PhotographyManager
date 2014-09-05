@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdvancedSearchModel\AdvancedSearchModel.cs" />
     <Compile Include="Entities\Album.cs" />
     <Compile Include="Entities\FreeUser.cs" />
     <Compile Include="Entities\Log.cs" />
@@ -62,7 +63,6 @@
     <Compile Include="Entities\UserProfile.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

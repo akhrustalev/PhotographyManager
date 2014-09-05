@@ -28,43 +28,14 @@ namespace PhotographyManager.Controllers
 
         public ActionResult AdvancedSearch()
         {
-            return View("AdvancedSearch", _unitOfWork.Users.GetById((int)Membership.GetUser().ProviderUserKey));
+            return View("AdvancedSearch");
         }
 
-        public ActionResult AdvancedSearchResult()
+        public ActionResult AdvancedSearchResult(AdvancedSearchModel model)
         {
-            string name = String.Format(Request.Form["Name"]);
-            string shootingPlace = String.Format(Request.Form["ShootingPlace"]);
-            DateTime shootingTime = DateTime.Now;
-            if (String.Format(Request.Form["ShootingTime"]) != "")
-            {
-                shootingTime = DateTime.Parse(String.Format(Request.Form["ShootingTime"]));
-            }
 
-            string cameraModel = String.Format(Request.Form["CameraModel"]);
-            string diaphragm = String.Format(Request.Form["Diaphragm"]);
-            string ISO = String.Format(Request.Form["ISO"]);
-            double focalDistance = 0;
-            if (!double.TryParse(Request.Form["FocalDistance"], NumberStyles.Float, CultureInfo.InvariantCulture, out focalDistance))
-            {
-                focalDistance = 0;
-            }
-            double shutterSpeed = 0;
-            if (!double.TryParse(Request.Form["ShutterSpeed"], NumberStyles.Float, CultureInfo.InvariantCulture, out shutterSpeed))
-            {
-                shutterSpeed = 0;
-            }
-            bool flash;
-            if (Request.Form["Flash"] != null && Request.Form["Flash"] == "on")
-            {
-                flash = true;
-            }
-            else
-            {
-                flash = false;
-            }
-            List<Photo> searchResult = new List<Photo>();
-            //List<Photo> searchResult = _unitOfWork.Photos.AdvancedSearch(name,shootingPlace,shootingTime,cameraModel,diaphragm,ISO,shutterSpeed,focalDistance,flash);
+            
+            List<Photo> searchResult = (List<Photo>)_unitOfWork.AdvancedSearchPhotos((model.Name == null) ? "" : model.Name, (model.ShootingPlace == null) ? "" : model.ShootingPlace, model.ShotAfter, model.ShotBefore, (model.CameraModel == null) ? "" : model.CameraModel, (model.Diaphragm == null) ? "" : model.Diaphragm, (model.ISO == null) ? "" : model.ISO, model.ShutterSpeed, model.FocalDistance, model.Flash);
             return View("SearchResult", searchResult);
         }
 
