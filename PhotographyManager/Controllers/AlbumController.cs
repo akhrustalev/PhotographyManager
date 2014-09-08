@@ -12,9 +12,8 @@ namespace PhotographyManager.Controllers
 {
     public class AlbumController : BaseController
     {
-        public AlbumController(IUnitOfWork uoW)
+        public AlbumController(IUnitOfWork unitOfWork):base(unitOfWork)
         {
-           _unitOfWork = uoW;
         }
 
         public ActionResult ManageAlbums()
@@ -74,7 +73,6 @@ namespace PhotographyManager.Controllers
             _unitOfWork.Users.GetById((int)Membership.GetUser().ProviderUserKey).Album.Where(album => album.Name.Equals(albumName)).First().Photo.Remove(_unitOfWork.Users.GetById((int)Membership.GetUser().ProviderUserKey).Photo.Where(photo => photo.ID == photoId).First());
             _unitOfWork.Commit();
             return View("ManagePhotosInAlbum", _unitOfWork.Users.GetById((int)Membership.GetUser().ProviderUserKey));
-
         }
 
         public ActionResult AddPhotoToAlbum(string albumName, int photoId)
@@ -84,6 +82,5 @@ namespace PhotographyManager.Controllers
             _unitOfWork.Commit();
             return View("ManagePhotosInAlbum", _unitOfWork.Users.GetById((int)Membership.GetUser().ProviderUserKey));
         }
-
     }
 }

@@ -4,7 +4,6 @@ namespace PhotographyManager.Model
     using System.Data.Entity;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
-    using System.Data.Entity.Infrastructure;
 
     public partial class PhotographyManagerContext : DbContext
     {
@@ -15,6 +14,7 @@ namespace PhotographyManager.Model
 
         public virtual DbSet<Album> Album { get; set; }
         public virtual DbSet<Photo> Photo { get; set; }
+        public virtual DbSet<PhotoImage> PhotoImage { get; set; }
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<Log> Log { get; set; }
 
@@ -45,6 +45,10 @@ namespace PhotographyManager.Model
                 .Property(e => e.Diaphragm)
                 .IsUnicode(false);
 
+            modelBuilder.Entity<Photo>()
+                .HasOptional(e => e.Image)
+                .WithRequired(e => e.Photo);
+
             modelBuilder.Entity<User>()
                 .Property(e => e.Name)
                 .IsUnicode(false);
@@ -53,6 +57,9 @@ namespace PhotographyManager.Model
                 .HasMany(e => e.Album)
                 .WithRequired(e => e.User)
                 .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<User>()
+                .HasMany(e => e.Photo);
 
             modelBuilder.Entity<Log>()
                 .Property(e => e.Thread)
@@ -73,7 +80,6 @@ namespace PhotographyManager.Model
             modelBuilder.Entity<Log>()
                 .Property(e => e.Exception)
                 .IsUnicode(false);
-            modelBuilder.Conventions.Remove<IncludeMetadataConvention>();
         }
     }
 }

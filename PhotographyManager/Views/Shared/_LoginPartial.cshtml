@@ -1,5 +1,4 @@
-﻿
-<div class="btn-group pull-right">
+﻿<div class="btn-group pull-right">
       @if (Request.IsAuthenticated)
      {
            using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" })) {
@@ -17,5 +16,4 @@
              <li>@Html.ActionLink("Log in", "Login", "Account")</li>
          </ul>
      }
-
 </div>

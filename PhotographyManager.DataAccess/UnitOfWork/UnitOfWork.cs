@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 using PhotographyManager.DataAccess.Repositories;
 using PhotographyManager.Model;
 using System.Data.SqlClient;
+using System.Data.Entity.Validation;
 
 
 namespace PhotographyManager.DataAccess.UnitOfWork
 {
-    public class MyUnitOfWork : PhotographyManagerContext, IUnitOfWork
+    public class UnitOfWork : PhotographyManagerContext, IUnitOfWork
     {
         private  readonly PhotographyManagerContext context = new PhotographyManagerContext();
 
@@ -50,13 +51,11 @@ namespace PhotographyManager.DataAccess.UnitOfWork
 
         public IEnumerable<Photo> SearchPhotos(string keyword)
         {
-
             return context.Database.SqlQuery<Photo>("SearchPhotos @KeyWord", new SqlParameter("KeyWord", keyword)).ToList();
         }
 
         public IEnumerable<Photo> AdvancedSearchPhotos(string name, string shootingPlace, DateTime? shotAfter,DateTime? shotBefore, string cameraModel, string diaphragm, string ISO, double? shutterSpeed, double? focalDistance, bool? flash)
         {
-
             SqlParameter shotAfterParam = new SqlParameter();
             SqlParameter shotBeforeParam = new SqlParameter();
             SqlParameter shutterSpeedParam = new SqlParameter();
@@ -113,10 +112,6 @@ namespace PhotographyManager.DataAccess.UnitOfWork
                 flashParam = new SqlParameter("flash", param);
             }
             return context.Database.SqlQuery<Photo>("AdvancedSearchPhoto @name, @shootingPlace, @shotAfter,@shotBefore, @cameraModel, @diaphragm, @ISO, @shutterSpeed,@focalDistance,@flash", new SqlParameter("name", name), new SqlParameter("shootingPlace", shootingPlace), shotAfterParam,shotBeforeParam, new SqlParameter("cameraModel", cameraModel), new SqlParameter("diaphragm", diaphragm), new SqlParameter("ISO", ISO), shutterSpeedParam, focalDistanceParam, flashParam).ToList();
-
         }
-
-
-
     }
 }

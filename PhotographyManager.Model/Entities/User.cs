@@ -12,6 +12,7 @@ namespace PhotographyManager.Model
         public User()
         {
             Album = new HashSet<Album>();
+            Photo = new HashSet<Photo>();
         }
 
         public int ID { get; set; }

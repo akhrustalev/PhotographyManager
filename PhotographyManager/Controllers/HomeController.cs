@@ -20,23 +20,16 @@ namespace PhotographyManager.Controllers
 {
     public class HomeController : BaseController
     {
-
-        public HomeController(IUnitOfWork uoW)
+        public HomeController(IUnitOfWork unitOfWork):base(unitOfWork)
         {
-            
-            _unitOfWork = uoW;
         }
         public ActionResult Index()
         {
             return View("Index", _unitOfWork);
-
         }
-
         public ActionResult MyHomePage()
         {
             return View(_unitOfWork.Users.GetById((int)Membership.GetUser().ProviderUserKey));
         }
-
-
     }
 }

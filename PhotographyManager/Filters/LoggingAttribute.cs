@@ -16,6 +16,5 @@ namespace PhotographyManager.Filters
             log.Error(filterContext.Exception.Message,filterContext.Exception);
             filterContext.Result = new ViewResult { ViewName = "ErrorView" };  
         }
-
     }
 }

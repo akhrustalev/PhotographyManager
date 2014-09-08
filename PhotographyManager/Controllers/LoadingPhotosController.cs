@@ -15,37 +15,23 @@ namespace PhotographyManager.Controllers
     public class LoadingPhotosController : ApiController
     {
         private IUnitOfWork _unitOfWork;
-        
-        
-        public class parameters
-        {
-            public int BlockNumber { get; set; }
-            public string AlbumName { get; set; }
-        }
 
-
-        public LoadingPhotosController(IUnitOfWork uoW)
+        public LoadingPhotosController(IUnitOfWork unitOfWork)
         {
-           _unitOfWork = uoW;
+           _unitOfWork = unitOfWork;
         }
 
         [HttpGet]
-        public string GetLoadingPhotos(int blockNumber, string albumName)
+        public List<int> GetLoadingPhotos(int blockNumber, string albumName)
         {
             int BlockSize = 4;
-            List<Photo> photos = LoadingPhotosService.GetBlockOfPhotos(_unitOfWork.Albums.GetByName(album => album.Name.Equals(albumName)).Photo.ToList(), blockNumber, BlockSize);
-            List<int> temps = new List<int>();
+            List<Photo> photos = PhotosService.GetBlockOfPhotos(_unitOfWork.Albums.GetByName(album => album.Name.Equals(albumName)).Photo.ToList(), blockNumber, BlockSize);
+            List<int> list = new List<int>();
             foreach(Photo item in photos)
             {
-                temps.Add(item.ID);
+                list.Add(item.ID);
             }
-            
-            string result = System.Web.Helpers.Json.Encode(temps);
-
-
-            return result;
+            return list ;
         }
-
-
     }
 }

@@ -16,7 +16,6 @@ namespace PhotographyManager.DataAccess.Repositories
         IQueryable<TEntity> GetMany(Expression<Func<TEntity, bool>> filter);
         TEntity GetById(int id);
         TEntity GetByName(Expression<Func<TEntity, bool>> filter);
-        List<TEntity> GetAll();
-
+        IEnumerable<TEntity> GetAll();
     }
 }

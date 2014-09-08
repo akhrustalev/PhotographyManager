@@ -13,5 +13,9 @@ namespace PhotographyManager.Controllers
     {
         protected IUnitOfWork _unitOfWork;
 
+        public BaseController(IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+        }
     }
 }

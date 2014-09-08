@@ -18,14 +18,11 @@ namespace PhotographyManager.DataAccess.Repositories
         PhotographyManagerContext context;
         DbSet<TEntity> dbSet;
 
-
-
         public Repository(PhotographyManagerContext _context)
         {
             context = _context;
             dbSet = context.Set<TEntity>();
         }
-
 
         public virtual void Add(TEntity item)
         {
@@ -58,12 +55,9 @@ namespace PhotographyManager.DataAccess.Repositories
             return dbSet.Where(filter).FirstOrDefault();
         }
 
-
-        public List<TEntity> GetAll()///ienum
+        public IEnumerable<TEntity> GetAll()
         {
-            return dbSet.ToList();
-        }
-        
+            return dbSet;
+        }       
     }
-
 }

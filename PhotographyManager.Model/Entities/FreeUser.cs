@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PhotographyManager.Model
 {
-  public  class FreeUser: User
+    public class FreeUser: User
     {
     }
 }

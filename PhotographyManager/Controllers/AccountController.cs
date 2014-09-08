@@ -19,9 +19,8 @@ namespace PhotographyManager.Controllers
 
         #region Constructor
 
-        public AccountController(IUnitOfWork uoW)
+        public AccountController(IUnitOfWork unitOfWork):base(unitOfWork)
         {
-            _unitOfWork = uoW;
         }
 
         #endregion
@@ -109,8 +108,6 @@ namespace PhotographyManager.Controllers
             }
             return View("Register",model);
         }
-
-
     }
 }
 

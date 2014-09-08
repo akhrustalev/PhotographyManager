@@ -3,10 +3,9 @@
 
 
 @{
-    ViewBag.Title = "EditPhotosProperties";
+    ViewBag.Title = "Edit Photos Properties";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 
 
 <div class="well-lg">
@@ -31,7 +30,6 @@
                         <input type="text" value="@Model.ShootingTime" id="ShootingTime" name="ShootingTime">
                         <span class="add-on"><i class="icon-th"></i></span>
                     </div>
-
                     @Html.ValidationMessageFor(m => m.ShootingTime)
                 </li>
                 <li>
@@ -60,18 +58,14 @@
                     @Html.ValidationMessageFor(m => m.Diaphragm)
                 </li>
                 <li>
-                    @Html.LabelFor(m => m.Flash, new { @class = "checkbox" })+
+                    @Html.LabelFor(m => m.Flash, new { @class = "checkbox" })
                     @Html.CheckBoxFor(m => m.Flash, new {@checked=Model.Flash })
                 </li>
-
             </ul>
             <input type="submit" value="Edit" class="btn btn-primary btn-lg" />
         </fieldset>
     </form>
-
 </div>
-
-
 
 <script type="text/javascript">
 

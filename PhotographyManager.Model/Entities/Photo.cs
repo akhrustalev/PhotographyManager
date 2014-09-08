@@ -19,11 +19,7 @@ namespace PhotographyManager.Model
         [StringLength(50)]
         public string Name { get; set; }
 
-        public byte[] Image { get; set; }
-
-        public byte[] MiniImage { get; set; }
-
-        public byte[] MiddleImage { get; set; }
+        public PhotoImage Image { get; set; }
 
         public DateTime? ShootingTime { get; set; }
 
@@ -35,7 +31,7 @@ namespace PhotographyManager.Model
         [StringLength(100)]
         public string ISO { get; set; }
 
-        [MaxLength(100)]
+        [StringLength(100)]
         public string CameraModel { get; set; }
 
         [StringLength(100)]
@@ -44,6 +40,10 @@ namespace PhotographyManager.Model
         public double? FocalDistance { get; set; }
 
         public bool Flash { get; set; }
+
+        public int UserID { get; set; }
+
+        public virtual User User { get; set; }
 
         public virtual ICollection<Album> Album { get; set; }
     }

@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>AdvancedSearch</h2>
+<h2>Advanced Search</h2>
 
 <div class="well-lg">
     <form method="post" enctype="multipart/form-data" action=@Url.Action("AdvancedSearchResult", "Search")>
@@ -29,7 +29,6 @@
                         <input type="text" id="ShotAfter"  name="ShotAfter">
                         <span class="add-on"><i class="icon-th"></i></span>
                     </div>
-
                     @Html.ValidationMessageFor(m => m.ShotAfter)
                 </li>
                 <li>
@@ -38,7 +37,6 @@
                         <input type="text" id="ShotBefore"  name="ShotBefore">
                         <span class="add-on"><i class="icon-th"></i></span>
                     </div>
-
                     @Html.ValidationMessageFor(m => m.ShotBefore)
                 </li>
                 <li>
@@ -71,14 +69,11 @@
                     <input type="checkbox" name="Flash" id="Flash"/>
                     @Html.ValidationMessageFor(m => m.Flash)
                 </li>
-
             </ul>
             <input type="submit" value="Search" class="btn btn-primary btn-lg" />
         </fieldset>
     </form>
-
 </div>
-
 
 
 <script type="text/javascript">
