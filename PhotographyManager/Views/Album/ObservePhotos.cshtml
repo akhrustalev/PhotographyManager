@@ -12,14 +12,13 @@
     
     <script type="text/javascript">
     $(document).ready(function () {
-        var BlockNumber = 3;
+        var BlockNumber = 2;
         var inProgress = false;
         $(window).scroll(function () {
             if ($(window).scrollTop() == $(document).height() -
             $(window).height() && !inProgress) {
                 event.preventDefault();
                 inProgress = true;
-
                 $.ajax({
                     type: "GET",
                     // url: "http://localhost:6783/api/LoadingPhotos",
@@ -29,9 +28,11 @@
                     data: { BlockNumber: BlockNumber, AlbumName: "@Model.Name" },
                     success: function (res) {
                         BlockNumber = BlockNumber + 1;
+                        var i = 0;
                         for (var key in res) {
+                            i++;
                             var url1 = "@Url.Action("ShowMiniPhoto","Photo")" + "/" + res[key];
-                            var url2 = "@Url.Action("ShowCurrentPhoto","Photo")" + "/" + res[key];
+                            var url2 = "@Url.Action("ShowCurrentPhoto","Photo")" + "/" + res[key]+"?ind="+(BlockNumber-1)*4+i;
                             $.ajax({
                                  url: url2,
                                  type: "GET",
@@ -49,12 +50,12 @@
 </head>
 <body>
     <div id="photosDiv">
-        @for (int i = 0; i < Model.Photo.Count&&i<8; i++)
+        @for (int i = 0; i < Model.Photo.Count&&i<4; i++)
         {
             <figure style="display:inline-block; border:none; vertical-align:top">
                 <img src=@Url.Action("ShowMiniPhoto", "Photo", new { id = Model.Photo.ElementAt(i).ID }) alt=""/>
                 <figcaption style="border:none">
-                    @Html.Action("ShowCurrentPhoto", "Photo", new {id = Model.Photo.ElementAt(i).ID })
+                    @Html.Action("ShowCurrentPhoto", "Photo", new {id = Model.Photo.ElementAt(i).ID, ind = i })
                 </figcaption>
             </figure>
          <br />

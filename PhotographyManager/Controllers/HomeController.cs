@@ -25,7 +25,7 @@ namespace PhotographyManager.Controllers
         }
         public ActionResult Index()
         {
-            return View("Index", _unitOfWork);
+            return View("Index");
         }
         public ActionResult MyHomePage()
         {

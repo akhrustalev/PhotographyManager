@@ -7,7 +7,7 @@ namespace PhotographyManager.Model
     using System.Data.Entity.Spatial;
 
     [Table("Album")]
-    public partial class Album
+    public partial class Album:IEntity
     {
         public Album()
         {

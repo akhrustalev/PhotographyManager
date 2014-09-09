@@ -25,7 +25,7 @@ namespace PhotographyManager.Controllers
         [HttpGet]
         public ActionResult ObservePhotos(string albumName)
         {
-            return View(_unitOfWork.Albums.GetByName(album => album.Name.Equals(albumName)));
+            return View(_unitOfWork.Albums.GetAll().Where(a=>a.Name.Equals(albumName)).FirstOrDefault());
         }
         
         public ActionResult AddAlbum()
@@ -49,7 +49,7 @@ namespace PhotographyManager.Controllers
             album.Name = String.Format(Request.Form["Name"]);
             album.Discription = String.Format(Request.Form["Discription"]);
 
-            if (_unitOfWork.Albums.GetByName(a => a.Name.Equals(album.Name)) != null)
+            if (_unitOfWork.Albums.GetAll().Where(a => a.Name.Equals(album.Name)).FirstOrDefault() != null)
             {
                 ModelState.AddModelError("", "Album's name already exists. Please enter another name");
                 return View("AddAlbum");
@@ -63,12 +63,16 @@ namespace PhotographyManager.Controllers
 
         public ActionResult ManagePhotosInAlbum(string albumName)
         {
+            if (_unitOfWork.Users.GetById((int)Membership.GetUser().ProviderUserKey).Album.Where(album => album.Name.Equals(albumName)).FirstOrDefault() == null)
+                return View("Error");
             ViewBag.AlbumName = albumName;
             return View("ManagePhotosInAlbum", _unitOfWork.Users.GetById((int)Membership.GetUser().ProviderUserKey));
         }
 
         public ActionResult DeletePhotoFromAlbum(string albumName, int photoId)
         {
+            if (_unitOfWork.Users.GetById((int)Membership.GetUser().ProviderUserKey).Album.Where(album => album.Name.Equals(albumName)).FirstOrDefault() == null)
+                return View("Error");
             ViewBag.AlbumName = albumName;
             _unitOfWork.Users.GetById((int)Membership.GetUser().ProviderUserKey).Album.Where(album => album.Name.Equals(albumName)).First().Photo.Remove(_unitOfWork.Users.GetById((int)Membership.GetUser().ProviderUserKey).Photo.Where(photo => photo.ID == photoId).First());
             _unitOfWork.Commit();
@@ -77,6 +81,8 @@ namespace PhotographyManager.Controllers
 
         public ActionResult AddPhotoToAlbum(string albumName, int photoId)
         {
+            if (_unitOfWork.Users.GetById((int)Membership.GetUser().ProviderUserKey).Album.Where(album => album.Name.Equals(albumName)).FirstOrDefault() == null)
+                return View("Error");
             ViewBag.AlbumName = albumName;
             _unitOfWork.Users.GetById((int)Membership.GetUser().ProviderUserKey).Album.Where(album => album.Name.Equals(albumName)).First().Photo.Add(_unitOfWork.Users.GetById((int)Membership.GetUser().ProviderUserKey).Photo.Where(photo => photo.ID == photoId).First());
             _unitOfWork.Commit();

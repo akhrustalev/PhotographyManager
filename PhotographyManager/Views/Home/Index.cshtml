@@ -1,33 +1,10 @@
-﻿@model PhotographyManager.DataAccess.UnitOfWork.UnitOfWork
-
-@{
+﻿@{
     ViewBag.Title = "Index Page";
 }
-
-<h3 style="color:white">Users' albums:</h3>
-<div class="row">
-@using (Html.BeginForm())
-{
-    for (int i = 0; i < Model.Users.GetAll().ToList().Count; i++) 
-    {
-        if (Model.Users.GetAll().ElementAt(i).Album.Count != 0) 
-        { 
-        <p>@Html.Label(Model.Users.GetAll().ToList()[i].Name, new { @class = "label label-success" })</p>
-            for (int j = 0; j < Model.Users.GetAll().ToList()[i].Album.Count; j++) 
-           { 
-                <figure style="display:inline-block; border:none">
-                @if (Model.Users.GetAll().ToList()[i].Album.ElementAt(j).Photo.Count != 0)
-                {
-                    <img src=@Url.Action("ShowMiniPhoto", "Photo", new { id = Model.Users.GetAll().ToList()[i].Album.ElementAt(j).Photo.ElementAt(0).ID }) alt=""/>
-                }
-                else
-                {<img src="~/Content/themes/base/images/ui-bg_flat_0_aaaaaa_40x100.png" alt="" style="height:200px; width:200px" /> }
-                    <figcaption style="border:none">@Html.ActionLink(Model.Users.GetAll().ToList()[i].Album.ElementAt(j).Name + "      ", "ObservePhotos", "Album", new { albumName = Model.Users.GetAll().ToList()[i].Album.ElementAt(j).Name }, null)</figcaption>
-                </figure>
-           }
-       }         
-    }        
-}
+<div>
+<h3 class="text-center"  style="color:#444; font:900">Welcome To Photography Manager! Please register or login</h3>
+    @Html.Partial("Login")
+    <p>Don't have an account yet? Register @Html.ActionLink("Here", "Register","Account")</p>
 </div>
 
 

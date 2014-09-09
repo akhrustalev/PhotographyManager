@@ -12,7 +12,6 @@
     <title>Home Page</title>
 </head>
 <body>
-    <h3>@Model.Name</h3>
     <div class="well">
         <form method ="post" id="searchForm" enctype="multipart/form-data" action=@Url.Action("Search","Search")>
             <input type="text" id="SearchText" name="SearchText" />
@@ -24,7 +23,8 @@
         </form>
 </div>
     <br/>
-    <h1 class="text-success">My Albums</h1>
+    @if (Model.Album.Count > 0) { 
+    <h1 class="text-center">My Albums</h1>
     <br />
     <div>
         @using (Html.BeginForm())
@@ -43,6 +43,7 @@
         }
         <br/>        
     </div>
+    }
 </body>
 </html>
 

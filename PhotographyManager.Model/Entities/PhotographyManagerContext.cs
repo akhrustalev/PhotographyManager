@@ -13,10 +13,10 @@ namespace PhotographyManager.Model
         }
 
         public virtual DbSet<Album> Album { get; set; }
+        public virtual DbSet<Log> Log { get; set; }
         public virtual DbSet<Photo> Photo { get; set; }
         public virtual DbSet<PhotoImage> PhotoImage { get; set; }
         public virtual DbSet<User> User { get; set; }
-        public virtual DbSet<Log> Log { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -28,6 +28,26 @@ namespace PhotographyManager.Model
                 .HasMany(e => e.Photo)
                 .WithMany(e => e.Album)
                 .Map(m => m.ToTable("Album2Photo").MapLeftKey("AlbumID").MapRightKey("PhotoID"));
+
+            modelBuilder.Entity<Log>()
+                .Property(e => e.Thread)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Log>()
+                .Property(e => e.Level)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Log>()
+                .Property(e => e.Logger)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Log>()
+                .Property(e => e.Message)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Log>()
+                .Property(e => e.Exception)
+                .IsUnicode(false);
 
             modelBuilder.Entity<Photo>()
                 .Property(e => e.Name)
@@ -57,29 +77,6 @@ namespace PhotographyManager.Model
                 .HasMany(e => e.Album)
                 .WithRequired(e => e.User)
                 .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<User>()
-                .HasMany(e => e.Photo);
-
-            modelBuilder.Entity<Log>()
-                .Property(e => e.Thread)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Log>()
-                .Property(e => e.Level)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Log>()
-                .Property(e => e.Logger)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Log>()
-                .Property(e => e.Message)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Log>()
-                .Property(e => e.Exception)
-                .IsUnicode(false);
         }
     }
 }

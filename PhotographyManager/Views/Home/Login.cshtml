@@ -1,0 +1,30 @@
+﻿@model PhotographyManager.Model.LoginModel
+<section id="loginForm">
+    <form method="post" action=@Url.Action("Login", "Account")>
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+        <div class="well" style="align-items:center">
+            <h2 class="text-center" style="color:#444">Use a local account to log in.</h2>
+            <fieldset>
+                <ul>
+                    <li>
+                        @Html.LabelFor(m => m.UserName)
+                        @Html.TextBoxFor(m => m.UserName)
+                        @Html.ValidationMessageFor(m => m.UserName)
+                    </li>
+                    <li>
+                        @Html.LabelFor(m => m.Password)
+                        @Html.PasswordFor(m => m.Password)
+                        @Html.ValidationMessageFor(m => m.Password)
+                    </li>
+                    <li>
+                        @Html.CheckBoxFor(m => m.RememberMe)
+                        @Html.LabelFor(m => m.RememberMe, new { @class = "checkbox" })
+                    </li>
+                </ul>
+                <input type="submit" value="Log in" class="btn btn-primary btn-lg" />
+            </fieldset>
+        </div>
+        </form>
+</section>
+

@@ -25,26 +25,18 @@ namespace PhotographyManager.Controllers
 
         #endregion
 
-        [AllowAnonymous]
-        public ActionResult Login(string returnUrl)
-        {
-            ViewBag.ReturnUrl = returnUrl;
-            return View();
-        }
-
-
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(LoginModel model, string returnUrl)
+        public ActionResult Login(LoginModel model)
         {
             if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
             {
-                return RedirectToAction("MyHomePage", "Home", new { Id = _unitOfWork.Users.GetByName(user =>user.Name.Equals(model.UserName)).ID });
+                return RedirectToAction("MyHomePage", "Home");
             }
 
             ModelState.AddModelError("", "The user name or password provided is incorrect.");
-            return View(model);
+            return RedirectToAction("Index","Home");
         }
 
 
@@ -70,7 +62,7 @@ namespace PhotographyManager.Controllers
         {
             if (ModelState.IsValid)
             {
-               var user = _unitOfWork.Users.GetByName(us=>us.Name.Equals(model.UserName));
+               var user = _unitOfWork.Users.GetAll().Where(us=>us.Name.Equals(model.UserName)).FirstOrDefault();
                if (user != null)
                   {
                       ModelState.AddModelError("", "User name already exists. Please enter a different user name.");
@@ -93,7 +85,7 @@ namespace PhotographyManager.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = _unitOfWork.Users.GetByName(us => us.Name.Equals(model.UserName));
+                var user = _unitOfWork.Users.GetAll().Where(us => us.Name.Equals(model.UserName)).FirstOrDefault();
                 if (user != null)
                 {
                     ModelState.AddModelError("", "User name already exists. Please enter a different user name.");

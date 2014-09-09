@@ -7,7 +7,7 @@ namespace PhotographyManager.Model
     using System.Data.Entity.Spatial;
 
     [Table("Photo")]
-    public partial class Photo
+    public partial class Photo:IEntity
     {
         public Photo()
         {
@@ -18,8 +18,6 @@ namespace PhotographyManager.Model
 
         [StringLength(50)]
         public string Name { get; set; }
-
-        public PhotoImage Image { get; set; }
 
         public DateTime? ShootingTime { get; set; }
 
@@ -44,6 +42,8 @@ namespace PhotographyManager.Model
         public int UserID { get; set; }
 
         public virtual User User { get; set; }
+
+        public virtual PhotoImage Image { get; set; }
 
         public virtual ICollection<Album> Album { get; set; }
     }

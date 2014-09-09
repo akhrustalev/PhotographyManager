@@ -1,19 +1,9 @@
 ﻿<div class="btn-group pull-right">
       @if (Request.IsAuthenticated)
-     {
-           using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" })) {
+     { 
+          using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" })) {
              @Html.AntiForgeryToken()
                 <a class="btn"   href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
              }
-     }
-     else
-     {
-         <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><i>
-         </i>Login <span class="caret"></span></a>
-         <ul class="dropdown-menu">
-             <li>@Html.ActionLink("Register", "Register", "Account")</li>
-             <li class="divider"></li>
-             <li>@Html.ActionLink("Log in", "Login", "Account")</li>
-         </ul>
      }
 </div>

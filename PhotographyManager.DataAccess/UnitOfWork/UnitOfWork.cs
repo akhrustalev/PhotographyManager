@@ -44,6 +44,14 @@ namespace PhotographyManager.DataAccess.UnitOfWork
             }
         }
 
+        public IRepository<PhotoImage> PhotoImages
+        {
+            get
+            {
+                return new Repository<PhotoImage>(context);
+            }
+        }
+
         public void Dispose()
         {
             if (context != null) context.Dispose();

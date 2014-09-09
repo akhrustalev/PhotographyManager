@@ -9,9 +9,11 @@ using PhotographyManager.Services;
 using PhotographyManager.Model;
 using PhotographyManager.DataAccess.UnitOfWork;
 using System.IO;
+using PhotographyManager.Filters;
 
 namespace PhotographyManager.Controllers
 {
+    [Logging]
     public class LoadingPhotosController : ApiController
     {
         private IUnitOfWork _unitOfWork;
@@ -25,7 +27,7 @@ namespace PhotographyManager.Controllers
         public List<int> GetLoadingPhotos(int blockNumber, string albumName)
         {
             int BlockSize = 4;
-            List<Photo> photos = PhotosService.GetBlockOfPhotos(_unitOfWork.Albums.GetByName(album => album.Name.Equals(albumName)).Photo.ToList(), blockNumber, BlockSize);
+            List<Photo> photos = PhotosService.GetBlockOfPhotos(_unitOfWork.Albums.GetAll().Where(album => album.Name.Equals(albumName)).FirstOrDefault().Photo.ToList(), blockNumber, BlockSize);
             List<int> list = new List<int>();
             foreach(Photo item in photos)
             {

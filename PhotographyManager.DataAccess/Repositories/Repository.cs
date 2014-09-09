@@ -13,7 +13,7 @@ using System.Data.SqlClient;
 
 namespace PhotographyManager.DataAccess.Repositories
 {
-    public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
+    public class Repository<TEntity> : IRepository<TEntity> where TEntity : class, IEntity
     {
         PhotographyManagerContext context;
         DbSet<TEntity> dbSet;
@@ -48,11 +48,6 @@ namespace PhotographyManager.DataAccess.Repositories
         public virtual TEntity GetById(int id)
         {
             return dbSet.Find(id);
-        }
-
-        public virtual TEntity GetByName(Expression<Func<TEntity, bool>> filter)
-        {
-            return dbSet.Where(filter).FirstOrDefault();
         }
 
         public IEnumerable<TEntity> GetAll()

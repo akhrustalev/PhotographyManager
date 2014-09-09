@@ -7,7 +7,7 @@ namespace PhotographyManager.Model
     using System.Data.Entity.Spatial;
 
     [Table("User")]
-    public abstract partial class User
+    public abstract partial class User:IEntity
     {
         public User()
         {
