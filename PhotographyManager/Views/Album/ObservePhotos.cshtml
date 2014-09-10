@@ -14,6 +14,8 @@
     $(document).ready(function () {
         var BlockNumber = 2;
         var inProgress = false;
+        //var blockSize = Math.floor((window.innerHeight / $("#photoFig").innerHeight()) * (window.innerWidth / $("#photoFig").innerWidth()));
+        var blockSize = Math.ceil(window.outerHeight / $("#photoFig").innerHeight()) * Math.ceil(window.outerWidth / $("#photoFig").innerWidth());
         $(window).scroll(function () {
             if ($(window).scrollTop() == $(document).height() -
             $(window).height() && !inProgress) {
@@ -25,19 +27,19 @@
                     url: "@Url.HttpRouteUrl("DefaultApi", new {controller="LoadingPhotos" })",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
-                    data: { BlockNumber: BlockNumber, AlbumName: "@Model.Name" },
+                    data: { BlockNumber: BlockNumber, AlbumName: "@Model.Name" ,BlockSize:blockSize},
                     success: function (res) {
                         BlockNumber = BlockNumber + 1;
                         var i = 0;
                         for (var key in res) {
                             i++;
                             var url1 = "@Url.Action("ShowMiniPhoto","Photo")" + "/" + res[key];
-                            var url2 = "@Url.Action("ShowCurrentPhoto","Photo")" + "/" + res[key]+"?ind="+(BlockNumber-1)*4+i;
+                            var url2 = "@Url.Action("ShowCurrentPhoto","Photo")" + "/" + res[key] + "?ind=" + (BlockNumber - 1) *blockSize+i;
                             $.ajax({
                                  url: url2,
                                  type: "GET",
                                  async: false,
-                                 success: function (data) { $("#photosDiv").append("<figure style='display:inline-block; border:none; vertical-align:top'><img src=" + url1 + " alt=''/><figcaption style='border:none'>" + data + "</figcaption></figure><br />") }
+                                 success: function (data) { $("#photosDiv").append("<figure id='photoFig' style='display:inline-block; border:none; vertical-align:top'><img src=" + url1 + " alt=''/><figcaption style='text-align: center; border:none'>" + data + "</figcaption></figure>") }
                                 })
                         }
                         inProgress = false;
@@ -47,19 +49,54 @@
         })
     })
     </script>
+    <script type="text/javascript">
+        $(function () {
+            var BlockNumber = 1;
+            var blockSize = Math.ceil(window.outerHeight / $("#photoFig").innerHeight()) * Math.ceil (window.outerWidth / $("#photoFig").innerWidth());
+            $("#photosDiv").html("")
+                $.ajax({
+                    type: "GET",
+                    url: "@Url.HttpRouteUrl("DefaultApi", new {controller="LoadingPhotos" })",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    data: { BlockNumber: BlockNumber, AlbumName: "@Model.Name", BlockSize: blockSize },
+                    success: function (res) {
+                        var i = 0;
+                        for (var key in res) {
+                            i++;
+                            var url1 = "@Url.Action("ShowMiniPhoto","Photo")" + "/" + res[key];
+                            var url2 = "@Url.Action("ShowCurrentPhoto","Photo")" + "/" + res[key] + "?ind=" + (BlockNumber - 1) * blockSize + i;
+                            $.ajax({
+                                url: url2,
+                                type: "GET",
+                                async: false,
+                                success: function (data) { $("#photosDiv").append("<figure id='figure' style='display:inline-block; border:none; vertical-align:top'><img src=" + url1 + " alt=''/><figcaption style='text-align: center; border:none'>" + data + "</figcaption></figure>") }
+                            })
+                        }
+                    }
+                });
+            })       
+    </script>
 </head>
 <body>
+    <a href="#UrlModal" data-toggle="modal" class="btn btn-primary">Get Link</a>
+    <div id="UrlModal" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        </div>
+        <div class="modal-body" id="currentPhoto">
+            <p class="text-center" style="font-family:'Times New Roman'; font-size:large">Link To This Album: @Html.Action("GetLink", "Album")</p>
+        </div>
+    </div>
     <div id="photosDiv">
-        @for (int i = 0; i < Model.Photo.Count&&i<4; i++)
-        {
-            <figure style="display:inline-block; border:none; vertical-align:top">
-                <img src=@Url.Action("ShowMiniPhoto", "Photo", new { id = Model.Photo.ElementAt(i).ID }) alt=""/>
+        <div id="photoFig">
+            <figure id="photoFig" style="display:inline-block; border:none; vertical-align:top">
+                <img src=@Url.Action("ShowMiniPhoto", "Photo", new { id = Model.Photo.ElementAt(0).ID }) alt="" />
                 <figcaption style="border:none">
-                    @Html.Action("ShowCurrentPhoto", "Photo", new {id = Model.Photo.ElementAt(i).ID, ind = i })
+                    @Html.Action("ShowCurrentPhoto", "Photo", new { id = Model.Photo.ElementAt(0).ID, ind = 0 })
                 </figcaption>
             </figure>
-         <br />
-        }
+        </div>
     </div>
 </body>
 </html>

@@ -8,7 +8,7 @@
     <h2>Create a new account.</h2>
 </hgroup>
 
-<form name="f1" method="post" >
+<form name="f1" method="post" action=@Url.Action("Register","Account")>
     @Html.AntiForgeryToken()
     @Html.ValidationSummary()
     <div class="well">
@@ -29,9 +29,8 @@
                 </li>
             </ul>
 
-            <input type="submit" value="Register As Free User" name="submitBtn" class="btn btn-primary btn-lg" onclick="f1.action='@Url.Action("RegisterFreeUser", "Account")';return true" />
+            <input type="submit" value="Register" name="submitBtn" class="btn btn-primary btn-lg" />
 
-            <input type="submit" value="Register As Paid User" name="submitBtn" class="btn btn-primary btn-lg" onclick="f1.action='@Url.Action("RegisterPaidUser", "Account")';return true" />
 
         </fieldset>
     </div>

@@ -7,14 +7,15 @@ using System.Web.Mvc;
 namespace PhotographyManager.Filters
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
-    public class LoggingAttribute :FilterAttribute, IExceptionFilter
+    public class ExceptionHandlerAttribute :FilterAttribute, IExceptionFilter
     {
         private log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         public void OnException(ExceptionContext filterContext)
         {
             filterContext.ExceptionHandled = true;
             log.Error(filterContext.Exception.Message,filterContext.Exception);
-            filterContext.Result = new ViewResult { ViewName = "ErrorView" };  
+            ViewResult result = new ViewResult { ViewName = "ErrorView" };
+            filterContext.Result = result;  
         }
     }
 }

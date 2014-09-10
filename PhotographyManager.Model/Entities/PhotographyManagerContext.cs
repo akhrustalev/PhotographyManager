@@ -10,6 +10,7 @@ namespace PhotographyManager.Model
         public PhotographyManagerContext()
             : base("name=PhotographyManagerContext")
         {
+            Configuration.LazyLoadingEnabled = true;
         }
 
         public virtual DbSet<Album> Album { get; set; }

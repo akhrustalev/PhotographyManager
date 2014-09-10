@@ -58,7 +58,7 @@ namespace PhotographyManager.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult RegisterFreeUser(RegisterModel model)
+        public ActionResult Register(RegisterModel model)
         {
             if (ModelState.IsValid)
             {
@@ -74,29 +74,6 @@ namespace PhotographyManager.Controllers
                   WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
                   WebSecurity.Login(model.UserName, model.Password);
                   return RedirectToAction("MyHomePage", "Home", new { Id = user.ID });
-            }
-            return View("Register",model);
-        }
-
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public ActionResult RegisterPaidUser(RegisterModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                var user = _unitOfWork.Users.GetAll().Where(us => us.Name.Equals(model.UserName)).FirstOrDefault();
-                if (user != null)
-                {
-                    ModelState.AddModelError("", "User name already exists. Please enter a different user name.");
-                    return View(model);
-                }
-                user = new PaidUser { Name = model.UserName };
-                _unitOfWork.Users.Add(user);
-                _unitOfWork.Commit();
-                WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
-                WebSecurity.Login(model.UserName, model.Password);
-                return RedirectToAction("MyHomePage", "Home", new { Id = user.ID });
             }
             return View("Register",model);
         }

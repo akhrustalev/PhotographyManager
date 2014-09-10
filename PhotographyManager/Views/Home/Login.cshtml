@@ -4,7 +4,7 @@
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true)
         <div class="well" style="align-items:center">
-            <h2 class="text-center" style="color:#444">Use a local account to log in.</h2>
+            <h2 class="text-center" style="color: #444">Log in</h2>
             <fieldset>
                 <ul>
                     <li>
@@ -19,7 +19,7 @@
                     </li>
                     <li>
                         @Html.CheckBoxFor(m => m.RememberMe)
-                        @Html.LabelFor(m => m.RememberMe, new { @class = "checkbox" })
+                        @Html.LabelFor(m => m.RememberMe)
                     </li>
                 </ul>
                 <input type="submit" value="Log in" class="btn btn-primary btn-lg" />

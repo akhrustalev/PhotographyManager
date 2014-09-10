@@ -30,7 +30,7 @@
             {
                 <figure style="display:inline-block; border:none">
                     <img src=@Url.Action("ShowMiniPhoto","Photo", new {id=Model.Photo.ElementAt(i).ID}) alt=""/>
-                    <figcaption style="border:none">
+                    <figcaption style="text-align: center; border: none; font-family:'Times New Roman'; background-color:#312e2e">
                         @Html.ActionLink("Edit Properties", "EditPhotosProperties","Photo", new { id = Model.Photo.ElementAt(i).ID },null)
                         <br />
                         @Html.ActionLink("Delete", "DeletePhoto", "Photo", new { id = Model.Photo.ElementAt(i).ID }, null)

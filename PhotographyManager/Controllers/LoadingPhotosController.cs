@@ -13,7 +13,7 @@ using PhotographyManager.Filters;
 
 namespace PhotographyManager.Controllers
 {
-    [Logging]
+    [ExceptionHandler]
     public class LoadingPhotosController : ApiController
     {
         private IUnitOfWork _unitOfWork;
@@ -24,10 +24,9 @@ namespace PhotographyManager.Controllers
         }
 
         [HttpGet]
-        public List<int> GetLoadingPhotos(int blockNumber, string albumName)
+        public List<int> GetLoadingPhotos(int blockNumber, string albumName, int blockSize)
         {
-            int BlockSize = 4;
-            List<Photo> photos = PhotosService.GetBlockOfPhotos(_unitOfWork.Albums.GetAll().Where(album => album.Name.Equals(albumName)).FirstOrDefault().Photo.ToList(), blockNumber, BlockSize);
+            List<Photo> photos = PhotosService.GetBlockOfPhotos(_unitOfWork.Albums.GetAll().Where(album => album.Name.Equals(albumName)).FirstOrDefault().Photo.ToList(), blockNumber,blockSize);
             List<int> list = new List<int>();
             foreach(Photo item in photos)
             {

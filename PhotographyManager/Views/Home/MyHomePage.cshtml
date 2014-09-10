@@ -12,10 +12,9 @@
     <title>Home Page</title>
 </head>
 <body>
-    <div class="well">
+    <div>
         <form method ="post" id="searchForm" enctype="multipart/form-data" action=@Url.Action("Search","Search")>
-            <input type="text" id="SearchText" name="SearchText" />
-            <br />
+            <input type="text" id="SearchText" name="SearchText" /><br />
             <input type="submit" class="btn btn-primary" id="SearchButton" value="Search"/> 
             </form>
         <form method="post" id="advancedSearchForm" enctype="multipart/form-data" action=@Url.Action("AdvancedSearch","Search")>
@@ -24,7 +23,7 @@
 </div>
     <br/>
     @if (Model.Album.Count > 0) { 
-    <h1 class="text-center">My Albums</h1>
+    <h1 class="text-center" style="color:#444">My Albums</h1>
     <br />
     <div>
         @using (Html.BeginForm())
@@ -37,7 +36,9 @@
                     <img src=@Url.Action("ShowMiniPhoto", "Photo", new { id = Model.Album.ElementAt(i).Photo.ElementAt(0).ID }) alt=""/>
                 }
                 else {<img src="~/Content/themes/base/images/ui-bg_flat_0_aaaaaa_40x100.png" alt="" style="height:200px; width:200px"/> }
-                    <figcaption style="border:none">@Html.ActionLink(Model.Album.ElementAt(i).Name + "      ", "ObservePhotos","Album", new { albumName = Model.Album.ElementAt(i).Name }, null)</figcaption>
+                    <figcaption style="text-align: center; border: none">
+                    @Html.ActionLink(Model.Album.ElementAt(i).Name + "      ", "ObservePhotos","Album", new { albumName = Model.Album.ElementAt(i).Name }, null)
+                    </figcaption>
                 </figure>
             }
         }

@@ -4,7 +4,7 @@
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
     </div>
-    <div class="modal-body" id="currentPhoto">
+    <div class="modal-body" id="currentPhoto" style="text-align: center; max-height:800px">
         <img src=@Url.Action("ShowMiddlePhoto", "Photo", new { id = Model.ID }) alt="" style="vertical-align:middle" id="Image" />
         <p class="text-center" style="font-family:'Times New Roman'; font-size:large">Name: @Model.Name</p>
         <p class="text-center" style="font-family:'Times New Roman'; font-size:large">Shooting Place: @Model.ShootingPlace</p>

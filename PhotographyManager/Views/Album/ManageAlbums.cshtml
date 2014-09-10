@@ -13,15 +13,17 @@
 </head>
 <body>
     <div>
-        <div class="well">
+        <div>
             <form method="post" enctype="multipart/form-data" action=@Url.Action("AddAlbum","Album")>
-                <INPUT type="submit" value="Add Album" runat="server" id="Button1" class="btn btn-primary">
+                <INPUT type="submit" value="Add Album" runat="server" id="Button1" >
             </form>
         </div>
         <br />
         @Html.ValidationSummary(true)
-        <h1 class ="text-success">Choose an album to manage</h1>
-        @using (Html.BeginForm())
+        @if (Model.Album.Count > 0) 
+        { 
+        <h1 style="color:#444">Choose an album to manage</h1>
+        using (Html.BeginForm())
         {
             for (int i = 0; i < Model.Album.Count; i++)
             {
@@ -35,6 +37,7 @@
                     <figcaption style="border:none">@Html.ActionLink(Model.Album.ElementAt(i).Name + "      ", "ManagePhotosInAlbum", new { albumName = Model.Album.ElementAt(i).Name }, null)</figcaption>      
                 </figure>
             }       
+        }
         }
 </div>
     <br />

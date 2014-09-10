@@ -88,5 +88,12 @@ namespace PhotographyManager.Controllers
             _unitOfWork.Commit();
             return View("ManagePhotosInAlbum", _unitOfWork.Users.GetById((int)Membership.GetUser().ProviderUserKey));
         }
+
+        public ActionResult GetLink()
+        {
+           string result = Request.Url.AbsoluteUri;
+           ViewBag.Url = result;
+           return PartialView("UrlView");
+        }
     }
 }

@@ -8,7 +8,7 @@ using PhotographyManager.Filters;
 
 namespace PhotographyManager.Controllers
 {
-    [Logging]
+    [ExceptionHandler]
     public abstract class BaseController : Controller
     {
         protected IUnitOfWork _unitOfWork;
