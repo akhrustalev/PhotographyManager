@@ -13,9 +13,9 @@ namespace PhotographyManager.DataAccess.Repositories
     {
         void Add(TEntity item);
         void Remove(TEntity item);
-        TEntity GetOne(Expression<Func<TEntity, bool>> filter);
-        IQueryable<TEntity> GetMany(Expression<Func<TEntity, bool>> filter);
-        TEntity GetById(int id);
+        TEntity GetOne(Expression<Func<TEntity, bool>> filter,params Expression<Func<TEntity, object>>[] paths);
+        IQueryable<TEntity> GetMany(Expression<Func<TEntity, bool>> filter, params Expression<Func<TEntity, object>>[] paths);
+        TEntity GetById(int id, params Expression<Func<TEntity, object>>[] paths);
         IEnumerable<TEntity> GetAll();
     }
 }

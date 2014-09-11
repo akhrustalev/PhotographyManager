@@ -27,7 +27,7 @@ namespace PhotographyManager.Services
             return photos;
         }
 
-        public async static Task UploadAsync(System.IO.Stream inputStream, int length, IUnitOfWork unitOfWork, int userId)
+        public async static Task<Photo> UploadAsync(System.IO.Stream inputStream, int length, IUnitOfWork unitOfWork, int userId)
         {
             //saving in big size
             byte[] image = new byte[length];
@@ -50,6 +50,7 @@ namespace PhotographyManager.Services
             photo.Image.MiniImage = (byte[])converter.ConvertTo(miniImage, typeof(byte[]));
             unitOfWork.Users.GetById(userId).Photo.Add(photo);
             unitOfWork.Commit();
+            return photo;
         }
     }
 }

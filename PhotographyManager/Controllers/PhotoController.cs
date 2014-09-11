@@ -59,8 +59,8 @@ namespace PhotographyManager.Controllers
 
                 return View("ManagePhotos", currentUser);
             }
-            await PhotosService.UploadAsync(file.InputStream, length,_unitOfWork,(int)Membership.GetUser().ProviderUserKey);
-            return View("ManagePhotos", currentUser);
+            Photo photo = await PhotosService.UploadAsync(file.InputStream, length,_unitOfWork,(int)Membership.GetUser().ProviderUserKey);
+            return PartialView("PhotoView",photo);
         }
 
         [HttpGet]
@@ -91,14 +91,14 @@ namespace PhotographyManager.Controllers
 
         public ActionResult EditPhotosProperties(int id)
         {
-            if (_unitOfWork.Users.GetById((int)Membership.GetUser().ProviderUserKey).Photo.Where(photo => photo.ID == id).FirstOrDefault() == null) 
+            if (_unitOfWork.Photos.GetById(id).UserID != (int)Membership.GetUser().ProviderUserKey)
                 return View("Error");
             return View(_unitOfWork.Photos.GetById(id));
         }
         [HttpPost]
         public ActionResult AddEditedProperties(Photo photo,int id)
         {
-            if (_unitOfWork.Users.GetById((int)Membership.GetUser().ProviderUserKey).Photo.Where(p => p.ID == id).FirstOrDefault() == null)
+            if (_unitOfWork.Photos.GetById(id).UserID != (int)Membership.GetUser().ProviderUserKey)
                 return View("Error");
             _unitOfWork.Photos.GetById(id).Name = photo.Name;
             _unitOfWork.Photos.GetById(id).ShootingPlace = photo.ShootingPlace;
@@ -114,7 +114,7 @@ namespace PhotographyManager.Controllers
 
         public ActionResult DeletePhoto(int id)
         {
-            if (_unitOfWork.Users.GetById((int)Membership.GetUser().ProviderUserKey).Photo.Where(p => p.ID == id).FirstOrDefault() == null)
+            if (_unitOfWork.Photos.GetById(id).UserID != (int)Membership.GetUser().ProviderUserKey)
                 return View("Error");
             Photo photo = _unitOfWork.Photos.GetById(id);
             for (int i = 0; i < photo.Album.Count; i++ )
@@ -122,7 +122,7 @@ namespace PhotographyManager.Controllers
                 _unitOfWork.Albums.GetById(photo.Album.ElementAt(i).ID).Photo.Remove(photo);
             }
             _unitOfWork.Users.GetById((int)Membership.GetUser().ProviderUserKey).Photo.Remove(photo);
-            _unitOfWork.PhotoImages.Remove(_unitOfWork.PhotoImages.GetAll().Where(photoImage => photoImage.ID == id).FirstOrDefault());
+            _unitOfWork.PhotoImages.Remove(_unitOfWork.PhotoImages.GetOne(photoImage => photoImage.ID == id));
             _unitOfWork.Photos.GetById(id).User = null;
             _unitOfWork.Photos.GetById(id).Album = null;
             _unitOfWork.Photos.GetById(id).Image = null;

@@ -34,19 +34,25 @@ namespace PhotographyManager.DataAccess.Repositories
             dbSet.Remove(item);
         }
 
-        public virtual TEntity GetOne(Expression<Func<TEntity, bool>> filter)
+        public virtual TEntity GetOne(Expression<Func<TEntity, bool>> filter, params Expression<Func<TEntity, object>>[] paths)
         {
-           return dbSet.Where(filter).FirstOrDefault();
+            foreach (Expression<Func<TEntity, object>> path in paths)
+                dbSet.Include(path);
+            return dbSet.Where(filter).FirstOrDefault();
 
         }
 
-        public virtual IQueryable<TEntity> GetMany(Expression<Func<TEntity, bool>> filter)
+        public virtual IQueryable<TEntity> GetMany(Expression<Func<TEntity, bool>> filter, params Expression<Func<TEntity, object>>[] paths)
         {
+            foreach (Expression<Func<TEntity, object>> path in paths)
+                dbSet.Include(path);
             return dbSet.Where(filter);
         }
 
-        public virtual TEntity GetById(int id)
+        public virtual TEntity GetById(int id, params Expression<Func<TEntity, object>>[] paths)
         {
+            foreach (Expression<Func<TEntity, object>> path in paths)
+                dbSet.Include(path);
             return dbSet.Find(id);
         }
 

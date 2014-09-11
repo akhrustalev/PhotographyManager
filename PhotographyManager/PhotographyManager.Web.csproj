@@ -268,6 +268,7 @@
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Images\Light-Wood-Background.jpg" />
     <Content Include="img\glyphicons-halflings-white.png" />
     <Content Include="img\glyphicons-halflings.png" />
     <Content Include="Scripts\bootstrap-datetimepicker.js" />
@@ -335,6 +336,7 @@
     <Content Include="Views\Shared\ErrorView.cshtml" />
     <Content Include="Views\Photo\CurrentPhoto.cshtml" />
     <Content Include="Views\Album\UrlView.cshtml" />
+    <Content Include="Views\Photo\PhotoView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -62,10 +62,10 @@ namespace PhotographyManager.Controllers
         {
             if (ModelState.IsValid)
             {
-               var user = _unitOfWork.Users.GetAll().Where(us=>us.Name.Equals(model.UserName)).FirstOrDefault();
+               var user = _unitOfWork.Users.GetOne(us => us.Name.Equals(model.UserName));
                if (user != null)
                   {
-                      ModelState.AddModelError("", "User name already exists. Please enter a different user name.");
+                      ModelState.AddModelError("", "User name already exists. Please enter another user name.");
                       return View("Register");
                   }
                    user = new FreeUser { Name = model.UserName };

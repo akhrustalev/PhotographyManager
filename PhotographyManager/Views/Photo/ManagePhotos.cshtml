@@ -11,17 +11,39 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>My Photos</title>
+
+    <script type="text/javascript">
+        $(function () {
+            $("#UploadButton").on("click",function (event) {
+                event.preventDefault();
+                var url = "@Url.Action("UploadAsync","Photo")";
+                $.post(url, $('#fileForm').serialize(), function (data) {
+                    $("#photosDiv").append(data);
+                })      
+            })
+        }
+        )
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            $("DeleteLink").on("click",function(event){
+                event.preventDefault();
+                $(event.target.parentElement.parentElement).hide();
+        })
+        })
+    </script>
 </head>
 <body>
     <div>
-        <div class="well">
-            <form method="post" enctype="multipart/form-data" action=@Url.Action("UploadAsync","Photo")>
+        <div >
+            <form method="post" enctype="multipart/form-data" id="fileForm">
                 <input id="OriginalLocation" type="file"
-                       size="28" name="OriginalLocation" runat="server" class="btn btn-primary">
-                <INPUT type="submit" value="Upload" runat="server" id="Button1" class="btn btn-primary">
+                       data-filename-placement="inside" size="28" class="btn btn-primary" name="OriginalLocation" runat="server">
+                <input type="submit" value="Upload" runat="server" id="UploadButton" class="btn btn-primary">
             </form>
         </div>
         <br />
+        <div id="photosDiv">
         @using (Html.BeginForm())
         {
             @Html.ValidationSummary(true)
@@ -30,16 +52,15 @@
             {
                 <figure style="display:inline-block; border:none">
                     <img src=@Url.Action("ShowMiniPhoto","Photo", new {id=Model.Photo.ElementAt(i).ID}) alt=""/>
-                    <figcaption style="text-align: center; border: none; font-family:'Times New Roman'; background-color:#312e2e">
-                        @Html.ActionLink("Edit Properties", "EditPhotosProperties","Photo", new { id = Model.Photo.ElementAt(i).ID },null)
+                    <figcaption style="text-align: center; border: none; font-family:'Times New Roman'">
+                        @Html.ActionLink("Edit Properties", "EditPhotosProperties", "Photo", new { id = Model.Photo.ElementAt(i).ID }, new {id="EditProperties" })
                         <br />
-                        @Html.ActionLink("Delete", "DeletePhoto", "Photo", new { id = Model.Photo.ElementAt(i).ID }, null)
+                        @Html.ActionLink("Delete", "DeletePhoto", "Photo", new { id = Model.Photo.ElementAt(i).ID }, new {id="DeleteLink"})
                     </figcaption>
                 </figure>
             }
         }
-        <br />
-        <br />
+        </div>
     </div>
 </body>
 </html>
