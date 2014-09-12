@@ -16,6 +16,8 @@ namespace PhotographyManager.DataAccess.UnitOfWork
 
         IRepository<User> Users{get; }
 
+        IRepository<UserProfile> UserProfiles { get; }
+
         IRepository<Album> Albums { get; }
 
         IRepository<Photo> Photos{get; }

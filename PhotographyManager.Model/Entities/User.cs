@@ -7,12 +7,13 @@ namespace PhotographyManager.Model
     using System.Data.Entity.Spatial;
 
     [Table("User")]
-    public abstract partial class User:IEntity
+    public abstract partial class User
     {
         public User()
         {
             Album = new HashSet<Album>();
             Photo = new HashSet<Photo>();
+            Roles = new HashSet<Roles>();
         }
 
         public int ID { get; set; }
@@ -22,6 +23,10 @@ namespace PhotographyManager.Model
 
         public virtual ICollection<Album> Album { get; set; }
 
+        public virtual Membership Membership { get; set; }
+
         public virtual ICollection<Photo> Photo { get; set; }
+
+        public virtual ICollection<Roles> Roles { get; set; }
     }
 }

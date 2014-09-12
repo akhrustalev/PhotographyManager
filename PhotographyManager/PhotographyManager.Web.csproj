@@ -198,12 +198,14 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PhotoController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
-    <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Filters\ExceptionHandlerAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security\PhotographyManagerMembershipProvider.cs" />
+    <Compile Include="Security\PhotographyManagerRoleProvider.cs" />
+    <Compile Include="Security\WebSecurity.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-datetimepicker.css" />
@@ -350,7 +352,7 @@
       <Name>PhotographyManager.DataAccess</Name>
     </ProjectReference>
     <ProjectReference Include="..\PhotographyManager.Model\PhotographyManager.Model.csproj">
-      <Project>{78b03ddd-dc64-43ca-a1df-328e1761ee1a}</Project>
+      <Project>{6a68ea02-4f2e-4dc4-97b5-ea6aad9bc9c8}</Project>
       <Name>PhotographyManager.Model</Name>
     </ProjectReference>
     <ProjectReference Include="..\PhotographyManager.Services\PhotographyManager.Services.csproj">

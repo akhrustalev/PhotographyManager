@@ -50,7 +50,7 @@
       <Name>PhotographyManager.DataAccess</Name>
     </ProjectReference>
     <ProjectReference Include="..\PhotographyManager.Model\PhotographyManager.Model.csproj">
-      <Project>{78b03ddd-dc64-43ca-a1df-328e1761ee1a}</Project>
+      <Project>{6a68ea02-4f2e-4dc4-97b5-ea6aad9bc9c8}</Project>
       <Name>PhotographyManager.Model</Name>
     </ProjectReference>
   </ItemGroup>

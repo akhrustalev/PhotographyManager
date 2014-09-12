@@ -12,10 +12,9 @@
     <meta name="viewport" content="width=device-width" />
     <title>My Photos</title>
 
-    <script type="text/javascript">
+    @*<script type="text/javascript">
         $(function () {
             $("#UploadButton").on("click",function (event) {
-                event.preventDefault();
                 var url = "@Url.Action("UploadAsync","Photo")";
                 $.post(url, $('#fileForm').serialize(), function (data) {
                     $("#photosDiv").append(data);
@@ -23,21 +22,31 @@
             })
         }
         )
-    </script>
-    <script type="text/javascript">
+    </script>*@
+    @*<script type="text/javascript">
+        $(function () {
+
+            document.getElementById("fileForm").onsubmit = function () {
+                event.preventDefault();
+                $("photosDiv").append(@Model.Photo.Last());
+
+            }
+        })
+    </script>*@
+    @*<script type="text/javascript">
         $(function () {
             $("DeleteLink").on("click",function(event){
                 event.preventDefault();
                 $(event.target.parentElement.parentElement).hide();
         })
         })
-    </script>
+    </script>*@
 </head>
 <body>
     <div>
         <div >
-            <form method="post" enctype="multipart/form-data" id="fileForm">
-                <input id="OriginalLocation" type="file"
+            <form method="post" enctype="multipart/form-data" id="fileForm" action=@Url.Action("UploadAsync","Photo")>
+                <input id="fileInput" type="file"
                        data-filename-placement="inside" size="28" class="btn btn-primary" name="OriginalLocation" runat="server">
                 <input type="submit" value="Upload" runat="server" id="UploadButton" class="btn btn-primary">
             </form>

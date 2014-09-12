@@ -15,7 +15,8 @@
         var BlockNumber = 2;
         var inProgress = false;
         //var blockSize = Math.floor((window.innerHeight / $("#photoFig").innerHeight()) * (window.innerWidth / $("#photoFig").innerWidth()));
-        var blockSize = Math.ceil($(window).innerHeight() / $("#photoFig").innerHeight()) * Math.ceil($(window).innerWidth() / $("#photoFig").innerWidth());
+        //var blockSize = Math.ceil($(window).innerHeight() / $("#photoFig").innerHeight()) * Math.ceil($(window).innerWidth() / $("#photoFig").innerWidth());
+        var blockSize= document.getElementsByTagName('figure').length;
         $(window).scroll(function () {
             if ($(window).scrollTop() == $(document).height() -
             $(window).height() && !inProgress) {
@@ -80,20 +81,23 @@
             })       
     </script>*@
     <script type="text/javascript">
-        $(function(){var windowBottom = $(document).height() -  $(window).height();
-            var figureTop = $(document).height();
-            @{int i=0;}
-            while (figureTop >= windowBottom) {
-                var url1 = "@Url.Action("ShowMiniPhoto","Photo")" + "/" + "@Model.Photo.ElementAt(i).ID";
-                var url2 = "@Url.Action("ShowCurrentPhoto","Photo")" + "/" + "@Model.Photo.ElementAt(i).ID" + "?ind=" + "@i";
+        $(function(){//var windowBottom = $(document).height() -  $(window).height();
+           // var Bottom = $(document).height();
+            var i = 0;
+            while ($(document).height() == $(window).height() && (i < "@Model.Photo.Count")) {
+                alert($(document).height());
+                alert($(window).height());
+                var url1 = "@Url.Action("ShowMiniPhotoOnIndex","Photo")" + "/" + i + "?albumId=" + "@Model.ID";
+                var url2 = "@Url.Action("ShowCurrentPhotoOnIndex","Photo")" + "/" + i+"?albumId="+"@Model.ID";
                 $.ajax({
                     url: url2,
                     type: "GET",
                     async: false,
                     success: function (data) { $("#photosDiv").append("<figure id='photoFig' style='display:inline-block; border:none; vertical-align:top'><img src=" + url1 + " alt=''/><figcaption style='text-align: center; border:none'>" + data + "</figcaption></figure>") }
                 })
-                figureTop = $("#photoFig").height();
-                @{i++;};
+                //Bottom = $(document).height() - $("#photosDiv").height() - $("#photosDiv").offset().top;
+                //alert(Bottom)
+                i = i + 1;
             }
         }
         )

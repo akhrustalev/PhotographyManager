@@ -10,14 +10,15 @@ namespace PhotographyManager.Model
         public PhotographyManagerContext()
             : base("name=PhotographyManagerContext")
         {
-            Configuration.LazyLoadingEnabled = true;
         }
 
         public virtual DbSet<Album> Album { get; set; }
-        public virtual DbSet<Log> Log { get; set; }
+        public virtual DbSet<Membership> Membership { get; set; }
         public virtual DbSet<Photo> Photo { get; set; }
         public virtual DbSet<PhotoImage> PhotoImage { get; set; }
+        public virtual DbSet<Roles> Roles { get; set; }
         public virtual DbSet<User> User { get; set; }
+        public virtual DbSet<Log> Log { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -29,6 +30,44 @@ namespace PhotographyManager.Model
                 .HasMany(e => e.Photo)
                 .WithMany(e => e.Album)
                 .Map(m => m.ToTable("Album2Photo").MapLeftKey("AlbumID").MapRightKey("PhotoID"));
+
+            modelBuilder.Entity<Photo>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Photo>()
+                .Property(e => e.ShootingPlace)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Photo>()
+                .Property(e => e.ISO)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Photo>()
+                .Property(e => e.Diaphragm)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Photo>()
+                .HasOptional(e => e.PhotoImage)
+                .WithRequired(e => e.Photo);
+
+            modelBuilder.Entity<Roles>()
+                .HasMany(e => e.User)
+                .WithMany(e => e.Roles)
+                .Map(m => m.ToTable("UsersInRoles").MapLeftKey("RoleId").MapRightKey("UserId"));
+
+            modelBuilder.Entity<User>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<User>()
+                .HasMany(e => e.Album)
+                .WithRequired(e => e.User)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<User>()
+                .HasOptional(e => e.Membership)
+                .WithRequired(e => e.User);
 
             modelBuilder.Entity<Log>()
                 .Property(e => e.Thread)
@@ -49,35 +88,6 @@ namespace PhotographyManager.Model
             modelBuilder.Entity<Log>()
                 .Property(e => e.Exception)
                 .IsUnicode(false);
-
-            modelBuilder.Entity<Photo>()
-                .Property(e => e.Name)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Photo>()
-                .Property(e => e.ShootingPlace)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Photo>()
-                .Property(e => e.ISO)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Photo>()
-                .Property(e => e.Diaphragm)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Photo>()
-                .HasOptional(e => e.Image)
-                .WithRequired(e => e.Photo);
-
-            modelBuilder.Entity<User>()
-                .Property(e => e.Name)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<User>()
-                .HasMany(e => e.Album)
-                .WithRequired(e => e.User)
-                .WillCascadeOnDelete(false);
         }
     }
 }

@@ -11,7 +11,6 @@ namespace PhotographyManager.Model
     {
         [Key]
         [Column(Order = 0)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
 
         [Key]

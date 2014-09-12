@@ -27,7 +27,7 @@ namespace PhotographyManager.Controllers
         [HttpPost]
         public async Task<ActionResult> UploadAsync()
         {
-            HttpPostedFileBase file = Request.Files["OriginalLocation"];
+            HttpPostedFileBase file = Request.Files[0];
             Int32 length = file.ContentLength;
             User currentUser = _unitOfWork.Users.GetById((int)Membership.GetUser().ProviderUserKey);
             if (currentUser.GetType().BaseType.Equals(typeof(FreeUser)))
@@ -60,7 +60,7 @@ namespace PhotographyManager.Controllers
                 return View("ManagePhotos", currentUser);
             }
             Photo photo = await PhotosService.UploadAsync(file.InputStream, length,_unitOfWork,(int)Membership.GetUser().ProviderUserKey);
-            return PartialView("PhotoView",photo);
+            return View("ManagePhotos", currentUser);
         }
 
         [HttpGet]
@@ -83,10 +83,22 @@ namespace PhotographyManager.Controllers
             return result;
         }
 
+        public ActionResult ShowMiniPhotoOnIndex(int id,int albumId)
+        {
+            FileContentResult result = new FileContentResult(_unitOfWork.Albums.GetById(albumId).Photo.ElementAt(id).Image.MiniImage, "jpeg");
+            return result;
+        }
+
         public ActionResult ShowCurrentPhoto(int id, int ind)
         {
             ViewBag.Ind = ind;
             return PartialView("CurrentPhoto",_unitOfWork.Photos.GetById(id));
+        }
+
+        public ActionResult ShowCurrentPhotoOnIndex(int id, int albumId)
+        {
+            ViewBag.Ind = id;
+            return PartialView("CurrentPhoto",_unitOfWork.Albums.GetById(albumId).Photo.ElementAt(id));
         }
 
         public ActionResult EditPhotosProperties(int id)

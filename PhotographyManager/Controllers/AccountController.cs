@@ -4,16 +4,14 @@ using System.Linq;
 using System.Transactions;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Security;
-using WebMatrix.WebData;
 using PhotographyManager.Filters;
 using PhotographyManager.DataAccess.UnitOfWork;
 using PhotographyManager.Model;
+using PhotographyManager.Security;
 
 namespace PhotographyManager.Controllers
 {
     [Authorize]
-    [InitializeSimpleMembership]
     public class AccountController : BaseController
     {
 
@@ -30,10 +28,10 @@ namespace PhotographyManager.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel model)
         {
-            if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
-            {
-                return RedirectToAction("MyHomePage", "Home");
-            }
+            //if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
+            //{
+            //    return RedirectToAction("MyHomePage", "Home");
+            //}
 
             ModelState.AddModelError("", "The user name or password provided is incorrect.");
             return RedirectToAction("Index","Home");
@@ -44,7 +42,7 @@ namespace PhotographyManager.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
-            WebSecurity.Logout();
+          //  WebSecurity.Logout();
 
             return RedirectToAction("Index", "Home");
         }
@@ -71,8 +69,8 @@ namespace PhotographyManager.Controllers
                    user = new FreeUser { Name = model.UserName };
                   _unitOfWork.Users.Add(user);
                   _unitOfWork.Commit();
-                  WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
-                  WebSecurity.Login(model.UserName, model.Password);
+                  //WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
+                  //WebSecurity.Login(model.UserName, model.Password);
                   return RedirectToAction("MyHomePage", "Home", new { Id = user.ID });
             }
             return View("Register",model);

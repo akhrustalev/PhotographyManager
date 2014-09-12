@@ -27,6 +27,13 @@ namespace PhotographyManager.DataAccess.UnitOfWork
                 return new Repository<User>(context);
             }
         }
+        public IRepository<UserProfile> UserProfiles
+        {
+            get
+            {
+                return new Repository<UserProfile>(context);
+            }
+        }
         public IRepository<Album> Albums
         {
             get

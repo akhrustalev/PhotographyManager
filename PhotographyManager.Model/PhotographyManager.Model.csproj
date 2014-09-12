@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{78B03DDD-DC64-43CA-A1DF-328E1761EE1A}</ProjectGuid>
+    <ProjectGuid>{6A68EA02-4F2E-4DC4-97B5-EA6AAD9BC9C8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>PhotographyManager.Model</RootNamespace>
@@ -51,15 +51,14 @@
     <Compile Include="Entities\Album.cs" />
     <Compile Include="Entities\FreeUser.cs" />
     <Compile Include="Entities\Log.cs" />
+    <Compile Include="Entities\Membership.cs" />
     <Compile Include="Entities\PaidUser.cs" />
     <Compile Include="Entities\Photo.cs" />
     <Compile Include="Entities\PhotographyManagerContext.cs" />
     <Compile Include="Entities\PhotoImage.cs" />
-    <Compile Include="Entities\User.cs" />
-    <Compile Include="Entities\UserProfile.cs" />
-    <Compile Include="Entities\UsersContext.cs" />
-    <Compile Include="EntityModel\IEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Entities\Roles.cs" />
+    <Compile Include="Entities\User.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
