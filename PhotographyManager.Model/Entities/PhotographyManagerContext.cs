@@ -13,10 +13,10 @@ namespace PhotographyManager.Model
         }
 
         public virtual DbSet<Album> Album { get; set; }
-        public virtual DbSet<Membership> Membership { get; set; }
+        public virtual DbSet<UserMembership> Membership { get; set; }
         public virtual DbSet<Photo> Photo { get; set; }
         public virtual DbSet<PhotoImage> PhotoImage { get; set; }
-        public virtual DbSet<Roles> Roles { get; set; }
+        public virtual DbSet<UserRoles> Roles { get; set; }
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<Log> Log { get; set; }
 
@@ -51,7 +51,7 @@ namespace PhotographyManager.Model
                 .HasOptional(e => e.PhotoImage)
                 .WithRequired(e => e.Photo);
 
-            modelBuilder.Entity<Roles>()
+            modelBuilder.Entity<UserRoles>()
                 .HasMany(e => e.User)
                 .WithMany(e => e.Roles)
                 .Map(m => m.ToTable("UsersInRoles").MapLeftKey("RoleId").MapRightKey("UserId"));

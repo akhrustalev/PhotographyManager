@@ -33,8 +33,8 @@ namespace PhotographyManager.Services
             byte[] image = new byte[length];
             inputStream.Read(image, 0, length);
             Photo photo = new Photo();
-            photo.Image = new PhotoImage();
-            photo.Image.BigImage = image;
+            photo.PhotoImage = new PhotoImage();
+            photo.PhotoImage.BigImage = image;
 
             Bitmap originalImage = new Bitmap(Image.FromStream(inputStream));
             //saving in middle size
@@ -43,11 +43,11 @@ namespace PhotographyManager.Services
                 g.DrawImage(originalImage, 0, 0, originalImage.Width/2, originalImage.Height/2);
             ImageConverter converter = new ImageConverter();
             //saving in small size
-            photo.Image.MiddleImage = (byte[])converter.ConvertTo(middleImage, typeof(byte[]));
+            photo.PhotoImage.MiddleImage = (byte[])converter.ConvertTo(middleImage, typeof(byte[]));
             Bitmap miniImage = new Bitmap(200, 200);
             using (Graphics g = Graphics.FromImage((Image)miniImage))
                 g.DrawImage(originalImage, 0, 0, 200, 200);
-            photo.Image.MiniImage = (byte[])converter.ConvertTo(miniImage, typeof(byte[]));
+            photo.PhotoImage.MiniImage = (byte[])converter.ConvertTo(miniImage, typeof(byte[]));
             unitOfWork.Users.GetById(userId).Photo.Add(photo);
             unitOfWork.Commit();
             return photo;

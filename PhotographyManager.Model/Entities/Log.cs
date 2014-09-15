@@ -11,7 +11,7 @@ namespace PhotographyManager.Model
     {
         [Key]
         [Column(Order = 0)]
-        public int Id { get; set; }
+        public int ID { get; set; }
 
         [Key]
         [Column(Order = 1)]

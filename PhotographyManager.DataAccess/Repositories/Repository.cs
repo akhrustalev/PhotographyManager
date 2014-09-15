@@ -9,6 +9,7 @@ using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Core.Objects;
 using PhotographyManager.Model;
 using System.Data.SqlClient;
+using System.Threading;
 
 
 namespace PhotographyManager.DataAccess.Repositories
@@ -37,9 +38,15 @@ namespace PhotographyManager.DataAccess.Repositories
         public virtual TEntity GetOne(Expression<Func<TEntity, bool>> filter, params Expression<Func<TEntity, object>>[] paths)
         {
             foreach (Expression<Func<TEntity, object>> path in paths)
-                dbSet.Include(path);
-            return dbSet.Where(filter).FirstOrDefault();
-
+               dbSet.Include(path);
+            try
+            {
+                return dbSet.FirstOrDefault(filter);
+            }
+            catch(System.Reflection.TargetException ex)
+            {
+                return null;
+            }
         }
 
         public virtual IQueryable<TEntity> GetMany(Expression<Func<TEntity, bool>> filter, params Expression<Func<TEntity, object>>[] paths)

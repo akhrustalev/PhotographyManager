@@ -1,0 +1,17 @@
+﻿@model List<PhotographyManager.Model.User>
+@{
+    ViewBag.Title = "Admin";
+}
+
+<h2>Admin</h2>
+
+@{
+    for (int i=0;i<Model.Count;i++)
+    {
+        Html.Label(Model.ElementAt(i).Name);
+        <input type="checkbox" />
+        <input type="checkbox"/>
+    }
+}
+
+

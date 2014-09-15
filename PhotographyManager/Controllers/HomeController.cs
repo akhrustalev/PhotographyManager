@@ -29,7 +29,15 @@ namespace PhotographyManager.Controllers
         }
         public ActionResult MyHomePage()
         {
-            return View(_unitOfWork.Users.GetById((int)Membership.GetUser().ProviderUserKey,user=>user.Album));
+            return View(_unitOfWork.Users.GetOne(user => user.Name.Equals(User.Identity.Name)));
+        }
+        [Authorize(Roles="Admin")]
+        public ActionResult ManageUsers()
+        {
+            User currentUser = _unitOfWork.Users.GetOne(user => user.Name.Equals(User.Identity.Name));
+            List<User> users = new List<User>();
+            users = _unitOfWork.Users.GetMany(user => user.ID != currentUser.ID).ToList();
+            return View("Admin",users);
         }
     }
 }

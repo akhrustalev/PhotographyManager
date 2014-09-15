@@ -27,13 +27,22 @@ namespace PhotographyManager.DataAccess.UnitOfWork
                 return new Repository<User>(context);
             }
         }
-        public IRepository<UserProfile> UserProfiles
+        public IRepository<UserMembership> UserMembership
         {
             get
             {
-                return new Repository<UserProfile>(context);
+                return new Repository<UserMembership>(context);
             }
         }
+
+        public IRepository<UserRoles> UserRoles
+        {
+            get
+            {
+                return new Repository<UserRoles>(context);
+            }
+        }
+
         public IRepository<Album> Albums
         {
             get

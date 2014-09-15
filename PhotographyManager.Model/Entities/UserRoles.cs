@@ -6,15 +6,15 @@ namespace PhotographyManager.Model
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class Roles
+    public partial class UserRoles:IEntity
     {
-        public Roles()
+        public UserRoles()
         {
             User = new HashSet<User>();
         }
 
         [Key]
-        public int RoleId { get; set; }
+        public int ID { get; set; }
 
         [Required]
         [StringLength(256)]

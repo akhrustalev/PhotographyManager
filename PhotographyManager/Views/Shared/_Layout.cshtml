@@ -43,6 +43,7 @@
                             <li>    @Html.ActionLink("My Home Page", "MyHomePage", "Home")</li>
                             <li>@Html.ActionLink("Manage Photos", "ManagePhotos", "Photo")</li>
                             <li>   @Html.ActionLink("Manage Albums", "ManageAlbums", "Album")</li>
+                            @if (PhotographyManager.Security.PhotographyManagerRoleProvider.IsUserInRole(User.Identity.Name,"Admin")) { <li>   @Html.ActionLink("Manage Users", "ManageUsers", "Home")</li>}
                         </ul>
                     </nav>
                 }

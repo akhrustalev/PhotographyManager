@@ -21,7 +21,7 @@ namespace PhotographyManager.Controllers
 
         public ActionResult ManagePhotos()
         {
-            return View(_unitOfWork.Users.GetById((int)Membership.GetUser().ProviderUserKey));
+            return View(currentUser);
         }
 
         [HttpPost]
@@ -29,7 +29,7 @@ namespace PhotographyManager.Controllers
         {
             HttpPostedFileBase file = Request.Files[0];
             Int32 length = file.ContentLength;
-            User currentUser = _unitOfWork.Users.GetById((int)Membership.GetUser().ProviderUserKey);
+
             if (currentUser.GetType().BaseType.Equals(typeof(FreeUser)))
             {
                 if (currentUser.Photo.Count == 30)
@@ -59,33 +59,33 @@ namespace PhotographyManager.Controllers
 
                 return View("ManagePhotos", currentUser);
             }
-            Photo photo = await PhotosService.UploadAsync(file.InputStream, length,_unitOfWork,(int)Membership.GetUser().ProviderUserKey);
+            Photo photo = await PhotosService.UploadAsync(file.InputStream, length,_unitOfWork,currentUser.ID);
             return View("ManagePhotos", currentUser);
         }
 
         [HttpGet]
         public ActionResult ShowPhoto(int id)
         {
-            FileContentResult result = new FileContentResult(_unitOfWork.Photos.GetById(id).Image.BigImage, "jpeg");
+            FileContentResult result = new FileContentResult(_unitOfWork.Photos.GetById(id).PhotoImage.BigImage, "jpeg");
             return result;
         }
 
         [HttpGet]
         public ActionResult ShowMiddlePhoto(int id)
         {
-            FileContentResult result = new FileContentResult(_unitOfWork.Photos.GetById(id).Image.MiddleImage, "jpeg");
+            FileContentResult result = new FileContentResult(_unitOfWork.Photos.GetById(id).PhotoImage.MiddleImage, "jpeg");
             return result;
         }
         [HttpGet]
         public ActionResult ShowMiniPhoto(int id)
         {
-            FileContentResult result = new FileContentResult(_unitOfWork.Photos.GetById(id).Image.MiniImage, "jpeg");
+            FileContentResult result = new FileContentResult(_unitOfWork.Photos.GetById(id).PhotoImage.MiniImage, "jpeg");
             return result;
         }
 
         public ActionResult ShowMiniPhotoOnIndex(int id,int albumId)
         {
-            FileContentResult result = new FileContentResult(_unitOfWork.Albums.GetById(albumId).Photo.ElementAt(id).Image.MiniImage, "jpeg");
+            FileContentResult result = new FileContentResult(_unitOfWork.Albums.GetById(albumId).Photo.ElementAt(id).PhotoImage.MiniImage, "jpeg");
             return result;
         }
 
@@ -103,14 +103,14 @@ namespace PhotographyManager.Controllers
 
         public ActionResult EditPhotosProperties(int id)
         {
-            if (_unitOfWork.Photos.GetById(id).UserID != (int)Membership.GetUser().ProviderUserKey)
+            if (_unitOfWork.Photos.GetById(id).UserID != currentUser.ID)
                 return View("Error");
             return View(_unitOfWork.Photos.GetById(id));
         }
         [HttpPost]
         public ActionResult AddEditedProperties(Photo photo,int id)
         {
-            if (_unitOfWork.Photos.GetById(id).UserID != (int)Membership.GetUser().ProviderUserKey)
+            if (_unitOfWork.Photos.GetById(id).UserID != currentUser.ID)
                 return View("Error");
             _unitOfWork.Photos.GetById(id).Name = photo.Name;
             _unitOfWork.Photos.GetById(id).ShootingPlace = photo.ShootingPlace;
@@ -126,21 +126,21 @@ namespace PhotographyManager.Controllers
 
         public ActionResult DeletePhoto(int id)
         {
-            if (_unitOfWork.Photos.GetById(id).UserID != (int)Membership.GetUser().ProviderUserKey)
+            if (_unitOfWork.Photos.GetById(id).UserID != currentUser.ID)
                 return View("Error");
             Photo photo = _unitOfWork.Photos.GetById(id);
             for (int i = 0; i < photo.Album.Count; i++ )
             {
                 _unitOfWork.Albums.GetById(photo.Album.ElementAt(i).ID).Photo.Remove(photo);
             }
-            _unitOfWork.Users.GetById((int)Membership.GetUser().ProviderUserKey).Photo.Remove(photo);
+            currentUser.Photo.Remove(photo);
             _unitOfWork.PhotoImages.Remove(_unitOfWork.PhotoImages.GetOne(photoImage => photoImage.ID == id));
             _unitOfWork.Photos.GetById(id).User = null;
             _unitOfWork.Photos.GetById(id).Album = null;
-            _unitOfWork.Photos.GetById(id).Image = null;
+            _unitOfWork.Photos.GetById(id).PhotoImage = null;
             _unitOfWork.Photos.Remove(photo);
             _unitOfWork.Commit();
-            return View("ManagePhotos", _unitOfWork.Users.GetById((int)Membership.GetUser().ProviderUserKey));
+            return View("ManagePhotos",currentUser);
         }
     }
 }

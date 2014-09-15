@@ -7,7 +7,7 @@ namespace PhotographyManager.Model
     using System.Data.Entity.Spatial;
 
     [Table("PhotoImage")]
-    public partial class PhotoImage
+    public partial class PhotoImage: IEntity
     {
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int ID { get; set; }

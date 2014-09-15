@@ -28,10 +28,10 @@ namespace PhotographyManager.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel model)
         {
-            //if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
-            //{
-            //    return RedirectToAction("MyHomePage", "Home");
-            //}
+            if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
+            {
+                return RedirectToAction("MyHomePage", "Home");
+            }
 
             ModelState.AddModelError("", "The user name or password provided is incorrect.");
             return RedirectToAction("Index","Home");
@@ -42,7 +42,7 @@ namespace PhotographyManager.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
-          //  WebSecurity.Logout();
+            WebSecurity.Logout();
 
             return RedirectToAction("Index", "Home");
         }
@@ -66,12 +66,12 @@ namespace PhotographyManager.Controllers
                       ModelState.AddModelError("", "User name already exists. Please enter another user name.");
                       return View("Register");
                   }
-                   user = new FreeUser { Name = model.UserName };
-                  _unitOfWork.Users.Add(user);
-                  _unitOfWork.Commit();
-                  //WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
-                  //WebSecurity.Login(model.UserName, model.Password);
-                  return RedirectToAction("MyHomePage", "Home", new { Id = user.ID });
+                  // user = new FreeUser { Name = model.UserName };
+                  //_unitOfWork.Users.Add(user);
+                  //_unitOfWork.Commit();
+                  WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
+                  WebSecurity.Login(model.UserName, model.Password);
+                  return RedirectToAction("MyHomePage", "Home");
             }
             return View("Register",model);
         }
