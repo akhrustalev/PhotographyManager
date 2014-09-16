@@ -6,19 +6,22 @@ using System.Web.Security;
 using PhotographyManager.DataAccess.UnitOfWork;
 using Ninject;
 
-namespace PhotographyManager.Security
+namespace PhotographyManager.Web.Security
 {
     public class WebSecurity
     {
-        static PhotographyManagerMembershipProvider provider=new PhotographyManagerMembershipProvider(new UnitOfWork());
         public static bool Login(string userName, string password, bool persistCookie = false)
         {
-            bool success = provider.ValidateUser(userName, password);
-            if (success)
+            using (UnitOfWork unitOfWork = new UnitOfWork())
             {
-                FormsAuthentication.SetAuthCookie(userName, persistCookie);
+                PhotographyManagerMembershipProvider provider = new PhotographyManagerMembershipProvider(unitOfWork);
+                bool success = provider.ValidateUser(userName, password);
+                if (success)
+                {
+                    FormsAuthentication.SetAuthCookie(userName, persistCookie);
+                }
+                return success;
             }
-            return success;
         }
 
         public static void Logout()
@@ -28,7 +31,20 @@ namespace PhotographyManager.Security
 
         public static void CreateUserAndAccount(string userName, string password)
         {
-            provider.CreateUserAndAccount(userName, password);
+            using (UnitOfWork unitOfWork = new UnitOfWork())
+            {
+                PhotographyManagerMembershipProvider provider = new PhotographyManagerMembershipProvider(unitOfWork);
+                provider.CreateUserAndAccount(userName, password);
+            }
+        }
+
+        public static bool IsUserInRole(string userName, string roleName)
+        {
+           using (UnitOfWork unitOfWork = new UnitOfWork())
+           {
+               PhotographyManagerRoleProvider provider = new PhotographyManagerRoleProvider(unitOfWork);
+               return provider.IsUserInRole(userName, roleName);
+           }
         }
     }
 }

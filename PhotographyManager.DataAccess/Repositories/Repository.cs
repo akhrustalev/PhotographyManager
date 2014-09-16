@@ -16,8 +16,8 @@ namespace PhotographyManager.DataAccess.Repositories
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class, IEntity
     {
-        PhotographyManagerContext context;
-        DbSet<TEntity> dbSet;
+        protected PhotographyManagerContext context;
+        protected DbSet<TEntity> dbSet;
 
         public Repository(PhotographyManagerContext _context)
         {
@@ -37,30 +37,26 @@ namespace PhotographyManager.DataAccess.Repositories
 
         public virtual TEntity GetOne(Expression<Func<TEntity, bool>> filter, params Expression<Func<TEntity, object>>[] paths)
         {
+            DbSet<TEntity> set = dbSet;
             foreach (Expression<Func<TEntity, object>> path in paths)
-               dbSet.Include(path);
-            try
-            {
-                return dbSet.FirstOrDefault(filter);
-            }
-            catch(System.Reflection.TargetException ex)
-            {
-                return null;
-            }
+               set.Include(path).Load();
+            return set.FirstOrDefault(filter);
         }
 
         public virtual IQueryable<TEntity> GetMany(Expression<Func<TEntity, bool>> filter, params Expression<Func<TEntity, object>>[] paths)
         {
+            DbSet<TEntity> set = dbSet;
             foreach (Expression<Func<TEntity, object>> path in paths)
-                dbSet.Include(path);
-            return dbSet.Where(filter);
+                set.Include(path).Load();
+            return set.Where(filter);
         }
 
         public virtual TEntity GetById(int id, params Expression<Func<TEntity, object>>[] paths)
         {
+            DbSet<TEntity> set = dbSet;
             foreach (Expression<Func<TEntity, object>> path in paths)
-                dbSet.Include(path);
-            return dbSet.Find(id);
+                set.Include(path).Load();
+            return set.First(e=>e.ID==id);
         }
 
         public IEnumerable<TEntity> GetAll()

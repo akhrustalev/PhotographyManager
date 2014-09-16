@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 
-namespace PhotographyManager
+namespace PhotographyManager.Web
 {
     public static class WebApiConfig
     {

@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Optimization;
 
-namespace PhotographyManager
+namespace PhotographyManager.Web
 {
     public class BundleConfig
     {

@@ -11,7 +11,7 @@ using PhotographyManager.DataAccess.UnitOfWork;
 using PhotographyManager.Model;
 [assembly: log4net.Config.XmlConfigurator(Watch = true)]
 
-namespace PhotographyManager
+namespace PhotographyManager.Web
 {
     // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
     // visit http://go.microsoft.com/?LinkId=9394801

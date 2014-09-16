@@ -85,8 +85,6 @@
            // var Bottom = $(document).height();
             var i = 0;
             while ($(document).height() == $(window).height() && (i < "@Model.Photo.Count")) {
-                alert($(document).height());
-                alert($(window).height());
                 var url1 = "@Url.Action("ShowMiniPhotoOnIndex","Photo")" + "/" + i + "?albumId=" + "@Model.ID";
                 var url2 = "@Url.Action("ShowCurrentPhotoOnIndex","Photo")" + "/" + i+"?albumId="+"@Model.ID";
                 $.ajax({

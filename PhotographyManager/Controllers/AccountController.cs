@@ -4,12 +4,13 @@ using System.Linq;
 using System.Transactions;
 using System.Web;
 using System.Web.Mvc;
-using PhotographyManager.Filters;
+using PhotographyManager.Web.Filters;
 using PhotographyManager.DataAccess.UnitOfWork;
 using PhotographyManager.Model;
-using PhotographyManager.Security;
+using PhotographyManager.Web.Security;
+using PhotographyManager.Web.Models.Account;
 
-namespace PhotographyManager.Controllers
+namespace PhotographyManager.Web.Controllers
 {
     [Authorize]
     public class AccountController : BaseController
@@ -66,9 +67,6 @@ namespace PhotographyManager.Controllers
                       ModelState.AddModelError("", "User name already exists. Please enter another user name.");
                       return View("Register");
                   }
-                  // user = new FreeUser { Name = model.UserName };
-                  //_unitOfWork.Users.Add(user);
-                  //_unitOfWork.Commit();
                   WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
                   WebSecurity.Login(model.UserName, model.Password);
                   return RedirectToAction("MyHomePage", "Home");

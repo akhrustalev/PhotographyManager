@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace PhotographyManager
+namespace PhotographyManager.Web
 {
     public static class AuthConfig
     {

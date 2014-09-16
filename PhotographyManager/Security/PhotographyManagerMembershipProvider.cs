@@ -8,7 +8,7 @@ using System.Web.Security;
 using System.Web.Helpers;
 using Ninject;
 
-namespace PhotographyManager.Security
+namespace PhotographyManager.Web.Security
 {
     public class PhotographyManagerMembershipProvider
     {
@@ -28,7 +28,7 @@ namespace PhotographyManager.Security
                 _unitOfWork.Commit();
             }
             user.Roles.Add(_unitOfWork.UserRoles.GetOne(role=>role.RoleName.Equals("User")));
-            _unitOfWork.UserRoles.GetOne(role => role.RoleName.Equals("User")).User.Add(user);
+            _unitOfWork.UserRoles.GetOne(role => role.RoleName.Equals("User"),u=>u.User).User.Add(user);
             _unitOfWork.Users.Add(user);
             _unitOfWork.Commit();
             int userId = _unitOfWork.Users.GetOne(u=>u.Name.Equals(userName)).ID;
@@ -47,9 +47,9 @@ namespace PhotographyManager.Security
 
         private int VerifyUserNameHasConfirmedAccount(string UserName)
         {
-            int userId;
+            int userId=-1;
             userId = _unitOfWork.Users.GetOne(user => user.Name.Equals(UserName)).ID;
-            if (userId == null) return -1;
+            if (userId == -1) return -1;
             if (_unitOfWork.UserMembership.GetOne(user => user.ID == userId)!= null) return userId;
             else return -1;
         }

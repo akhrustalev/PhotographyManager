@@ -38,9 +38,9 @@ namespace PhotographyManager.Services
 
             Bitmap originalImage = new Bitmap(Image.FromStream(inputStream));
             //saving in middle size
-            Bitmap middleImage = new Bitmap(originalImage.Width/2, originalImage.Height/2);
+            Bitmap middleImage = new Bitmap(originalImage.Width / 2, originalImage.Height / 2);
             using (Graphics g = Graphics.FromImage((Image)middleImage))
-                g.DrawImage(originalImage, 0, 0, originalImage.Width/2, originalImage.Height/2);
+                g.DrawImage(originalImage, 0, 0, originalImage.Width / 2, originalImage.Height / 2);
             ImageConverter converter = new ImageConverter();
             //saving in small size
             photo.PhotoImage.MiddleImage = (byte[])converter.ConvertTo(middleImage, typeof(byte[]));

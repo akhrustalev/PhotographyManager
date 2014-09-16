@@ -9,9 +9,9 @@ using PhotographyManager.Services;
 using PhotographyManager.Model;
 using PhotographyManager.DataAccess.UnitOfWork;
 using System.IO;
-using PhotographyManager.Filters;
+using PhotographyManager.Web.Filters;
 
-namespace PhotographyManager.Controllers
+namespace PhotographyManager.Web.Controllers
 {
     [ExceptionHandler]
     public class LoadingPhotosController : ApiController

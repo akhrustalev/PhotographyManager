@@ -11,7 +11,7 @@ using System.Globalization;
 using PhotographyManager.Services;
 using System.Threading.Tasks;
 
-namespace PhotographyManager.Controllers
+namespace PhotographyManager.Web.Controllers
 {
     public class PhotoController : BaseController
     {
@@ -21,7 +21,8 @@ namespace PhotographyManager.Controllers
 
         public ActionResult ManagePhotos()
         {
-            return View(currentUser);
+            
+            return View(_unitOfWork.Users.GetOne(user=>user.Name.Equals(User.Identity.Name),user=>user.Photo.Select(photo=>photo.PhotoImage)));
         }
 
         [HttpPost]
@@ -29,6 +30,7 @@ namespace PhotographyManager.Controllers
         {
             HttpPostedFileBase file = Request.Files[0];
             Int32 length = file.ContentLength;
+            User currentUser = _unitOfWork.Users.GetOne(user => user.Name.Equals(User.Identity.Name), u => u.Photo.Select(p => p.PhotoImage));
 
             if (currentUser.GetType().BaseType.Equals(typeof(FreeUser)))
             {
@@ -60,49 +62,51 @@ namespace PhotographyManager.Controllers
                 return View("ManagePhotos", currentUser);
             }
             Photo photo = await PhotosService.UploadAsync(file.InputStream, length,_unitOfWork,currentUser.ID);
-            return View("ManagePhotos", currentUser);
+            return View("ManagePhotos", _unitOfWork.Users.GetOne(user => user.Name.Equals(User.Identity.Name), u => u.Photo.Select(p => p.PhotoImage)));
         }
+
 
         [HttpGet]
         public ActionResult ShowPhoto(int id)
         {
-            FileContentResult result = new FileContentResult(_unitOfWork.Photos.GetById(id).PhotoImage.BigImage, "jpeg");
+            FileContentResult result = new FileContentResult(_unitOfWork.Photos.GetById(id, p => p.PhotoImage).PhotoImage.BigImage, "jpeg");
             return result;
         }
 
         [HttpGet]
         public ActionResult ShowMiddlePhoto(int id)
         {
-            FileContentResult result = new FileContentResult(_unitOfWork.Photos.GetById(id).PhotoImage.MiddleImage, "jpeg");
+            FileContentResult result = new FileContentResult(_unitOfWork.Photos.GetById(id, p => p.PhotoImage).PhotoImage.MiddleImage, "jpeg");
             return result;
         }
         [HttpGet]
         public ActionResult ShowMiniPhoto(int id)
         {
-            FileContentResult result = new FileContentResult(_unitOfWork.Photos.GetById(id).PhotoImage.MiniImage, "jpeg");
+            FileContentResult result = new FileContentResult(_unitOfWork.Photos.GetById(id,p=>p.PhotoImage).PhotoImage.MiniImage, "jpeg");
             return result;
         }
 
         public ActionResult ShowMiniPhotoOnIndex(int id,int albumId)
         {
-            FileContentResult result = new FileContentResult(_unitOfWork.Albums.GetById(albumId).Photo.ElementAt(id).PhotoImage.MiniImage, "jpeg");
+            FileContentResult result = new FileContentResult(_unitOfWork.Albums.GetById(albumId,album=>album.Photo.Select(photo=>photo.PhotoImage)).Photo.ElementAt(id).PhotoImage.MiniImage, "jpeg");
             return result;
         }
 
         public ActionResult ShowCurrentPhoto(int id, int ind)
         {
             ViewBag.Ind = ind;
-            return PartialView("CurrentPhoto",_unitOfWork.Photos.GetById(id));
+            return PartialView("CurrentPhoto", _unitOfWork.Photos.GetById(id, p => p.PhotoImage));
         }
 
         public ActionResult ShowCurrentPhotoOnIndex(int id, int albumId)
         {
             ViewBag.Ind = id;
-            return PartialView("CurrentPhoto",_unitOfWork.Albums.GetById(albumId).Photo.ElementAt(id));
+            return PartialView("CurrentPhoto",_unitOfWork.Albums.GetById(albumId,album=>album.Photo.Select(photo=>photo.PhotoImage)).Photo.ElementAt(id));
         }
 
         public ActionResult EditPhotosProperties(int id)
         {
+            User currentUser = _unitOfWork.Users.GetOne(user => user.Name.Equals(User.Identity.Name));
             if (_unitOfWork.Photos.GetById(id).UserID != currentUser.ID)
                 return View("Error");
             return View(_unitOfWork.Photos.GetById(id));
@@ -110,6 +114,7 @@ namespace PhotographyManager.Controllers
         [HttpPost]
         public ActionResult AddEditedProperties(Photo photo,int id)
         {
+            User currentUser = _unitOfWork.Users.GetOne(user => user.Name.Equals(User.Identity.Name));
             if (_unitOfWork.Photos.GetById(id).UserID != currentUser.ID)
                 return View("Error");
             _unitOfWork.Photos.GetById(id).Name = photo.Name;
@@ -121,11 +126,12 @@ namespace PhotographyManager.Controllers
             _unitOfWork.Photos.GetById(id).ShutterSpeed = photo.ShutterSpeed;
             _unitOfWork.Photos.GetById(id).Flash = photo.Flash;
             _unitOfWork.Commit();
-            return View("Error");
+            return RedirectToAction("ManagePhotos","Photo");
         }
 
         public ActionResult DeletePhoto(int id)
         {
+            User currentUser = _unitOfWork.Users.GetOne(user => user.Name.Equals(User.Identity.Name));
             if (_unitOfWork.Photos.GetById(id).UserID != currentUser.ID)
                 return View("Error");
             Photo photo = _unitOfWork.Photos.GetById(id);
@@ -140,7 +146,7 @@ namespace PhotographyManager.Controllers
             _unitOfWork.Photos.GetById(id).PhotoImage = null;
             _unitOfWork.Photos.Remove(photo);
             _unitOfWork.Commit();
-            return View("ManagePhotos",currentUser);
+            return View("ManagePhotos", _unitOfWork.Users.GetOne(user => user.Name.Equals(User.Identity.Name),user=>user.Photo.Select(p=>p.PhotoImage)));
         }
     }
 }

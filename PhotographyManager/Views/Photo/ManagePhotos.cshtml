@@ -11,36 +11,6 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>My Photos</title>
-
-    @*<script type="text/javascript">
-        $(function () {
-            $("#UploadButton").on("click",function (event) {
-                var url = "@Url.Action("UploadAsync","Photo")";
-                $.post(url, $('#fileForm').serialize(), function (data) {
-                    $("#photosDiv").append(data);
-                })      
-            })
-        }
-        )
-    </script>*@
-    @*<script type="text/javascript">
-        $(function () {
-
-            document.getElementById("fileForm").onsubmit = function () {
-                event.preventDefault();
-                $("photosDiv").append(@Model.Photo.Last());
-
-            }
-        })
-    </script>*@
-    @*<script type="text/javascript">
-        $(function () {
-            $("DeleteLink").on("click",function(event){
-                event.preventDefault();
-                $(event.target.parentElement.parentElement).hide();
-        })
-        })
-    </script>*@
 </head>
 <body>
     <div>
@@ -62,9 +32,9 @@
                 <figure style="display:inline-block; border:none">
                     <img src=@Url.Action("ShowMiniPhoto","Photo", new {id=Model.Photo.ElementAt(i).ID}) alt=""/>
                     <figcaption style="text-align: center; border: none; font-family:'Times New Roman'">
-                        @Html.ActionLink("Edit Properties", "EditPhotosProperties", "Photo", new { id = Model.Photo.ElementAt(i).ID }, new {id="EditProperties" })
+                        @Html.ActionLink("Edit Properties", "EditPhotosProperties", "Photo", new {id = Model.Photo.ElementAt(i).ID }, new {id="EditProperties" })
                         <br />
-                        @Html.ActionLink("Delete", "DeletePhoto", "Photo", new { id = Model.Photo.ElementAt(i).ID }, new {id="DeleteLink"})
+                        @Html.ActionLink("Delete", "DeletePhoto", "Photo", new {id = Model.Photo.ElementAt(i).ID },null)
                     </figcaption>
                 </figure>
             }

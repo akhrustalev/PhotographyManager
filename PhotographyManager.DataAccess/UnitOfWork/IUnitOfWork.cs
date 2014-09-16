@@ -7,6 +7,7 @@ using System.Data;
 using System.Data.Entity;
 using PhotographyManager.DataAccess.Repositories;
 using PhotographyManager.Model;
+using PhotographyManager.DataAccess.Repositories.PhotoRepository;
 
 namespace PhotographyManager.DataAccess.UnitOfWork
 {
@@ -22,13 +23,9 @@ namespace PhotographyManager.DataAccess.UnitOfWork
 
         IRepository<Album> Albums { get; }
 
-        IRepository<Photo> Photos{get; }
+        IPhotoRepository Photos{get; }
 
         IRepository<PhotoImage> PhotoImages { get; }
-
-        IEnumerable<Photo> SearchPhotos(string keyword);
-
-        IEnumerable<Photo> AdvancedSearchPhotos(string name, string shootingPlace, DateTime? shotAfter, DateTime? shotBefore, string cameraModel, string diaphragm, string ISO, double? shutterSpeed, double? focalDistance, bool? flash);
         
     }
 }

@@ -1,4 +1,4 @@
-﻿@model PhotographyManager.Model.AdvancedSearchModel
+﻿@model PhotographyManager.Web.Models.Search.AdvancedSearchModel
 
 @{
     ViewBag.Title = "AdvancedSearch";
@@ -66,7 +66,7 @@
                 </li>
                 <li>
                     @Html.Label("Flash")
-                    <input type="checkbox" name="Flash" id="Flash"/>
+                    <input type="checkbox" name="Flash" id="Flash" value="Flash" />
                     @Html.ValidationMessageFor(m => m.Flash)
                 </li>
             </ul>

@@ -1,0 +1,23 @@
+﻿@model List<PhotographyManager.Model.User>
+@{
+    ViewBag.Title = "Manage Users";
+}
+
+<div class="well-lg">
+    <form method="post" action=@Url.Action("AddChangedUsers","Admin")>
+        @{
+            for (int i = 0; i < Model.Count; i++)
+            {
+                <label>@Model.ElementAt(i).Name</label>
+                @Html.Label("Free")
+                <input type="checkbox" checked="@Model.ElementAt(i).GetType().BaseType.Equals(typeof(PhotographyManager.Model.FreeUser))" />
+                @Html.Label("Paid")
+                <input type="checkbox" checked="@Model.ElementAt(i).GetType().BaseType.Equals(typeof(PhotographyManager.Model.PaidUser))" />
+                <br />            
+            }
+            <input type="submit" />
+       }
+        </form>
+</div>
+
+

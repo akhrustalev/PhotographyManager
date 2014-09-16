@@ -1,29 +1,20 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-<head>
-    
-    <meta charset="utf-8" />
-    
-    <title>@ViewBag.Title - Photography Manager</title>
-    
-    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-    
-    <meta name="viewport" content="width=device-width" />
-    
+<head>    
+    <meta charset="utf-8" />    
+    <title>@ViewBag.Title - Photography Manager</title>    
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />    
+    <meta name="viewport" content="width=device-width" />    
     <style type="text/css">
  body  {
  padding-top: 60px;
  padding-bottom: 40px;
         }
-
 .sidebar-nav {
  padding: 9px 0;
         }
-
     </style>
-
     @Styles.Render("~/Content/bootstrapcss")
-    @*@Scripts.Render("~/bundles/modernizr")*@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/jqueryval")
@@ -40,10 +31,10 @@
                 {
                     <nav class="navbar-default">
                         <ul class="nav navbar-default">
-                            <li>    @Html.ActionLink("My Home Page", "MyHomePage", "Home")</li>
-                            <li>@Html.ActionLink("Manage Photos", "ManagePhotos", "Photo")</li>
-                            <li>   @Html.ActionLink("Manage Albums", "ManageAlbums", "Album")</li>
-                            @if (PhotographyManager.Security.PhotographyManagerRoleProvider.IsUserInRole(User.Identity.Name,"Admin")) { <li>   @Html.ActionLink("Manage Users", "ManageUsers", "Home")</li>}
+                            <li>@Html.ActionLink("Home", "MyHomePage", "Home")</li>
+                            <li>@Html.ActionLink("Photos", "ManagePhotos", "Photo")</li>
+                            <li>@Html.ActionLink("Albums", "ManageAlbums", "Album")</li>
+                            @if (PhotographyManager.Web.Security.WebSecurity.IsUserInRole(User.Identity.Name,"Admin")) { <li>@Html.ActionLink("Users", "ManageUsers", "Admin")</li>}
                         </ul>
                     </nav>
                 }

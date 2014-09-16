@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace PhotographyManager.Filters
+namespace PhotographyManager.Web.Filters
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
     public class ExceptionHandlerAttribute :FilterAttribute, IExceptionFilter

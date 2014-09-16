@@ -14,9 +14,9 @@ using System.Web.Security;
 using PhotographyManager.Services;
 using System.Data.SqlClient;
 using System.Globalization;
-using PhotographyManager.Filters;
+using PhotographyManager.Web.Filters;
 
-namespace PhotographyManager.Controllers
+namespace PhotographyManager.Web.Controllers
 {
     public class HomeController : BaseController
     {
@@ -29,15 +29,7 @@ namespace PhotographyManager.Controllers
         }
         public ActionResult MyHomePage()
         {
-            return View(_unitOfWork.Users.GetOne(user => user.Name.Equals(User.Identity.Name)));
-        }
-        [Authorize(Roles="Admin")]
-        public ActionResult ManageUsers()
-        {
-            User currentUser = _unitOfWork.Users.GetOne(user => user.Name.Equals(User.Identity.Name));
-            List<User> users = new List<User>();
-            users = _unitOfWork.Users.GetMany(user => user.ID != currentUser.ID).ToList();
-            return View("Admin",users);
+            return View(_unitOfWork.Users.GetOne(user => user.Name.Equals(User.Identity.Name),user=>user.Album.Select(album=>album.Photo.Select(photo=>photo.PhotoImage)),user=>user.Roles,user=>user.Membership));
         }
     }
 }

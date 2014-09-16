@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PhotographyManager.Model
+namespace PhotographyManager.Web.Models.Search
 {
     public class AdvancedSearchModel
     {

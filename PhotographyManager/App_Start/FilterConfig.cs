@@ -1,8 +1,8 @@
 ﻿using System.Web;
 using System.Web.Mvc;
-using PhotographyManager.Filters;
+using PhotographyManager.Web.Filters;
 
-namespace PhotographyManager
+namespace PhotographyManager.Web
 {
     public class FilterConfig
     {

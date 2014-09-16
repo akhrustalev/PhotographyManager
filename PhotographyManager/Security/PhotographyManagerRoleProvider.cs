@@ -4,16 +4,22 @@ using System.Linq;
 using System.Web;
 using PhotographyManager.Model;
 using System.Web.Security;
+using PhotographyManager.DataAccess.UnitOfWork;
 
-namespace PhotographyManager.Security
+namespace PhotographyManager.Web.Security
 {
     public class PhotographyManagerRoleProvider
     {
-        public static bool IsUserInRole(string userName, string roleName)
+       IUnitOfWork _unitOfWork;
+        public PhotographyManagerRoleProvider(IUnitOfWork unitOfWork)
         {
-            using (var photographyManagerContext = new PhotographyManagerContext())
+            _unitOfWork = unitOfWork;
+        }
+        public  bool IsUserInRole(string userName, string roleName)
+        {
+            using (UnitOfWork unitOfWork = new UnitOfWork())
             {
-                var user = photographyManagerContext.User.SingleOrDefault(u => u.Name == userName);
+                var user = unitOfWork.Users.GetOne(u => u.Name == userName,u=>u.Roles);
                 if (user == null)
                     return false;
                 return user.Roles != null && user.Roles.Any(r => r.RoleName == roleName);

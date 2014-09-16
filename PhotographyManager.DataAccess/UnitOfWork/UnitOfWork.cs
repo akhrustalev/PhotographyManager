@@ -7,6 +7,7 @@ using PhotographyManager.DataAccess.Repositories;
 using PhotographyManager.Model;
 using System.Data.SqlClient;
 using System.Data.Entity.Validation;
+using PhotographyManager.DataAccess.Repositories.PhotoRepository;
 
 
 namespace PhotographyManager.DataAccess.UnitOfWork
@@ -52,11 +53,11 @@ namespace PhotographyManager.DataAccess.UnitOfWork
  
         }
 
-        public IRepository<Photo> Photos
+        public IPhotoRepository Photos
         {
             get
             {
-                return new Repository<Photo>(context);
+                return new PhotoRepository(context);
             }
         }
 
@@ -71,71 +72,6 @@ namespace PhotographyManager.DataAccess.UnitOfWork
         public void Dispose()
         {
             if (context != null) context.Dispose();
-        }
-
-        public IEnumerable<Photo> SearchPhotos(string keyword)
-        {
-            return context.Database.SqlQuery<Photo>("SearchPhotos @KeyWord", new SqlParameter("KeyWord", keyword)).ToList();
-        }
-
-        public IEnumerable<Photo> AdvancedSearchPhotos(string name, string shootingPlace, DateTime? shotAfter,DateTime? shotBefore, string cameraModel, string diaphragm, string ISO, double? shutterSpeed, double? focalDistance, bool? flash)
-        {
-            SqlParameter shotAfterParam = new SqlParameter();
-            SqlParameter shotBeforeParam = new SqlParameter();
-            SqlParameter shutterSpeedParam = new SqlParameter();
-            SqlParameter focalDistanceParam = new SqlParameter();
-            SqlParameter flashParam = new SqlParameter();
-            if (shotAfter == null) 
-            { 
-                var param = DBNull.Value;
-                shotAfterParam = new SqlParameter("shotAfter", param);
-            }
-            else 
-            { 
-                var param = shotAfter;
-                shotAfterParam = new SqlParameter("shotAfter", param);
-            }
-            if (shotBefore == null) 
-            { 
-                var param = DBNull.Value;
-                shotBeforeParam = new SqlParameter("shotBefore",param);
-            }
-            else 
-            { 
-                var param = shotBefore;
-                shotBeforeParam = new SqlParameter("shotBefore", param);
-            }
-            if (shutterSpeed == null)
-            {
-                var param = DBNull.Value;
-                shutterSpeedParam = new SqlParameter("shutterSpeed", param);
-            }
-            else
-            {
-                var param = shutterSpeed;
-                shutterSpeedParam = new SqlParameter("shutterSpeed", param);
-            }
-            if (focalDistance == null)
-            {
-                var param = DBNull.Value;
-                focalDistanceParam = new SqlParameter("focalDistance", param);
-            }
-            else
-            {
-                var param = shotBefore;
-                focalDistanceParam = new SqlParameter("focalDistance", param);
-            }
-            if (flash == null)
-            {
-                var param = DBNull.Value;
-                flashParam = new SqlParameter("flash", param);
-            }
-            else
-            {
-                var param = flash;
-                flashParam = new SqlParameter("flash", param);
-            }
-            return context.Database.SqlQuery<Photo>("AdvancedSearchPhoto @name, @shootingPlace, @shotAfter,@shotBefore, @cameraModel, @diaphragm, @ISO, @shutterSpeed,@focalDistance,@flash", new SqlParameter("name", name), new SqlParameter("shootingPlace", shootingPlace), shotAfterParam,shotBeforeParam, new SqlParameter("cameraModel", cameraModel), new SqlParameter("diaphragm", diaphragm), new SqlParameter("ISO", ISO), shutterSpeedParam, focalDistanceParam, flashParam).ToList();
         }
     }
 }

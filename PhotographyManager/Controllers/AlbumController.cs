@@ -8,7 +8,7 @@ using PhotographyManager.Model;
 using PhotographyManager.DataAccess.UnitOfWork;
 
 
-namespace PhotographyManager.Controllers
+namespace PhotographyManager.Web.Controllers
 {
     public class AlbumController : BaseController
     {
@@ -18,20 +18,21 @@ namespace PhotographyManager.Controllers
 
         public ActionResult ManageAlbums()
         {
-            return View("ManageAlbums", _unitOfWork.Users.GetOne(user => user.Name.Equals(User.Identity.Name)));
+            return View("ManageAlbums", _unitOfWork.Users.GetOne(user => user.Name.Equals(User.Identity.Name),user=>user.Album.Select(album=>album.Photo.Select(photo=>photo.PhotoImage))));
         }    
         
         [HttpGet]
         public ActionResult ObservePhotos(string albumName)
         {
-            return View(_unitOfWork.Albums.GetOne(a => a.Name.Equals(albumName)));
+            return View(_unitOfWork.Albums.GetOne(a => a.Name.Equals(albumName),album=>album.Photo.Select(photo=>photo.PhotoImage)));
         }
         
         public ActionResult AddAlbum()
         {
-            if (_unitOfWork.Users.GetById((int)Membership.GetUser().ProviderUserKey).GetType().BaseType.Equals(typeof(FreeUser)))
+            User currentUser = _unitOfWork.Users.GetOne(user => user.Name.Equals(User.Identity.Name));
+            if (currentUser.GetType().BaseType.Equals(typeof(FreeUser)))
             {
-                if (_unitOfWork.Users.GetById((int)Membership.GetUser().ProviderUserKey).Album.Count == 5)
+                if (currentUser.Album.Count == 5)
                 {
                     ModelState.AddModelError("", "You can't create more than 5  albums because you are a free user");
 
@@ -43,6 +44,7 @@ namespace PhotographyManager.Controllers
 
         public ActionResult AddAlbumToUser()
         {
+            User currentUser = _unitOfWork.Users.GetOne(user => user.Name.Equals(User.Identity.Name));
             Album album;
             album = new Album();
             album.Name = String.Format(Request.Form["Name"]);
@@ -54,38 +56,41 @@ namespace PhotographyManager.Controllers
                 return View("AddAlbum");
             }
 
-            _unitOfWork.Users.GetById((int)Membership.GetUser().ProviderUserKey).Album.Add(album);
+            _unitOfWork.Users.GetById(currentUser.ID).Album.Add(album);
             _unitOfWork.Commit();
 
-            return View("ManageAlbums", currentUser);
+            return View("ManageAlbums", _unitOfWork.Users.GetOne(user => user.Name.Equals(User.Identity.Name), u => u.Album.Select(a => a.Photo.Select(p => p.PhotoImage))));
         }
 
         public ActionResult ManagePhotosInAlbum(string albumName)
         {
-            if (_unitOfWork.Albums.GetOne(album => album.Name.Equals(albumName)).UserID != (int)Membership.GetUser().ProviderUserKey)
+            User currentUser = _unitOfWork.Users.GetOne(user => user.Name.Equals(User.Identity.Name),u=>u.Photo);
+            if (_unitOfWork.Albums.GetOne(album => album.Name.Equals(albumName)).UserID != currentUser.ID)
                 return View("Error");
             ViewBag.AlbumName = albumName;
-            return View("ManagePhotosInAlbum",currentUser);
+            return View("ManagePhotosInAlbum", _unitOfWork.Users.GetOne(user => user.Name.Equals(User.Identity.Name), u => u.Photo, u => u.Album.Select(a => a.Photo.Select(p => p.PhotoImage))));
         }
 
         public ActionResult DeletePhotoFromAlbum(string albumName, int photoId)
         {
-            if (_unitOfWork.Albums.GetOne(album => album.Name.Equals(albumName)).UserID != (int)Membership.GetUser().ProviderUserKey)
+            User currentUser = _unitOfWork.Users.GetOne(user => user.Name.Equals(User.Identity.Name));
+            if (_unitOfWork.Albums.GetOne(album => album.Name.Equals(albumName)).UserID != currentUser.ID)
                 return View("Error");
             ViewBag.AlbumName = albumName;
-            _unitOfWork.Users.GetById((int)Membership.GetUser().ProviderUserKey).Album.Where(album => album.Name.Equals(albumName)).First().Photo.Remove(_unitOfWork.Users.GetById((int)Membership.GetUser().ProviderUserKey).Photo.Where(photo => photo.ID == photoId).First());
+            _unitOfWork.Users.GetById(currentUser.ID,u=>u.Album.Select(a=>a.Photo.Select(p=>p.PhotoImage))).Album.Where(album => album.Name.Equals(albumName)).First().Photo.Remove(_unitOfWork.Users.GetById(currentUser.ID,u=>u.Photo).Photo.Where(photo => photo.ID == photoId).First());
             _unitOfWork.Commit();
-            return View("ManagePhotosInAlbum", currentUser);
+            return View("ManagePhotosInAlbum", _unitOfWork.Users.GetOne(user => user.Name.Equals(User.Identity.Name), u => u.Photo,u=>u.Album.Select(a=>a.Photo.Select(p=>p.PhotoImage))));
         }
 
         public ActionResult AddPhotoToAlbum(string albumName, int photoId)
         {
-            if (_unitOfWork.Albums.GetOne(album => album.Name.Equals(albumName)).UserID != (int)Membership.GetUser().ProviderUserKey)
+            User currentUser = _unitOfWork.Users.GetOne(user => user.Name.Equals(User.Identity.Name));
+            if (_unitOfWork.Albums.GetOne(album => album.Name.Equals(albumName)).UserID != currentUser.ID)
                 return View("Error");
             ViewBag.AlbumName = albumName;
-            _unitOfWork.Users.GetById((int)Membership.GetUser().ProviderUserKey).Album.Where(album => album.Name.Equals(albumName)).First().Photo.Add(_unitOfWork.Users.GetById((int)Membership.GetUser().ProviderUserKey).Photo.Where(photo => photo.ID == photoId).First());
+            _unitOfWork.Users.GetById(currentUser.ID,u=>u.Album.Select(a=>a.Photo.Select(p=>p.PhotoImage))).Album.Where(album => album.Name.Equals(albumName)).First().Photo.Add(_unitOfWork.Users.GetById(currentUser.ID,u=>u.Photo).Photo.Where(photo => photo.ID == photoId).First());
             _unitOfWork.Commit();
-            return View("ManagePhotosInAlbum", currentUser);
+            return View("ManagePhotosInAlbum", _unitOfWork.Users.GetOne(user => user.Name.Equals(User.Identity.Name), u => u.Photo, u => u.Album.Select(a => a.Photo.Select(p => p.PhotoImage))));
         }
 
         public ActionResult GetLink()

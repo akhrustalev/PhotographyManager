@@ -11,7 +11,7 @@ namespace PhotographyManager.App_Start
     using Ninject;
     using Ninject.Web.Common;
     using PhotographyManager.DataAccess.UnitOfWork;
-    using PhotographyManager.Security;
+    using PhotographyManager.Web.Security;
 
     public static class NinjectWebCommon 
     {
