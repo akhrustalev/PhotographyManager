@@ -66,8 +66,7 @@
                 </li>
                 <li>
                     @Html.Label("Flash")
-                    <input type="checkbox" name="Flash" id="Flash" value="Flash" />
-                    @Html.ValidationMessageFor(m => m.Flash)
+                    @Html.CheckBoxFor(m => m.Flash)
                 </li>
             </ul>
             <input type="submit" value="Search" class="btn btn-primary btn-lg" />

@@ -47,10 +47,10 @@ namespace PhotographyManager.Web.Security
 
         private int VerifyUserNameHasConfirmedAccount(string UserName)
         {
-            int userId=-1;
-            userId = _unitOfWork.Users.GetOne(user => user.Name.Equals(UserName)).ID;
-            if (userId == -1) return -1;
-            if (_unitOfWork.UserMembership.GetOne(user => user.ID == userId)!= null) return userId;
+            User user = _unitOfWork.Users.GetOne(u => u.Name.Equals(UserName));
+            if (user==null) return -1;
+            int userId = user.ID;
+            if (_unitOfWork.UserMembership.GetOne(u => u.ID == userId)!= null) return userId;
             else return -1;
         }
 

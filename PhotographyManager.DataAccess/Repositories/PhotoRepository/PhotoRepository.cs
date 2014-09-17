@@ -15,9 +15,10 @@ namespace PhotographyManager.DataAccess.Repositories.PhotoRepository
             context = _context;
             dbSet = context.Set<Photo>();
         }
-        
+
         public IEnumerable<Photo> SearchPhotos(string keyword)
         {
+            if (!(keyword.Equals(""))) return new List<Photo>();
             return context.Database.SqlQuery<Photo>("SearchPhotos @KeyWord", new SqlParameter("KeyWord", keyword)).ToList();
         }
         public IEnumerable<Photo> AdvancedSearchPhotos(string name, string shootingPlace, DateTime? shotAfter, DateTime? shotBefore, string cameraModel, string diaphragm, string ISO, double? shutterSpeed, double? focalDistance, bool? flash)
@@ -67,17 +68,7 @@ namespace PhotographyManager.DataAccess.Repositories.PhotoRepository
                 var param = shotBefore;
                 focalDistanceParam = new SqlParameter("focalDistance", param);
             }
-            if (flash == null)
-            {
-                var param = DBNull.Value;
-                flashParam = new SqlParameter("flash", param);
-            }
-            else
-            {
-                var param = flash;
-                flashParam = new SqlParameter("flash", param);
-            }
-            return context.Database.SqlQuery<Photo>("AdvancedSearchPhotos @name, @shootingPlace, @cameraModel, @ISO, @diaphragm, @shotAfter,@shotBefore,@shutterSpeed,@focalDistance,@flash", new SqlParameter("name", name), new SqlParameter("shootingPlace", shootingPlace), new SqlParameter("cameraModel", cameraModel), new SqlParameter("ISO", ISO),new SqlParameter("diaphragm",diaphragm), shotAfterParam, shotBeforeParam, shutterSpeedParam, focalDistanceParam, flashParam).ToList();
+            return context.Database.SqlQuery<Photo>("AdvancedSearchPhotos @name, @shootingPlace, @cameraModel, @ISO, @diaphragm, @shotAfter,@shotBefore,@shutterSpeed,@focalDistance,@flash", new SqlParameter("name", name), new SqlParameter("shootingPlace", shootingPlace), new SqlParameter("cameraModel", cameraModel), new SqlParameter("ISO", ISO),new SqlParameter("diaphragm",diaphragm), shotAfterParam, shotBeforeParam, shutterSpeedParam, focalDistanceParam, new SqlParameter("flash",flash)).ToList();
         }
     }
 }

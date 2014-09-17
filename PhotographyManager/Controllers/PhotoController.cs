@@ -104,6 +104,11 @@ namespace PhotographyManager.Web.Controllers
             return PartialView("CurrentPhoto",_unitOfWork.Albums.GetById(albumId,album=>album.Photo.Select(photo=>photo.PhotoImage)).Photo.ElementAt(id));
         }
 
+        public ActionResult ShowBigCurrentPhoto(int id)
+        {
+            return View("CurrentPhotoBigSize",_unitOfWork.Photos.GetById(id,photo=>photo.PhotoImage));
+        }
+
         public ActionResult EditPhotosProperties(int id)
         {
             User currentUser = _unitOfWork.Users.GetOne(user => user.Name.Equals(User.Identity.Name));

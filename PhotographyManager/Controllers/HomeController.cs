@@ -25,6 +25,7 @@ namespace PhotographyManager.Web.Controllers
         }
         public ActionResult Index()
         {
+            if (User.Identity.IsAuthenticated) return RedirectToAction("MyHomePage");
             return View("Index");
         }
         public ActionResult MyHomePage()

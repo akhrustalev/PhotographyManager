@@ -26,7 +26,7 @@ namespace PhotographyManager.Web.Controllers
         [HttpGet]
         public List<int> GetLoadingPhotos(int blockNumber, string albumName, int blockSize)
         {
-            List<Photo> photos = PhotosService.GetBlockOfPhotos(_unitOfWork.Albums.GetOne(album => album.Name.Equals(albumName)).Photo.ToList(), blockNumber, blockSize);
+            List<Photo> photos = PhotosService.GetBlockOfPhotos(_unitOfWork.Albums.GetOne(album => album.Name.Equals(albumName),a=>a.Photo).Photo.ToList(), blockNumber, blockSize);
             List<int> list = new List<int>();
             foreach(Photo item in photos)
             {

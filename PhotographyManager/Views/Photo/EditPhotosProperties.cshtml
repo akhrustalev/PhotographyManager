@@ -59,8 +59,7 @@
                 </li>
                 <li>
                     @Html.LabelFor(m => m.Flash, new { @class = "checkbox" })
-                    @*@Html.CheckBoxFor(m => m.Flash, new {@checked=Model.Flash })*@
-                    <input type="checkbox" name="Flash" id="Flash" checked="@Model.Flash" />
+                    @Html.CheckBoxFor(m => m.Flash, new {@checked=Model.Flash })
                 </li>
             </ul>
             <input type="submit" value="Edit" class="btn btn-primary btn-lg" />

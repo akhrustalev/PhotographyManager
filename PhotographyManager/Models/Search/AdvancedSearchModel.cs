@@ -27,7 +27,7 @@ namespace PhotographyManager.Web.Models.Search
 
         public double? FocalDistance { get; set; }
 
-        public bool? Flash { get; set; }
+        public bool Flash { get; set; }
 
     }
 }

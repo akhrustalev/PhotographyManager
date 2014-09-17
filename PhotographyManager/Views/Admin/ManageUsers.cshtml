@@ -8,14 +8,15 @@
         @{
             for (int i = 0; i < Model.Count; i++)
             {
-                <label>@Model.ElementAt(i).Name</label>
-                @Html.Label("Free")
-                <input type="checkbox" checked="@Model.ElementAt(i).GetType().BaseType.Equals(typeof(PhotographyManager.Model.FreeUser))" />
-                @Html.Label("Paid")
-                <input type="checkbox" checked="@Model.ElementAt(i).GetType().BaseType.Equals(typeof(PhotographyManager.Model.PaidUser))" />
-                <br />            
-            }
-            <input type="submit" />
+                <label class="text-success">@Model.ElementAt(i).Name</label>
+                <div class="well">
+                @PhotographyManager.Web.Helpers.PhotoHelper.Radio(@Model.ElementAt(i).Name, @Model.ElementAt(i).GetType().BaseType.Equals(typeof(PhotographyManager.Model.FreeUser)), "Free")
+                @PhotographyManager.Web.Helpers.PhotoHelper.Radio(@Model.ElementAt(i).Name, @Model.ElementAt(i).GetType().BaseType.Equals(typeof(PhotographyManager.Model.PaidUser)), "Paid")
+               </div>
+                <br />
+            }<br />
+            <br />
+            <input type="submit" value="Save" class="btn btn-primary"  />
        }
         </form>
 </div>

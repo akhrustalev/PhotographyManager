@@ -1,0 +1,18 @@
+﻿@model PhotographyManager.Model.Photo
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@Model.Name</title>
+</head>
+<body>
+    <div>
+        <img src=@Url.Action("ShowPhoto", "Photo", new { id = Model.ID }) alt="" style="vertical-align:middle"/>
+    </div>
+</body>
+</html>

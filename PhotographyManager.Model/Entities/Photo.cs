@@ -37,7 +37,7 @@ namespace PhotographyManager.Model
 
         public double? FocalDistance { get; set; }
 
-        public bool? Flash { get; set; }
+        public bool Flash { get; set; }
 
         public int UserID { get; set; }
 
