@@ -10,8 +10,8 @@
             {
                 <label class="text-success">@Model.ElementAt(i).Name</label>
                 <div class="well">
-                @PhotographyManager.Web.Helpers.PhotoHelper.Radio(@Model.ElementAt(i).Name, @Model.ElementAt(i).GetType().BaseType.Equals(typeof(PhotographyManager.Model.FreeUser)), "Free")
-                @PhotographyManager.Web.Helpers.PhotoHelper.Radio(@Model.ElementAt(i).Name, @Model.ElementAt(i).GetType().BaseType.Equals(typeof(PhotographyManager.Model.PaidUser)), "Paid")
+                @PhotographyManager.Web.Helpers.PhotoHelper.Radio(@Model.ElementAt(i).Name, @Model.ElementAt(i).GetType().BaseType.Equals(typeof(PhotographyManager.Model.FreeUser)), "Free","Free")
+                @PhotographyManager.Web.Helpers.PhotoHelper.Radio(@Model.ElementAt(i).Name, @Model.ElementAt(i).GetType().BaseType.Equals(typeof(PhotographyManager.Model.PaidUser)), "Paid","Paid")
                </div>
                 <br />
             }<br />

@@ -7,9 +7,9 @@ namespace PhotographyManager.Web.Helpers
 {
     public class PhotoHelper
     {
-        public static HtmlString Radio(string name, bool isChecked, string text)
+        public static HtmlString Radio(string name, bool isChecked,string text, string value)
         {
-            return new HtmlString(text+"<br><input type='radio' name='" + name + "'" + (isChecked==true?"checked":"") + "><br>");
+            return new HtmlString(text+"<br><input type='radio' value='"+value+"' name='" + name + "'" + (isChecked==true?"checked":"") + "><br>");
         }
     }
 }
