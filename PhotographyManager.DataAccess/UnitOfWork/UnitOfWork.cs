@@ -8,6 +8,7 @@ using PhotographyManager.Model;
 using System.Data.SqlClient;
 using System.Data.Entity.Validation;
 using PhotographyManager.DataAccess.Repositories.PhotoRepository;
+using PhotographyManager.DataAccess.Repositories.UserRepository;
 
 
 namespace PhotographyManager.DataAccess.UnitOfWork
@@ -21,11 +22,11 @@ namespace PhotographyManager.DataAccess.UnitOfWork
             context.SaveChanges();
         }
 
-        public IRepository<User> Users
+        public IUserRepository Users
         {
             get
             {
-                return new Repository<User>(context);
+                return new UserRepository(context);
             }
         }
         public IRepository<UserMembership> UserMembership

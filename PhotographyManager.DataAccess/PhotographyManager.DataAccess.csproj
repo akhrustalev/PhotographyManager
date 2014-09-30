@@ -56,6 +56,8 @@
     <Compile Include="Repositories\PhotoRepository\IPhotoRepository.cs" />
     <Compile Include="Repositories\PhotoRepository\PhotoRepository.cs" />
     <Compile Include="Repositories\Repository.cs" />
+    <Compile Include="Repositories\UserRepository\IUserRepository.cs" />
+    <Compile Include="Repositories\UserRepository\UserRepository.cs" />
     <Compile Include="UnitOfWork\IUnitOfWork.cs" />
     <Compile Include="UnitOfWork\UnitOfWork.cs" />
   </ItemGroup>

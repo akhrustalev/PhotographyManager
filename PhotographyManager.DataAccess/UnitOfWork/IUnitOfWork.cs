@@ -8,6 +8,7 @@ using System.Data.Entity;
 using PhotographyManager.DataAccess.Repositories;
 using PhotographyManager.Model;
 using PhotographyManager.DataAccess.Repositories.PhotoRepository;
+using PhotographyManager.DataAccess.Repositories.UserRepository;
 
 namespace PhotographyManager.DataAccess.UnitOfWork
 {
@@ -15,7 +16,7 @@ namespace PhotographyManager.DataAccess.UnitOfWork
     {
         void Commit();
 
-        IRepository<User> Users{get; }
+        IUserRepository Users{get; }
 
         IRepository<UserMembership> UserMembership { get; }
 

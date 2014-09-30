@@ -76,5 +76,7 @@
     <Build Include="dbo\Tables\__MigrationHistory.sql" />
     <Build Include="dbo\Stored Procedures\AdvancedSearchPhotos.sql" />
     <Build Include="dbo\Stored Procedures\SearchPhotos.sql" />
+    <Build Include="dbo\Stored Procedures\ChangeUsersTypeToPaid.sql" />
+    <Build Include="dbo\Stored Procedures\ChangeUsersTypeToFree.sql" />
   </ItemGroup>
 </Project>
