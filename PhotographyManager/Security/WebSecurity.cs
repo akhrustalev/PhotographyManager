@@ -29,12 +29,12 @@ namespace PhotographyManager.Web.Security
             FormsAuthentication.SignOut();
         }
 
-        public static void CreateUserAndAccount(string userName, string password)
+        public static void CreateUserAndAccount(string userName, string password, bool isPaid)
         {
             using (UnitOfWork unitOfWork = new UnitOfWork())
             {
                 PhotographyManagerMembershipProvider provider = new PhotographyManagerMembershipProvider(unitOfWork);
-                provider.CreateUserAndAccount(userName, password);
+                provider.CreateUserAndAccount(userName, password, isPaid);
             }
         }
 

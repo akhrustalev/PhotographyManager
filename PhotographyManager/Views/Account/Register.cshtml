@@ -28,7 +28,9 @@
                     @Html.PasswordFor(m => m.ConfirmPassword)
                 </li>
             </ul>
-
+            @PhotographyManager.Web.Helpers.PhotoHelper.Radio("UsersType",true,"Free User","Free")
+            @PhotographyManager.Web.Helpers.PhotoHelper.Radio("UsersType",false,"Paid User","Paid")
+            <br />
             <input type="submit" value="Register" name="submitBtn" class="btn btn-primary btn-lg" />
 
 

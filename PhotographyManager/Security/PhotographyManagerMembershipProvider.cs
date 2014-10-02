@@ -19,9 +19,11 @@ namespace PhotographyManager.Web.Security
             _unitOfWork = unitOfWork;
         }
        
-        public void CreateUserAndAccount(string userName, string password)
+        public void CreateUserAndAccount(string userName, string password, bool isPaid)
         {
-            User user = new FreeUser{Name=userName};
+            User user;
+            if (!isPaid) { user = new FreeUser { Name = userName }; }
+            else { user = new PaidUser { Name = userName }; } 
             if (_unitOfWork.UserRoles.GetOne(role => role.RoleName.Equals("User")) == null) 
             {
                 _unitOfWork.UserRoles.Add(new UserRoles { RoleName = "User" }); 

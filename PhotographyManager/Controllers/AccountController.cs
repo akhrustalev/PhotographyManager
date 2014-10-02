@@ -67,9 +67,16 @@ namespace PhotographyManager.Web.Controllers
                       ModelState.AddModelError("", "User name already exists. Please enter another user name.");
                       return View("Register");
                   }
-                  WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
-                  WebSecurity.Login(model.UserName, model.Password);
-                  return RedirectToAction("Index", "Home");
+               if (Request.Form["UsersType"] != null && Request.Form["UsersType"] == "Free")
+               {
+                   WebSecurity.CreateUserAndAccount(model.UserName, model.Password,false);
+               }
+               else
+               {
+                   WebSecurity.CreateUserAndAccount(model.UserName, model.Password, true);
+               }
+               WebSecurity.Login(model.UserName, model.Password);
+               return RedirectToAction("Index", "Home");
             }
             return View("Register", model);
         }

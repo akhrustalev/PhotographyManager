@@ -12,6 +12,12 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>My Photos</title>
+    @*<script type="text/javascript">
+        $("#UploadButton").on("click",function(event){
+            var fileSize = document.getElementById("fileInput").files[0].fileSize;
+            if (fileSize > 500 * 1024) event.preventDefault;
+        })
+    </script>*@
 </head>
 <body>
     <div>
