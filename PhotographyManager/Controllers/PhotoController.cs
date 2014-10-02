@@ -57,7 +57,7 @@ namespace PhotographyManager.Web.Controllers
 
                 return View("ManagePhotos", currentUser);
             }
-            if (System.IO.Path.GetExtension(file.FileName).ToLower() != ".jpg")
+            if (!file.ContentType.Equals("image/jpeg"))
             {
                 ModelState.AddModelError("", "Image must be JPEG");
 
