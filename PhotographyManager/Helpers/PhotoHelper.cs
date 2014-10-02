@@ -9,7 +9,7 @@ namespace PhotographyManager.Web.Helpers
     {
         public static HtmlString Radio(string name, bool isChecked,string text, string value)
         {
-            return new HtmlString(text+"<br><input type='radio' value='"+value+"' name='" + name + "'" + (isChecked==true?"checked":"") + "><br>");
+            return new HtmlString(text + "<br><input type='radio' value='" + value + "' name='" + name + "'" + (isChecked==true?"checked":"") + "><br>");
         }
     }
 }

@@ -26,12 +26,12 @@
                 <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
                     <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
                 </a>
-                @Html.Partial("_LoginPartial")
+                @Html.Partial("_LogoutPartial")
                 @if (Request.IsAuthenticated)
                 {
                     <nav class="navbar-default">
                         <ul class="nav navbar-default">
-                            <li>@Html.ActionLink("Home", "MyHomePage", "Home")</li>
+                            <li>@Html.ActionLink("Home", "Index", "Home")</li>
                             <li>@Html.ActionLink("Photos", "ManagePhotos", "Photo")</li>
                             <li>@Html.ActionLink("Albums", "ManageAlbums", "Album")</li>
                             @if (PhotographyManager.Web.Security.WebSecurity.IsUserInRole(User.Identity.Name,"Admin")) { <li>@Html.ActionLink("Users", "ManageUsers", "Admin")</li>}

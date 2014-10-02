@@ -10,6 +10,7 @@ using System.Drawing;
 using System.Globalization;
 using PhotographyManager.Services;
 using System.Threading.Tasks;
+using PhotographyManager.Web.Filters;
 
 namespace PhotographyManager.Web.Controllers
 {
@@ -19,12 +20,13 @@ namespace PhotographyManager.Web.Controllers
         {
         }
 
+        [PhotographyManagerAuthorize]
         public ActionResult ManagePhotos()
-        {
-            
-            return View(_unitOfWork.Users.GetOne(user=>user.Name.Equals(User.Identity.Name),user=>user.Photo.Select(photo=>photo.PhotoImage)));
+        {            
+            return View(_unitOfWork.Users.GetOne(user => user.Name.Equals(User.Identity.Name),user => user.Photo.Select(photo => photo.PhotoImage)));
         }
 
+        [PhotographyManagerAuthorize]
         [HttpPost]
         public async Task<ActionResult> UploadAsync()
         {
@@ -82,13 +84,13 @@ namespace PhotographyManager.Web.Controllers
         [HttpGet]
         public ActionResult ShowMiniPhoto(int id)
         {
-            FileContentResult result = new FileContentResult(_unitOfWork.Photos.GetById(id,p=>p.PhotoImage).PhotoImage.MiniImage, "jpeg");
+            FileContentResult result = new FileContentResult(_unitOfWork.Photos.GetById(id,p => p.PhotoImage).PhotoImage.MiniImage, "jpeg");
             return result;
         }
 
         public ActionResult ShowMiniPhotoOnIndex(int id,int albumId)
         {
-            FileContentResult result = new FileContentResult(_unitOfWork.Albums.GetById(albumId,album=>album.Photo.Select(photo=>photo.PhotoImage)).Photo.ElementAt(id).PhotoImage.MiniImage, "jpeg");
+            FileContentResult result = new FileContentResult(_unitOfWork.Albums.GetById(albumId,album => album.Photo.Select(photo => photo.PhotoImage)).Photo.ElementAt(id).PhotoImage.MiniImage, "jpeg");
             return result;
         }
 
@@ -101,14 +103,15 @@ namespace PhotographyManager.Web.Controllers
         public ActionResult ShowCurrentPhotoOnIndex(int id, int albumId)
         {
             ViewBag.Ind = id;
-            return PartialView("CurrentPhoto",_unitOfWork.Albums.GetById(albumId,album=>album.Photo.Select(photo=>photo.PhotoImage)).Photo.ElementAt(id));
+            return PartialView("CurrentPhoto",_unitOfWork.Albums.GetById(albumId,album => album.Photo.Select(photo => photo.PhotoImage)).Photo.ElementAt(id));
         }
 
         public ActionResult ShowBigCurrentPhoto(int id)
         {
-            return View("CurrentPhotoBigSize",_unitOfWork.Photos.GetById(id,photo=>photo.PhotoImage));
+            return View("CurrentPhotoBigSize",_unitOfWork.Photos.GetById(id,photo => photo.PhotoImage));
         }
 
+        [PhotographyManagerAuthorize]
         public ActionResult EditPhotosProperties(int id)
         {
             User currentUser = _unitOfWork.Users.GetOne(user => user.Name.Equals(User.Identity.Name));
@@ -116,6 +119,7 @@ namespace PhotographyManager.Web.Controllers
                 return View("Error");
             return View(_unitOfWork.Photos.GetById(id));
         }
+        [PhotographyManagerAuthorize]
         [HttpPost]
         public ActionResult AddEditedProperties(Photo photo,int id)
         {
@@ -124,7 +128,7 @@ namespace PhotographyManager.Web.Controllers
                 return View("Error");
             _unitOfWork.Photos.GetById(id).Name = photo.Name;
             _unitOfWork.Photos.GetById(id).ShootingPlace = photo.ShootingPlace;
-            _unitOfWork.Photos.GetById(id).CameraModel =photo.CameraModel;
+            _unitOfWork.Photos.GetById(id).CameraModel = photo.CameraModel;
             _unitOfWork.Photos.GetById(id).FocalDistance = photo.FocalDistance;
             _unitOfWork.Photos.GetById(id).Diaphragm = photo.Diaphragm;
             _unitOfWork.Photos.GetById(id).ISO = photo.ISO;
@@ -134,6 +138,7 @@ namespace PhotographyManager.Web.Controllers
             return RedirectToAction("ManagePhotos","Photo");
         }
 
+        [PhotographyManagerAuthorize]
         public ActionResult DeletePhoto(int id)
         {
             User currentUser = _unitOfWork.Users.GetOne(user => user.Name.Equals(User.Identity.Name));
@@ -151,7 +156,7 @@ namespace PhotographyManager.Web.Controllers
             _unitOfWork.Photos.GetById(id).PhotoImage = null;
             _unitOfWork.Photos.Remove(photo);
             _unitOfWork.Commit();
-            return View("ManagePhotos", _unitOfWork.Users.GetOne(user => user.Name.Equals(User.Identity.Name),user=>user.Photo.Select(p=>p.PhotoImage)));
+            return View("ManagePhotos", _unitOfWork.Users.GetOne(user => user.Name.Equals(User.Identity.Name),user => user.Photo.Select(p => p.PhotoImage)));
         }
     }
 }

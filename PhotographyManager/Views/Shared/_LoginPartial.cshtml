@@ -1,9 +1,0 @@
-﻿<div class="btn-group pull-right">
-      @if (Request.IsAuthenticated)
-     { 
-          using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" })) {
-             @Html.AntiForgeryToken()
-                <a class="btn"   href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
-             }
-     }
-</div>

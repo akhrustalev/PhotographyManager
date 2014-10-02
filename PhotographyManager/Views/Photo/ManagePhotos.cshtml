@@ -2,6 +2,7 @@
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Photos";
 }
 
 <!DOCTYPE html>
@@ -14,8 +15,8 @@
 </head>
 <body>
     <div>
-        <div >
-            <form method="post" enctype="multipart/form-data" id="fileForm" action=@Url.Action("UploadAsync","Photo")>
+        <div>
+            <form method="post" enctype="multipart/form-data" id="fileForm"  action="@Url.Action("UploadAsync","Photo")">
                 <input id="fileInput" type="file"
                        data-filename-placement="inside" size="28" class="btn btn-primary" name="OriginalLocation" runat="server">
                 <input type="submit" value="Upload" runat="server" id="UploadButton" class="btn btn-primary">
@@ -30,11 +31,11 @@
             for (int i = 0; i < count1; i++)
             {
                 <figure style="display:inline-block; border:none">
-                    <img src=@Url.Action("ShowMiniPhoto","Photo", new {id=Model.Photo.ElementAt(i).ID}) alt=""/>
+                    <img src=@Url.Action("ShowMiniPhoto","Photo", new {id = Model.Photo.ElementAt(i).ID}) alt=""/>
                     <figcaption style="text-align: center; border: none; font-family:'Times New Roman'">
-                        @Html.ActionLink("Edit Properties", "EditPhotosProperties", "Photo", new {id = Model.Photo.ElementAt(i).ID }, new {id="EditProperties" })
+                        @Html.ActionLink("Edit Properties", "EditPhotosProperties", "Photo", new {id = Model.Photo.ElementAt(i).ID }, new {id= "EditProperties" })
                         <br />
-                        @Html.ActionLink("Delete", "DeletePhoto", "Photo", new {id = Model.Photo.ElementAt(i).ID },null)
+                        @Html.ActionLink("Delete", "DeletePhoto", "Photo", new { id = Model.Photo.ElementAt(i).ID }, new {id = "DeleteLink" })
                     </figcaption>
                 </figure>
             }

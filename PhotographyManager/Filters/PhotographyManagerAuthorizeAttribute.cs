@@ -27,6 +27,7 @@ namespace PhotographyManager.Web.Filters
         }
         public bool AuthorizeCore(AuthorizationContext filterContext)
         {
+            if (HttpContext.Current.User.Identity.Name.Equals("")) { filterContext.Result = new RedirectResult("~/"); };
             using (UnitOfWork unitOfWork = new UnitOfWork())
             {
                 User user = unitOfWork.Users.GetOne(u => u.Name.Equals(HttpContext.Current.User.Identity.Name));

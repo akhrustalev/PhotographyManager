@@ -8,9 +8,11 @@ using PhotographyManager.Model;
 using PhotographyManager.Web.Models.Search;
 using System.Globalization;
 using System.Web.Security;
+using PhotographyManager.Web.Filters;
 
 namespace PhotographyManager.Web.Controllers
 {
+    [PhotographyManagerAuthorize]
     public class SearchController : BaseController
     {
         public SearchController(IUnitOfWork unitOfWork):base(unitOfWork)
@@ -20,7 +22,7 @@ namespace PhotographyManager.Web.Controllers
         public ActionResult Search()
         {
             string keyword = String.Format(Request.Form["SearchText"]);
-            List<Photo> searchResult =(List<Photo>)_unitOfWork.Photos.SearchPhotos(keyword);
+            List<Photo> searchResult = (List<Photo>)_unitOfWork.Photos.SearchPhotos(keyword);
             return View("SearchResult", searchResult);
         }
 

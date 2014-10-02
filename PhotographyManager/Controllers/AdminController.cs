@@ -28,7 +28,7 @@ namespace PhotographyManager.Web.Controllers
             List<User> users = _unitOfWork.Users.GetMany(u => !u.Name.Equals(User.Identity.Name), u => u.Membership).ToList();
             foreach(User user in users)
             {
-                if (Request.Form[user.Name]!=null&&Request.Form[user.Name]=="Free")
+                if (Request.Form[user.Name] != null && Request.Form[user.Name] == "Free")
                 {
                     _unitOfWork.Users.ChangeUsersTypeToFree(user.ID);
                     _unitOfWork.Commit();
@@ -42,7 +42,7 @@ namespace PhotographyManager.Web.Controllers
                     }
                 }
             }
-            return RedirectToAction("MyHomePage","Home");
+            return RedirectToAction("Index","Home");
         }       
     }
 }

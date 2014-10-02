@@ -31,7 +31,7 @@ namespace PhotographyManager.Web.Controllers
         {
             if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
             {
-                return RedirectToAction("MyHomePage", "Home");
+                return RedirectToAction("Index", "Home");
             }
 
             ModelState.AddModelError("", "The user name or password provided is incorrect.");
@@ -69,9 +69,9 @@ namespace PhotographyManager.Web.Controllers
                   }
                   WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
                   WebSecurity.Login(model.UserName, model.Password);
-                  return RedirectToAction("MyHomePage", "Home");
+                  return RedirectToAction("Index", "Home");
             }
-            return View("Register",model);
+            return View("Register", model);
         }
     }
 }

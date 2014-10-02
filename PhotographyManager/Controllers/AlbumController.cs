@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Web.Security;
 using PhotographyManager.Model;
 using PhotographyManager.DataAccess.UnitOfWork;
+using PhotographyManager.Web.Filters;
 
 
 namespace PhotographyManager.Web.Controllers
@@ -15,7 +16,7 @@ namespace PhotographyManager.Web.Controllers
         public AlbumController(IUnitOfWork unitOfWork):base(unitOfWork)
         {
         }
-
+        [PhotographyManagerAuthorize]
         public ActionResult ManageAlbums()
         {
             return View("ManageAlbums", _unitOfWork.Users.GetOne(user => user.Name.Equals(User.Identity.Name),user=>user.Album.Select(album=>album.Photo.Select(photo=>photo.PhotoImage))));
@@ -24,9 +25,9 @@ namespace PhotographyManager.Web.Controllers
         [HttpGet]
         public ActionResult ObservePhotos(string albumName)
         {
-            return View(_unitOfWork.Albums.GetOne(a => a.Name.Equals(albumName),album=>album.Photo.Select(photo=>photo.PhotoImage)));
+            return View(_unitOfWork.Albums.GetOne(a => a.Name.Equals(albumName),album=>album.Photo.Select(photo=>photo.PhotoImage),album=>album.User));
         }
-        
+        [PhotographyManagerAuthorize]
         public ActionResult AddAlbum()
         {
             User currentUser = _unitOfWork.Users.GetOne(user => user.Name.Equals(User.Identity.Name));
@@ -41,7 +42,7 @@ namespace PhotographyManager.Web.Controllers
             }
             return View("AddAlbum");
         }
-
+        [PhotographyManagerAuthorize]
         public ActionResult AddAlbumToUser()
         {
             User currentUser = _unitOfWork.Users.GetOne(user => user.Name.Equals(User.Identity.Name));
@@ -61,7 +62,7 @@ namespace PhotographyManager.Web.Controllers
 
             return View("ManageAlbums", _unitOfWork.Users.GetOne(user => user.Name.Equals(User.Identity.Name), u => u.Album.Select(a => a.Photo.Select(p => p.PhotoImage))));
         }
-
+        [PhotographyManagerAuthorize]
         public ActionResult ManagePhotosInAlbum(string albumName)
         {
             User currentUser = _unitOfWork.Users.GetOne(user => user.Name.Equals(User.Identity.Name),u=>u.Photo);
@@ -70,7 +71,7 @@ namespace PhotographyManager.Web.Controllers
             ViewBag.AlbumName = albumName;
             return View("ManagePhotosInAlbum", _unitOfWork.Users.GetOne(user => user.Name.Equals(User.Identity.Name), u => u.Photo, u => u.Album.Select(a => a.Photo.Select(p => p.PhotoImage))));
         }
-
+        [PhotographyManagerAuthorize]
         public ActionResult DeletePhotoFromAlbum(string albumName, int photoId)
         {
             User currentUser = _unitOfWork.Users.GetOne(user => user.Name.Equals(User.Identity.Name));
@@ -81,7 +82,7 @@ namespace PhotographyManager.Web.Controllers
             _unitOfWork.Commit();
             return View("ManagePhotosInAlbum", _unitOfWork.Users.GetOne(user => user.Name.Equals(User.Identity.Name), u => u.Photo,u=>u.Album.Select(a=>a.Photo.Select(p=>p.PhotoImage))));
         }
-
+        [PhotographyManagerAuthorize]
         public ActionResult AddPhotoToAlbum(string albumName, int photoId)
         {
             User currentUser = _unitOfWork.Users.GetOne(user => user.Name.Equals(User.Identity.Name));

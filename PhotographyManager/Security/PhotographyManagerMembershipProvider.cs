@@ -33,22 +33,21 @@ namespace PhotographyManager.Web.Security
             _unitOfWork.Commit();
             int userId = _unitOfWork.Users.GetOne(u=>u.Name.Equals(userName)).ID;
             string salt = Crypto.GenerateSalt();
-            string hashedPassword = Crypto.HashPassword(password+salt);
-            _unitOfWork.UserMembership.Add(new UserMembership {ID=userId,Password=hashedPassword, PasswordSalt=salt});
+            string hashedPassword = Crypto.HashPassword(password + salt);
+            _unitOfWork.UserMembership.Add(new UserMembership {ID = userId,Password = hashedPassword, PasswordSalt = salt});
             _unitOfWork.Commit();            
         }
         public bool ValidateUser(string userName, string password)
         {
             int userId = VerifyUserNameHasConfirmedAccount(userName);
             if (userId == -1) return false;
-            else return CheckPassword(userId,password);
-            
+            else return CheckPassword(userId,password);            
         }
 
         private int VerifyUserNameHasConfirmedAccount(string UserName)
         {
             User user = _unitOfWork.Users.GetOne(u => u.Name.Equals(UserName));
-            if (user==null) return -1;
+            if (user == null) return -1;
             int userId = user.ID;
             if (_unitOfWork.UserMembership.GetOne(u => u.ID == userId)!= null) return userId;
             else return -1;

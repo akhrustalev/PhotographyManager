@@ -23,14 +23,15 @@ namespace PhotographyManager.Web.Controllers
         public HomeController(IUnitOfWork unitOfWork):base(unitOfWork)
         {
         }
+        public ActionResult Login()
+        {
+            if (User.Identity.IsAuthenticated) return RedirectToAction("Index");
+            return View("Login");
+        }
+        [PhotographyManagerAuthorize]
         public ActionResult Index()
         {
-            if (User.Identity.IsAuthenticated) return RedirectToAction("MyHomePage");
-            return View("Index");
-        }
-        public ActionResult MyHomePage()
-        {
-            return View(_unitOfWork.Users.GetOne(user => user.Name.Equals(User.Identity.Name),user=>user.Album.Select(album=>album.Photo.Select(photo=>photo.PhotoImage)),user=>user.Roles,user=>user.Membership));
+            return View(_unitOfWork.Users.GetOne(user => user.Name.Equals(User.Identity.Name),user => user.Album.Select(album => album.Photo.Select(photo => photo.PhotoImage)),user => user.Roles,user => user.Membership));
         }
     }
 }

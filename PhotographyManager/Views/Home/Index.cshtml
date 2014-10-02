@@ -1,10 +1,52 @@
-﻿@{
-    ViewBag.Title = "Index Page";
+﻿@model PhotographyManager.Model.User
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Home Page";
 }
-<div>
-<h3 class="text-center">Welcome To Photography Manager! Please register or login</h3>
-    @Html.Partial("Login")
-    <p>Don't have an account yet? Register @Html.ActionLink("Here", "Register","Account")</p>
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Home Page</title>
+</head>
+<body>
+    <div>
+        <form method ="post" id="searchForm" enctype="multipart/form-data" action=@Url.Action("Search","Search")>
+            <input type="text" id="SearchText" name="SearchText" /><br />
+            <input type="submit" class="btn btn-primary" id="SearchButton" value="Search"/> 
+            </form>
+        <form method="post" id="advancedSearchForm" enctype="multipart/form-data" action=@Url.Action("AdvancedSearch","Search")>
+            <input type="submit" class="btn btn-primary" id="SearchButton" value="Advanced Search" />
+        </form>
 </div>
+    <br/>
+    @if (Model.Album.Count > 0) { 
+    <h1 class="text-center" style="color:#444">My Albums</h1>
+    <br />
+    <div>
+        @using (Html.BeginForm())
+        {
+            for (int i = 0; i < Model.Album.Count; i++)
+            {
+                <figure style="display:inline-block; border:none">
+                @if (Model.Album.ElementAt(i).Photo.Count != 0)
+                {
+                    <img src=@Url.Action("ShowMiniPhoto", "Photo", new { id = Model.Album.ElementAt(i).Photo.ElementAt(0).ID }) alt=""/>
+                }
+                else {<img src="~/Content/themes/base/images/ui-bg_flat_0_aaaaaa_40x100.png" alt="" style="height:200px; width:200px"/> }
+                    <figcaption style="text-align: center; border: none">
+                    @Html.ActionLink(Model.Album.ElementAt(i).Name + "      ", "ObservePhotos","Album", new { albumName = Model.Album.ElementAt(i).Name }, null)
+                    </figcaption>
+                </figure>
+            }
+        }
+        <br/>        
+    </div>
+    }
+</body>
+</html>
 
 

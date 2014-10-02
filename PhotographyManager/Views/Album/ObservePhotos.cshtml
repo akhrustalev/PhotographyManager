@@ -2,6 +2,7 @@
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = Model.Name;
 }
 <!DOCTYPE html>
 
@@ -77,6 +78,7 @@
     </script>
 </head>
 <body>
+    @{if (HttpContext.Current.User.Identity.Name.Equals(Model.User.Name)) { 
     <a href="#UrlModal" data-toggle="modal" class="btn btn-primary">Get Link</a>
     <div id="UrlModal" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-header">
@@ -86,8 +88,14 @@
             <p class="text-center" style="font-family:'Times New Roman'; font-size:large">Link To This Album: @Html.Action("GetLink", "Album")</p>
         </div>
     </div>
+    }
+    }
     <div id="photosDiv">
     </div>
+    @if (!Request.IsAuthenticated)
+    {
+    <p>You may want to @Html.ActionLink("Login to this site", "Login", "Home")</p>
+    }
 </body>
 </html>
 
