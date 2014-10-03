@@ -44,7 +44,6 @@ namespace PhotographyManager.Web.Controllers
                 }
             }
 
-
             if (length == 0)
             {
                 ModelState.AddModelError("", "No image was chosen");
@@ -90,7 +89,8 @@ namespace PhotographyManager.Web.Controllers
 
         public ActionResult ShowMiniPhotoOnIndex(int id,int albumId)
         {
-            FileContentResult result = new FileContentResult(_unitOfWork.Albums.GetById(albumId,album => album.Photo.Select(photo => photo.PhotoImage)).Photo.ElementAt(id).PhotoImage.MiniImage, "jpeg");
+            FileContentResult result = new FileContentResult(_unitOfWork.Albums.GetById(albumId,
+                album => album.Photo.Select(photo => photo.PhotoImage)).Photo.ElementAt(id).PhotoImage.MiniImage, "jpeg");
             return result;
         }
 

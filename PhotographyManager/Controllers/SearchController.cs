@@ -33,7 +33,9 @@ namespace PhotographyManager.Web.Controllers
 
         public ActionResult AdvancedSearchResult(AdvancedSearchModel model)
         {
-            List<Photo> searchResult = (List<Photo>)_unitOfWork.Photos.AdvancedSearchPhotos((model.Name == null) ? "" : model.Name, (model.ShootingPlace == null) ? "" : model.ShootingPlace, model.ShotAfter, model.ShotBefore, (model.CameraModel == null) ? "" : model.CameraModel, (model.Diaphragm == null) ? "" : model.Diaphragm, (model.ISO == null) ? "" : model.ISO, model.ShutterSpeed, model.FocalDistance, model.Flash);
+            List<Photo> searchResult = (List<Photo>)_unitOfWork.Photos.AdvancedSearchPhotos((model.Name == null) ? "" : model.Name, (model.ShootingPlace == null) ? "" : 
+                model.ShootingPlace, model.ShotAfter, model.ShotBefore, (model.CameraModel == null) ? "" : model.CameraModel,
+                (model.Diaphragm == null) ? "" : model.Diaphragm, (model.ISO == null) ? "" : model.ISO, model.ShutterSpeed, model.FocalDistance, model.Flash);
             return View("SearchResult", searchResult);
         }
 

@@ -13,7 +13,6 @@ namespace PhotographyManager.DataAccess.Repositories.PhotoRepository
         public PhotoRepository(PhotographyManagerContext _context):base(_context)
         {
             context = _context;
-            dbSet = context.Set<Photo>();
         }
 
         public IEnumerable<Photo> SearchPhotos(string keyword)
@@ -21,7 +20,8 @@ namespace PhotographyManager.DataAccess.Repositories.PhotoRepository
             if (!(keyword.Equals(""))) return new List<Photo>();
             return context.Database.SqlQuery<Photo>("SearchPhotos @KeyWord", new SqlParameter("KeyWord", keyword)).ToList();
         }
-        public IEnumerable<Photo> AdvancedSearchPhotos(string name, string shootingPlace, DateTime? shotAfter, DateTime? shotBefore, string cameraModel, string diaphragm, string ISO, double? shutterSpeed, double? focalDistance, bool? flash)
+        public IEnumerable<Photo> AdvancedSearchPhotos(string name, string shootingPlace, DateTime? shotAfter, DateTime? shotBefore,
+        string cameraModel, string diaphragm, string ISO, double? shutterSpeed, double? focalDistance, bool? flash)
         {
             SqlParameter shotAfterParam = new SqlParameter();
             SqlParameter shotBeforeParam = new SqlParameter();

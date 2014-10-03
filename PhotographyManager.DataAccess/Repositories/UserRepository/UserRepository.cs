@@ -14,7 +14,6 @@ namespace PhotographyManager.DataAccess.Repositories.UserRepository
             : base(_context)
         {
             context = _context;
-            dbSet = context.Set<User>();
         }
 
         public void ChangeUsersTypeToPaid(int userId)

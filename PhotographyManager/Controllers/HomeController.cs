@@ -31,7 +31,8 @@ namespace PhotographyManager.Web.Controllers
         [PhotographyManagerAuthorize]
         public ActionResult Index()
         {
-            return View(_unitOfWork.Users.GetOne(user => user.Name.Equals(User.Identity.Name),user => user.Album.Select(album => album.Photo.Select(photo => photo.PhotoImage)),user => user.Roles,user => user.Membership));
+            return View(_unitOfWork.Users.GetOne(user => user.Name.Equals(User.Identity.Name),user => user.Album.Select(album => album.Photo.Select(photo => photo.PhotoImage)),
+                user => user.Roles,user => user.Membership));
         }
     }
 }

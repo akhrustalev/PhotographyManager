@@ -15,7 +15,7 @@
     $(function () {
         var BlockNumber = 2;
         var inProgress = false;;
-        var blockSize = Math.ceil($(window).height() / 300) * Math.ceil($(window).width()/300);
+        var blockSize = Math.ceil($(window).height() / 283) * Math.ceil($(window).width()/281);
         $(window).scroll(function () {
             if ($(window).scrollTop() == $(document).height() -
             $(window).height() && !inProgress) {
@@ -51,7 +51,7 @@
     <script type="text/javascript">
         $(function () {
             var BlockNumber = 1;
-            var blockSize = Math.ceil($(window).height() / 300) * Math.ceil($(window).width() / 300);
+            var blockSize = Math.ceil($(window).height() / 283) * Math.ceil($(window).width() / 281);
             $.ajax({
             type: "GET",
             url: "@Url.HttpRouteUrl("DefaultApi", new {controller="LoadingPhotos" })",

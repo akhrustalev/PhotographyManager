@@ -50,8 +50,7 @@ namespace PhotographyManager.DataAccess.UnitOfWork
             get
             {
                return new Repository<Album>(context);
-            }
- 
+            } 
         }
 
         public IPhotoRepository Photos
