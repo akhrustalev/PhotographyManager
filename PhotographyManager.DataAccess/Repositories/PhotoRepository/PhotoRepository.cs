@@ -17,7 +17,7 @@ namespace PhotographyManager.DataAccess.Repositories.PhotoRepository
 
         public IEnumerable<Photo> SearchPhotos(string keyword)
         {
-            if (!(keyword.Equals(""))) return new List<Photo>();
+            if (String.IsNullOrWhiteSpace(keyword)) return new List<Photo>();
             return context.Database.SqlQuery<Photo>("SearchPhotos @KeyWord", new SqlParameter("KeyWord", keyword)).ToList();
         }
         public IEnumerable<Photo> AdvancedSearchPhotos(string name, string shootingPlace, DateTime? shotAfter, DateTime? shotBefore,

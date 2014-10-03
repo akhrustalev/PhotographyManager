@@ -129,6 +129,7 @@ namespace PhotographyManager.Web.Controllers
             _unitOfWork.Photos.GetById(id).Name = photo.Name;
             _unitOfWork.Photos.GetById(id).ShootingPlace = photo.ShootingPlace;
             _unitOfWork.Photos.GetById(id).CameraModel = photo.CameraModel;
+            _unitOfWork.Photos.GetById(id).ShootingTime = photo.ShootingTime;
             _unitOfWork.Photos.GetById(id).FocalDistance = photo.FocalDistance;
             _unitOfWork.Photos.GetById(id).Diaphragm = photo.Diaphragm;
             _unitOfWork.Photos.GetById(id).ISO = photo.ISO;
