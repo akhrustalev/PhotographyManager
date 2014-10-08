@@ -7,6 +7,7 @@ using System.Web.Security;
 using PhotographyManager.Model;
 using PhotographyManager.DataAccess.UnitOfWork;
 using PhotographyManager.Web.Filters;
+using PhotographyManager.Services;
 
 
 namespace PhotographyManager.Web.Controllers
@@ -31,14 +32,11 @@ namespace PhotographyManager.Web.Controllers
         public ActionResult AddAlbum()
         {
             User currentUser = _unitOfWork.Users.GetOne(user => user.Name.Equals(User.Identity.Name));
-            if (currentUser.GetType().BaseType.Equals(typeof(FreeUser)))
+            if (PhotosService.TooManyAlbums(currentUser))
             {
-                if (currentUser.Album.Count == 5)
-                {
                     ModelState.AddModelError("", "You can't create more than 5  albums because you are a free user");
 
                     return View("ManageAlbums",currentUser);
-                }
             }
             return View("AddAlbum");
         }
@@ -72,6 +70,7 @@ namespace PhotographyManager.Web.Controllers
             return View("ManagePhotosInAlbum", _unitOfWork.Users.GetOne(user => user.Name.Equals(User.Identity.Name), u => u.Photo, u => u.Album.Select(a => a.Photo.Select(p => p.PhotoImage))));
         }
         [PhotographyManagerAuthorize]
+        [HttpPost]
         public ActionResult DeletePhotoFromAlbum(string albumName, int photoId)
         {
             User currentUser = _unitOfWork.Users.GetOne(user => user.Name.Equals(User.Identity.Name));

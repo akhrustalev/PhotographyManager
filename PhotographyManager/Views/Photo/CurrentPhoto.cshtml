@@ -1,4 +1,8 @@
 ﻿@model PhotographyManager.Model.Photo
+@Scripts.Render("~/bundles/jquery")
+<script type="text/javascript" src="../Scripts/AngularJS/angular.js"></script>
+<script type="text/javascript" src="../Scripts/jquery.signalR-2.1.2.min.js"></script>
+@*<script type="text/javascript" src="../Scripts/AngularJS/app.js"></script>*@
 <a href="#@ViewBag.Ind" data-toggle="modal">Show</a>
 <div id="@ViewBag.Ind" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-header">
@@ -15,6 +19,16 @@
         <p class="text-center" style="font-family:'Times New Roman'; font-size:large">Shutter Speed: @Model.ShutterSpeed</p>
         <p class="text-center" style="font-family:'Times New Roman'; font-size:large">Focal Distance: @Model.FocalDistance</p>
         <p class="text-center" style="font-family:'Times New Roman'; font-size:large">Flash: @Model.Flash</p>
+        <div class="well" data-ng-repeat="comment in Comments | filter:{photoId:@Model.ID}">{{comment.text}} </div>
+        <div> 
+        <form>
+            <input type="text" class="input-large" data-ng-model="commentText"/>
+            <br />
+            <input ng-click="PushComment(@Model.ID)" value="Add Comment" class="btn btn-primary"/>
+        </form>
+        </div>
+
+
     </div>
     <div class="modal-footer">
         <a href="#@((ViewBag.Ind - 1).ToString())" class="btn btn-primary" style="float:left" data-dismiss="modal" data-toggle="modal">Previous</a>
@@ -29,4 +43,5 @@
         })
     })
 </script>
+
 

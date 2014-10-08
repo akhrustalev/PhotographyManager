@@ -29,8 +29,8 @@ namespace PhotographyManager.Web
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             BundleTable.EnableOptimizations = true;
             AuthConfig.RegisterAuth();
-            Database.SetInitializer<PhotographyManagerContext>(
- new DropCreateDatabaseIfModelChanges<PhotographyManagerContext>()); 
+ //           Database.SetInitializer<PhotographyManagerContext>(
+ //new DropCreateDatabaseIfModelChanges<PhotographyManagerContext>()); 
             
         }
     }

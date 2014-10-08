@@ -34,15 +34,11 @@ namespace PhotographyManager.Web.Controllers
             Int32 length = file.ContentLength;
             User currentUser = _unitOfWork.Users.GetOne(user => user.Name.Equals(User.Identity.Name), u => u.Photo.Select(p => p.PhotoImage));
 
-            if (currentUser.GetType().BaseType.Equals(typeof(FreeUser)))
-            {
-                if (currentUser.Photo.Count == 30)
-                {
+            if (PhotosService.TooManyPhoto(currentUser)){
                     ModelState.AddModelError("", "You can't upload more than 30 photos because you are a free user");
 
                     return View("ManagePhotos", currentUser);
                 }
-            }
 
             if (length == 0)
             {
@@ -126,38 +122,41 @@ namespace PhotographyManager.Web.Controllers
             User currentUser = _unitOfWork.Users.GetOne(user => user.Name.Equals(User.Identity.Name));
             if (_unitOfWork.Photos.GetById(id).UserID != currentUser.ID)
                 return View("Error");
-            _unitOfWork.Photos.GetById(id).Name = photo.Name;
-            _unitOfWork.Photos.GetById(id).ShootingPlace = photo.ShootingPlace;
-            _unitOfWork.Photos.GetById(id).CameraModel = photo.CameraModel;
-            _unitOfWork.Photos.GetById(id).ShootingTime = photo.ShootingTime;
-            _unitOfWork.Photos.GetById(id).FocalDistance = photo.FocalDistance;
-            _unitOfWork.Photos.GetById(id).Diaphragm = photo.Diaphragm;
-            _unitOfWork.Photos.GetById(id).ISO = photo.ISO;
-            _unitOfWork.Photos.GetById(id).ShutterSpeed = photo.ShutterSpeed;
-            _unitOfWork.Photos.GetById(id).Flash = photo.Flash;
+            Photo editedPhoto = _unitOfWork.Photos.GetById(id);
+            editedPhoto.Name = photo.Name;
+            editedPhoto.ShootingPlace = photo.ShootingPlace;
+            editedPhoto.CameraModel = photo.CameraModel;
+            editedPhoto.ShootingTime = photo.ShootingTime;
+            editedPhoto.FocalDistance = photo.FocalDistance;
+            editedPhoto.Diaphragm = photo.Diaphragm;
+            editedPhoto.ISO = photo.ISO;
+            editedPhoto.ShutterSpeed = photo.ShutterSpeed;
+            editedPhoto.Flash = photo.Flash;
             _unitOfWork.Commit();
             return RedirectToAction("ManagePhotos","Photo");
         }
 
         [PhotographyManagerAuthorize]
+        [HttpPost]
         public ActionResult DeletePhoto(int id)
         {
             User currentUser = _unitOfWork.Users.GetOne(user => user.Name.Equals(User.Identity.Name));
             if (_unitOfWork.Photos.GetById(id).UserID != currentUser.ID)
                 return View("Error");
             Photo photo = _unitOfWork.Photos.GetById(id);
-            for (int i = 0; i < photo.Album.Count; i++ )
+            for (int i = 0; i < photo.Album.Count; i++)
             {
                 _unitOfWork.Albums.GetById(photo.Album.ElementAt(i).ID).Photo.Remove(photo);
             }
             currentUser.Photo.Remove(photo);
             _unitOfWork.PhotoImages.Remove(_unitOfWork.PhotoImages.GetOne(photoImage => photoImage.ID == id));
-            _unitOfWork.Photos.GetById(id).User = null;
-            _unitOfWork.Photos.GetById(id).Album = null;
-            _unitOfWork.Photos.GetById(id).PhotoImage = null;
+            photo.User = null;
+            photo.Album = null;
+            photo.PhotoImage = null;
             _unitOfWork.Photos.Remove(photo);
             _unitOfWork.Commit();
-            return View("ManagePhotos", _unitOfWork.Users.GetOne(user => user.Name.Equals(User.Identity.Name),user => user.Photo.Select(p => p.PhotoImage)));
+            return null;
+            //return View("ManagePhotos", _unitOfWork.Users.GetOne(user => user.Name.Equals(User.Identity.Name), user => user.Photo.Select(p => p.PhotoImage)));
         }
     }
 }

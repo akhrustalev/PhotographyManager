@@ -14,6 +14,7 @@ namespace PhotographyManager.Model
             Album = new HashSet<Album>();
             Photo = new HashSet<Photo>();
             Roles = new HashSet<UserRoles>();
+            Comment = new HashSet<Comment>();
         }
 
         public int ID { get; set; }
@@ -28,5 +29,7 @@ namespace PhotographyManager.Model
         public virtual ICollection<Photo> Photo { get; set; }
 
         public virtual ICollection<UserRoles> Roles { get; set; }
+
+        public virtual ICollection<Comment> Comment { get; set; }
     }
 }

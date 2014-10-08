@@ -27,6 +27,30 @@ namespace PhotographyManager.Services
             return photos;
         }
 
+        public static bool TooManyPhoto(User user)
+        {
+            if (user.GetType().BaseType.Equals(typeof(FreeUser)))
+            {
+                if (user.Photo.Count == 30)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public static bool TooManyAlbums(User user)
+        {
+            if (user.GetType().BaseType.Equals(typeof(FreeUser)))
+            {
+                if (user.Album.Count == 5)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public async static Task<Photo> UploadAsync(System.IO.Stream inputStream, int length, IUnitOfWork unitOfWork, int userId)
         {
             //saving in big size

@@ -10,41 +10,82 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Manage Photos In Album</title>
+    <script type="text/javascript">
+        $(function () {
+            $('[id=DeleteLink]').live("click", function (event) {
+                event.preventDefault();
+                var id = event.target.getAttribute('name');//we keep photo's id in name attribute
+                $.ajax({
+                    url:"@Url.Action("DeletePhotoFromAlbum","Album")"+'?albumName=' + "@ViewBag.AlbumName" +'&photoId='+id,
+                    type: 'POST',
+                    success: function() {
+                        $('#' + id).remove();
+                        var photoUrl = "@Url.Action("ShowMiniPhoto","Photo")" + '/' + id;
+                        var addPhotoUrl = "<a href='/Album/AddPhotoToAlbum?albumName=" + "@ViewBag.AlbumName" + "&amp;photoId=" + id + "' id='AddLink' name='" + id + "'>Add Photo</a>";
+                        $('#modalBody').append("<figure style='display:inline-block; border:none' id='"+id+"'><img src="+photoUrl+" alt=''/><figcaption style='text-align: center;font-size:larger'>"+addPhotoUrl+"</figcaption></figure>");
+                }
+                })
+            })
+        })
+    </script>
+    <script type="text/javascript">
+    $(function () {
+        $('[id=AddLink]').live("click", function (event) {
+            event.preventDefault();
+            var id = event.target.getAttribute('name');//we keep photo's id in name attribute
+            $.ajax({
+                url:"@Url.Action("AddPhotoToAlbum","Album")"+'?albumName=' + "@ViewBag.AlbumName" +'&photoId='+id,
+                type: 'POST',
+                success: function () {
+                    var photoUrl = "@Url.Action("ShowMiniPhoto","Photo")" + '/' + id;
+                    var deletePhotoUrl = "<a href='/Album/DeletePhotoFromAlbum?albumName=" + "@ViewBag.AlbumName" + "&amp;photoId=" + id + "' id='DeleteLink' name='" + id + "'>Delete Photo</a>";
+                       $('#' + id).remove();
+                       $('#photosDiv').append("<figure style='display:inline-block' id='" + id + "'><img src=" + photoUrl + " alt=''/><figcaption style='text-align: center;font-size:larger'>" + deletePhotoUrl + "</figcaption></figure>");
+                }
+            })
+            })
+        })
+    </script>
 </head>
 <body>
     <div>
- @using (Html.BeginForm())
-{
-   <h1>Photos in Album</h1>
-    for (int i = 0; i < Model.Photo.Count; i++)
-    {
-
+        
+        <a href="#AddPhotosToAlbum" data-toggle="modal" class="btn btn-primary">Add Photos</a>
+        <div id="AddPhotosToAlbum" class="modal hide fade"  aria-hidden="true" style="width:1000px;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body" style="max-height:800px" id="modalBody">
+                @{for (int i = 0; i < Model.Photo.Count; i++)
+                 {
+                     if (Model.Photo.ElementAt(i).Album.Where(album => album.Name == ViewBag.AlbumName).Count() == 0)
+                     {
+                        <figure style="display:inline-block; border:none" id="@Model.Photo.ElementAt(i).ID">
+                            <img src=@Url.Action("ShowMiniPhoto","Photo", new {id=Model.Photo.ElementAt(i).ID}) alt="" />
+                            <figcaption style="text-align: center;font-size:larger">
+                                @Html.ActionLink("Add Photo", "AddPhotoToAlbum", new { albumName = ViewBag.AlbumName, photoId = Model.Photo.ElementAt(i).ID }, new {id = "AddLink", name = Model.Photo.ElementAt(i).ID })
+                            </figcaption>
+                        </figure>
+                     }
+                 }
+                }
+            </div>
+        </div>
+        <br />
+        <div id="photosDiv">
+       @{ for (int i = 0; i < Model.Photo.Count; i++) { 
         if (Model.Photo.ElementAt(i).Album.Where(album => album.Name == ViewBag.AlbumName).Count() != 0)
         {
-            <figure style="display:inline-block">
-                <img src=@Url.Action("ShowMiniPhoto", "Photo", new { id = Model.Photo.ElementAt(i).ID }) alt=""/>
-                <figcaption style="border:none">
-                    @Html.ActionLink("Delete Photo", "DeletePhotoFromAlbum", new { albumName = ViewBag.AlbumName, photoId = Model.Photo.ElementAt(i).ID }, null)
-                </figcaption>
-            </figure>
+        <figure style="display:inline-block" id="@Model.Photo.ElementAt(i).ID">
+            <img src=@Url.Action("ShowMiniPhoto", "Photo", new { id = Model.Photo.ElementAt(i).ID }) alt="" />
+            <figcaption style="text-align: center;font-size:larger">
+                @Html.ActionLink("Delete Photo", "DeletePhotoFromAlbum", new { albumName = ViewBag.AlbumName, photoId = Model.Photo.ElementAt(i).ID }, new { id = "DeleteLink", name = Model.Photo.ElementAt(i).ID })
+            </figcaption>
+        </figure>
         }
-    }
-
-    <h1>Photos not in Album</h1>
-    for (int i = 0; i < Model.Photo.Count; i++)
-    {
-
-        if (Model.Photo.ElementAt(i).Album.Where(album => album.Name == ViewBag.AlbumName).Count() == 0)
-        {
-            <figure style="display:inline-block; border:none">
-                <img src=@Url.Action("ShowMiniPhoto","Photo", new {id=Model.Photo.ElementAt(i).ID}) alt=""/>
-                <figcaption style="border:none">
-                @Html.ActionLink("Add Photo", "AddPhotoToAlbum", new { albumName = ViewBag.AlbumName, photoId = Model.Photo.ElementAt(i).ID }, null)
-                </figcaption>
-            </figure>
         }
-    }
-}
+        }
+       </div>
     </div>
 </body>
 </html>

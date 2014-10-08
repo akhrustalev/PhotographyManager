@@ -12,12 +12,23 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>My Photos</title>
-    @*<script type="text/javascript">
-        $("#UploadButton").on("click",function(event){
-            var fileSize = document.getElementById("fileInput").files[0].fileSize;
-            if (fileSize > 500 * 1024) event.preventDefault;
+    <script type="text/javascript">
+        $(function () {
+            $('[id=DeleteLink]').on("click", function (event) {
+                event.preventDefault();
+                //event.returnValue = false;
+                var id = event.target.getAttribute('name');//we keep photo's id in name attribute
+                $.ajax({
+                    url:"@Url.Action("DeletePhoto","Photo")"+'/' + id,
+                    @*url: "@Url.HttpRouteUrl("DefaultApi", new {controller="LoadingPhotos" })",*@
+                    type: 'POST',
+                    success: function() {
+                        $('#' + id).remove();
+                }
+                })
+            })
         })
-    </script>*@
+    </script>
 </head>
 <body>
     <div>
@@ -36,12 +47,12 @@
             int count1 = Model.Photo.Count;
             for (int i = 0; i < count1; i++)
             {
-                <figure style="display:inline-block; border:none">
+                <figure style="display:inline-block; border:none" id="@Model.Photo.ElementAt(i).ID">
                     <img src=@Url.Action("ShowMiniPhoto","Photo", new {id = Model.Photo.ElementAt(i).ID}) alt=""/>
-                    <figcaption style="text-align: center; border: none; font-family:'Times New Roman'">
-                        @Html.ActionLink("Edit Properties", "EditPhotosProperties", "Photo", new {id = Model.Photo.ElementAt(i).ID }, new {id= "EditProperties" })
+                    <figcaption style="text-align: center; border: none;font-family:'Times New Roman';font-size:larger">
+                        @Html.ActionLink("Edit Properties", "EditPhotosProperties", "Photo", new { id = Model.Photo.ElementAt(i).ID },null)
                         <br />
-                        @Html.ActionLink("Delete", "DeletePhoto", "Photo", new { id = Model.Photo.ElementAt(i).ID }, new {id = "DeleteLink" })
+                        @Html.ActionLink("Delete", "DeletePhoto", "Photo", new { id = Model.Photo.ElementAt(i).ID }, new { id = "DeleteLink" , name = Model.Photo.ElementAt(i).ID})
                     </figcaption>
                 </figure>
             }

@@ -21,6 +21,8 @@ namespace PhotographyManager.Model
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<Log> Log { get; set; }
 
+        public virtual DbSet<Comment> Comment { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Album>()

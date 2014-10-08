@@ -27,6 +27,8 @@ namespace PhotographyManager.DataAccess.UnitOfWork
         IPhotoRepository Photos{get; }
 
         IRepository<PhotoImage> PhotoImages { get; }
+
+        IRepository<Comment> Comments { get; }
         
     }
 }

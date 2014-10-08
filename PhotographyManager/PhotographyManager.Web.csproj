@@ -230,7 +230,7 @@
     <Compile Include="Security\PhotographyManagerMembershipProvider.cs" />
     <Compile Include="Security\PhotographyManagerRoleProvider.cs" />
     <Compile Include="Security\WebSecurity.cs" />
-    <Compile Include="SignalR\ShowComments.cs" />
+    <Compile Include="SignalR\CommentsHub.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>

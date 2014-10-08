@@ -24,21 +24,23 @@
         @if (Model.Album.Count > 0) 
         { 
         <h1 style="color:#444">Choose an album to manage</h1>
-        using (Html.BeginForm())
-        {
-            for (int i = 0; i < Model.Album.Count; i++)
+            using (Html.BeginForm())
             {
-                <figure style="display:inline-block; border:none">
-                @if (Model.Album.ElementAt(i).Photo.Count != 0)
+                for (int i = 0; i < Model.Album.Count; i++)
                 {
-                    <img src=@Url.Action("ShowMiniPhoto", "Photo", new { id = Model.Album.ElementAt(i).Photo.ElementAt(0).ID }) alt=""/>
+                     <figure style="display:inline-block; border:none">
+                         @if (Model.Album.ElementAt(i).Photo.Count != 0)
+                         {
+                             <img src=@Url.Action("ShowMiniPhoto", "Photo", new { id = Model.Album.ElementAt(i).Photo.ElementAt(0).ID }) alt="" />
+                         }
+                         else
+                         {<img src="~/Content/themes/base/images/ui-bg_flat_0_aaaaaa_40x100.png" alt="" style="height:200px; width:200px" /> }
+                         <figcaption style="text-align: center; border: none;font-family:'Times New Roman';font-size:larger">
+                             @Html.ActionLink(Model.Album.ElementAt(i).Name + "      ", "ManagePhotosInAlbum", new { albumName = Model.Album.ElementAt(i).Name }, null)
+                         </figcaption>
+                     </figure>
                 }
-                else
-                {<img src="~/Content/themes/base/images/ui-bg_flat_0_aaaaaa_40x100.png" alt="" style="height:200px; width:200px" /> }
-                    <figcaption style="border:none">@Html.ActionLink(Model.Album.ElementAt(i).Name + "      ", "ManagePhotosInAlbum", new { albumName = Model.Album.ElementAt(i).Name }, null)</figcaption>      
-                </figure>
-            }       
-        }
+            }
         }
 </div>
 </body>

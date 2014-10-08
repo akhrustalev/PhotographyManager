@@ -28,21 +28,22 @@
     <br />
     <div>
         @using (Html.BeginForm())
-        {
-            for (int i = 0; i < Model.Album.Count; i++)
-            {
-                <figure style="display:inline-block; border:none">
+{
+    for (int i = 0; i < Model.Album.Count; i++)
+    {
+            <figure style="display:inline-block; border:none">
                 @if (Model.Album.ElementAt(i).Photo.Count != 0)
                 {
-                    <img src=@Url.Action("ShowMiniPhoto", "Photo", new { id = Model.Album.ElementAt(i).Photo.ElementAt(0).ID }) alt=""/>
+                    <img src=@Url.Action("ShowMiniPhoto", "Photo", new { id = Model.Album.ElementAt(i).Photo.ElementAt(0).ID }) alt="" />
                 }
-                else {<img src="~/Content/themes/base/images/ui-bg_flat_0_aaaaaa_40x100.png" alt="" style="height:200px; width:200px"/> }
-                    <figcaption style="text-align: center; border: none">
-                    @Html.ActionLink(Model.Album.ElementAt(i).Name + "      ", "ObservePhotos","Album", new { albumName = Model.Album.ElementAt(i).Name }, null)
-                    </figcaption>
-                </figure>
-            }
-        }
+                else
+                {<img src="~/Content/themes/base/images/ui-bg_flat_0_aaaaaa_40x100.png" alt="" style="height:200px; width:200px" /> }
+                <figcaption style="text-align: center; border: none;font-family:'Times New Roman';font-size:larger">
+                    @Html.ActionLink(Model.Album.ElementAt(i).Name + "      ", "ObservePhotos", "Album", new { albumName = Model.Album.ElementAt(i).Name }, null)
+                </figcaption>
+            </figure>
+    }
+}
         <br/>        
     </div>
     }

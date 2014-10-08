@@ -77,6 +77,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\Album.cs" />
+    <Compile Include="Entities\Comment.cs" />
     <Compile Include="Entities\FreeUser.cs" />
     <Compile Include="Entities\IEntity.cs" />
     <Compile Include="Entities\Log.cs" />
@@ -85,12 +86,22 @@
     <Compile Include="Entities\Photo.cs" />
     <Compile Include="Entities\PhotographyManagerContext.cs" />
     <Compile Include="Entities\PhotoImage.cs" />
+    <Compile Include="Migrations\201410040803086_Comments.cs" />
+    <Compile Include="Migrations\201410040803086_Comments.Designer.cs">
+      <DependentUpon>201410040803086_Comments.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entities\UserRoles.cs" />
     <Compile Include="Entities\User.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201410040803086_Comments.resx">
+      <DependentUpon>201410040803086_Comments.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

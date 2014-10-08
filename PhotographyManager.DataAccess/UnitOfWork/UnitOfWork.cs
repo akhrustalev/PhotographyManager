@@ -69,6 +69,14 @@ namespace PhotographyManager.DataAccess.UnitOfWork
             }
         }
 
+        public IRepository<Comment> Comments
+        {
+            get
+            {
+                return new Repository<Comment>(context);
+            }
+        }
+
         public void Dispose()
         {
             if (context != null) context.Dispose();
