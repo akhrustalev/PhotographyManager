@@ -77,7 +77,7 @@
         })
     </script>
 </head>
-<body data-ng-app="app" data-ng-controller="SignalRAngularCtrl">
+<body >
     @{if (HttpContext.Current.User.Identity.Name.Equals(Model.User.Name)) { 
     <a href="#UrlModal" data-toggle="modal" class="btn btn-primary">Get Link</a>
     <div id="UrlModal" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">

@@ -5,9 +5,8 @@ function SignalRAngularCtrl($scope, signalRSvc) {
     $scope.Comments = []
     $scope.PushComment = function (photoId) {
         var commentText = $scope.commentText;
-        alert('pushed');
         $scope.Comments.push({ text: commentText, photoId: photoId });
-        //signalRSvc.sendRequest(commentText, photoId);
+        signalRSvc.sendRequest(commentText, photoId);
     }
     updateComment = function (text,photoId) {     
         $scope.Comments.push({text:text,photoId:photoId});    
